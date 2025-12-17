@@ -25,6 +25,8 @@
 
 package jdk.javadoc.internal.doclets.formats.html;
 
+import org.checkerframework.dataflow.qual.Pure;
+
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.EnumSet;

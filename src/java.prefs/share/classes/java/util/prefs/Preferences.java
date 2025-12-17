@@ -25,6 +25,11 @@
 
 package java.util.prefs;
 
+import org.checkerframework.checker.interning.qual.UsesObjectEquals;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.PolyNull;
+import org.checkerframework.framework.qual.AnnotatedFor;
+
 import jdk.internal.util.OperatingSystem;
 
 import java.io.InputStream;
@@ -223,7 +228,8 @@ import java.lang.Double;
  * @author  Josh Bloch
  * @since   1.4
  */
-public abstract class Preferences {
+@AnnotatedFor({"interning", "nullness"})
+public abstract @UsesObjectEquals class Preferences {
 
     private static final PreferencesFactory factory = factory();
 
@@ -521,7 +527,7 @@ public abstract class Preferences {
      * @throws IllegalArgumentException if key contains the null control
      *         character, code point U+0000.
      */
-    public abstract String get(String key, String def);
+    public abstract @PolyNull String get(String key, @PolyNull String def);
 
     /**
      * Removes the value associated with the specified key in this preference
@@ -899,7 +905,7 @@ public abstract class Preferences {
      * @see #get(String,String)
      * @see #putByteArray(String,byte[])
      */
-    public abstract byte[] getByteArray(String key, byte[] def);
+    public abstract byte @PolyNull [] getByteArray(String key, byte @PolyNull [] def);
 
     /**
      * Returns all of the keys that have an associated value in this
@@ -943,7 +949,7 @@ public abstract class Preferences {
      * @throws IllegalStateException if this node (or an ancestor) has been
      *         removed with the {@link #removeNode()} method.
      */
-    public abstract Preferences parent();
+    public abstract @Nullable Preferences parent();
 
     /**
      * Returns the named preference node in the same tree as this node,

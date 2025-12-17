@@ -21,6 +21,8 @@
  * questions.
  */
 
+import org.checkerframework.checker.signature.qual.BinaryName;
+
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadInfo;
 import java.security.Permission;
@@ -90,7 +92,7 @@ public class TestLoggerBundleSync {
 
 
     public static final class LoggerRB {
-        public final String resourceBundleName;
+        public final @BinaryName String resourceBundleName;
         public final ResourceBundle userBundle;
         public LoggerRB(String name, ResourceBundle bundle) {
             resourceBundleName = name;

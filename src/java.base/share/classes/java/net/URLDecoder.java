@@ -25,6 +25,9 @@
 
 package java.net;
 
+import org.checkerframework.checker.interning.qual.UsesObjectEquals;
+import org.checkerframework.framework.qual.AnnotatedFor;
+
 import jdk.internal.util.StaticProperty;
 
 import java.io.*;
@@ -83,7 +86,8 @@ import java.util.Objects;
  * @since   1.2
  */
 
-public class URLDecoder {
+@AnnotatedFor({"interning"})
+public @UsesObjectEquals class URLDecoder {
 
     /**
      * Do not call.
