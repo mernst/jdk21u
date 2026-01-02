@@ -323,7 +323,7 @@ final class JumboEnumSet<E extends Enum<E>> extends EnumSet<E> {
      * @return {@code true} if this set changed as a result of the call
      * @throws NullPointerException if the specified collection is null
      */
-    public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable JumboEnumSet<E> this, Collection<? extends @UnknownSignedness Object> c) {
+    public boolean removeAll(@GuardSatisfied @Modifiable JumboEnumSet<E> this, Collection<? extends @UnknownSignedness Object> c) {
         if (!(c instanceof JumboEnumSet<?> es))
             return super.removeAll(c);
 

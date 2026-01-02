@@ -796,7 +796,7 @@ public class IdentityHashMap<K,V>
             return lastReturnedIndex;
         }
 
-        public void remove(@GuardSatisfied @Modifiable IdentityHashMapIterator<E> this) {
+        public void remove(@GuardSatisfied @Modifiable IdentityHashMapIterator<T> this) {
             if (lastReturnedIndex == -1)
                 throw new IllegalStateException();
             if (modCount != expectedModCount)
@@ -1049,7 +1049,7 @@ public class IdentityHashMap<K,V>
          * the former contains an optimization that results in incorrect
          * behavior when c is a smaller "normal" (non-identity-based) Set.
          */
-        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable KeySet this, Collection<? extends @UnknownSignedness Object> c) {
+        public boolean removeAll(@GuardSatisfied @Modifiable KeySet this, Collection<? extends @UnknownSignedness Object> c) {
             Objects.requireNonNull(c);
             boolean modified = false;
             for (Iterator<K> i = iterator(); i.hasNext(); ) {
@@ -1280,7 +1280,7 @@ public class IdentityHashMap<K,V>
          * the former contains an optimization that results in incorrect
          * behavior when c is a smaller "normal" (non-identity-based) Set.
          */
-        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable EntrySet this, Collection<? extends @UnknownSignedness Object> c) {
+        public boolean removeAll(@GuardSatisfied @Modifiable EntrySet this, Collection<? extends @UnknownSignedness Object> c) {
             Objects.requireNonNull(c);
             boolean modified = false;
             for (Iterator<Map.Entry<K,V>> i = iterator(); i.hasNext(); ) {

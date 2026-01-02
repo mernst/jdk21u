@@ -370,7 +370,7 @@ public class CopyOnWriteArraySet<E> extends AbstractSet<E>
      *         or if the specified collection is null
      * @see #remove(Object)
      */
-    public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable CopyOnWriteArraySet<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
+    public boolean removeAll(@GuardSatisfied @Modifiable CopyOnWriteArraySet<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
         return al.removeAll(c);
     }
 

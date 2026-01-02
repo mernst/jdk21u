@@ -266,7 +266,7 @@ final class RegularEnumSet<E extends Enum<E>> extends EnumSet<E> {
      * @return {@code true} if this set changed as a result of the call
      * @throws NullPointerException if the specified collection is null
      */
-    public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable RegularEnumSet<E> this, Collection<? extends @UnknownSignedness Object> c) {
+    public boolean removeAll(@GuardSatisfied @Modifiable RegularEnumSet<E> this, Collection<? extends @UnknownSignedness Object> c) {
         if (!(c instanceof RegularEnumSet<?> es))
             return super.removeAll(c);
 

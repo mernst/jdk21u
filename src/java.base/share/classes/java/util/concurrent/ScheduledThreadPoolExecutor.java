@@ -47,6 +47,7 @@ import org.checkerframework.dataflow.qual.SideEffectsOnly;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
+import org.checkerframework.checker.lock.qual.GuardSatisfied;
 import org.checkerframework.checker.modifiable.qual.Modifiable;
 import java.util.AbstractQueue;
 import java.util.Arrays;

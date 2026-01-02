@@ -1460,7 +1460,7 @@ public class Properties extends Hashtable<Object,Object> {
         }
 
         @Override
-        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable EntrySet this, Collection<? extends @UnknownSignedness Object> c) {
+        public boolean removeAll(@GuardSatisfied @Modifiable EntrySet this, Collection<? extends @UnknownSignedness Object> c) {
             return entrySet.removeAll(c);
         }
 

@@ -1335,7 +1335,7 @@ public class ArrayList<E> extends AbstractList<E>
             return batchRemove(c, false);
         }
 
-        public boolean retainAll(@GuardSatisfied @Modifiable SubList<> this, Collection<? extends @UnknownSignedness Object> c) {
+        public boolean retainAll(@GuardSatisfied @Modifiable @Shrinkable SubList<E> this, Collection<? extends @UnknownSignedness Object> c) {
             return batchRemove(c, true);
         }
 

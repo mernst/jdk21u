@@ -25,6 +25,7 @@
 
 package java.util;
 
+import org.checkerframework.checker.lock.qual.GuardSatisfied;
 import org.checkerframework.checker.modifiable.qual.Modifiable;
 import java.util.function.Consumer;
 import java.util.function.IntFunction;

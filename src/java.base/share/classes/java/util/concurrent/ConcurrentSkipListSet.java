@@ -355,7 +355,7 @@ public class ConcurrentSkipListSet<E extends @NonNull Object>
      * @throws NullPointerException if the specified collection or any
      *         of its elements are null
      */
-    public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ConcurrentSkipListSet<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
+    public boolean removeAll(@GuardSatisfied @Modifiable ConcurrentSkipListSet<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
         // Override AbstractSet version to avoid unnecessary call to size()
         boolean modified = false;
         for (Object e : c)

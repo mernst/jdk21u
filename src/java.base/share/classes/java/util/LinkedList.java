@@ -1521,7 +1521,7 @@ public class LinkedList<E>
             return rlist.get(index);
         }
 
-        public void clear(@GuardSatisfied @Modifiable @Shrinkable LinkedList<E> this) {
+        public void clear(@GuardSatisfied @Modifiable @Shrinkable ReverseOrderLinkedListView<E> this) {
             rlist.clear();
         }
 
