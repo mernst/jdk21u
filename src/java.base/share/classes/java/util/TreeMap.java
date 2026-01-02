@@ -341,7 +341,7 @@ public class TreeMap<K,V>
      * @throws UnsupportedOperationException always
      * @since 21
      */
-     public V putFirst(K k, V v) {
+     public V putFirst(@GuardSatisfied @Modifiable ThisClass<K,V> this, K k, V v) {
         throw new UnsupportedOperationException();
     }
 
@@ -353,7 +353,7 @@ public class TreeMap<K,V>
      * @throws UnsupportedOperationException always
      * @since 21
      */
-    public V putLast(K k, V v) {
+    public V putLast(@GuardSatisfied @Modifiable ThisClass<K,V> this, K k, V v) {
         throw new UnsupportedOperationException();
     }
 
@@ -1007,7 +1007,7 @@ public class TreeMap<K,V>
     /**
      * @since 1.6
      */
-    public Map.@Nullable Entry<K,V> pollFirstEntry(@GuardSatisfied TreeMap<K, V> this) {
+    public Map.@Nullable Entry<K,V> pollFirstEntry(@GuardSatisfied @Modifiable TreeMap<K, V> this) {
         Entry<K,V> p = getFirstEntry();
         Map.Entry<K,V> result = exportEntry(p);
         if (p != null)
@@ -1018,7 +1018,7 @@ public class TreeMap<K,V>
     /**
      * @since 1.6
      */
-    public Map.@Nullable Entry<K,V> pollLastEntry(@GuardSatisfied TreeMap<K, V> this) {
+    public Map.@Nullable Entry<K,V> pollLastEntry(@GuardSatisfied @Modifiable TreeMap<K, V> this) {
         Entry<K,V> p = getLastEntry();
         Map.Entry<K,V> result = exportEntry(p);
         if (p != null)
@@ -1390,7 +1390,7 @@ public class TreeMap<K,V>
             return TreeMap.this.containsValue(o);
         }
 
-        public boolean remove(@UnknownSignedness Object o) {
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object o) {
             for (Entry<K,V> e = getFirstEntry(); e != null; e = successor(e)) {
                 if (valEquals(e.getValue(), o)) {
                     deleteEntry(e);
@@ -1426,7 +1426,7 @@ public class TreeMap<K,V>
             return p != null && valEquals(p.getValue(), value);
         }
 
-        public boolean remove(@UnknownSignedness Object o) {
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object o) {
             if (!(o instanceof Map.Entry<?, ?> entry))
                 return false;
             Object value = entry.getValue();
@@ -1512,7 +1512,7 @@ public class TreeMap<K,V>
             Map.Entry<E,?> e = m.pollLastEntry();
             return (e == null) ? null : e.getKey();
         }
-        public boolean remove(@UnknownSignedness Object o) {
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object o) {
             int oldSize = size();
             m.remove(o);
             return size() != oldSize;
@@ -1591,7 +1591,7 @@ public class TreeMap<K,V>
             return e;
         }
 
-        public void remove() {
+        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
             if (lastReturned == null)
                 throw new IllegalStateException();
             if (modCount != expectedModCount)
@@ -1639,7 +1639,7 @@ public class TreeMap<K,V>
         public K next(@NonEmpty DescendingKeyIterator this) {
             return prevEntry().key;
         }
-        public void remove() {
+        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
             if (lastReturned == null)
                 throw new IllegalStateException();
             if (modCount != expectedModCount)
@@ -1985,7 +1985,7 @@ public class TreeMap<K,V>
             return exportEntry(subHighest());
         }
 
-        public final Map.Entry<K,V> pollFirstEntry() {
+        public final Map.Entry<K,V> pollFirstEntry(@GuardSatisfied @Modifiable ThisClass<E> this) {
             TreeMap.Entry<K,V> e = subLowest();
             Map.Entry<K,V> result = exportEntry(e);
             if (e != null)
@@ -1993,7 +1993,7 @@ public class TreeMap<K,V>
             return result;
         }
 
-        public final Map.Entry<K,V> pollLastEntry() {
+        public final Map.Entry<K,V> pollLastEntry(@GuardSatisfied @Modifiable ThisClass<E> this) {
             TreeMap.Entry<K,V> e = subHighest();
             Map.Entry<K,V> result = exportEntry(e);
             if (e != null)
@@ -2078,7 +2078,7 @@ public class TreeMap<K,V>
                     valEquals(node.getValue(), entry.getValue());
             }
 
-            public boolean remove(@UnknownSignedness Object o) {
+            public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object o) {
                 if (!(o instanceof Entry<?, ?> entry))
                     return false;
                 Object key = entry.getKey();
@@ -2174,7 +2174,7 @@ public class TreeMap<K,V>
             public Map.Entry<K,V> next(@NonEmpty SubMapEntryIterator this) {
                 return nextEntry();
             }
-            public void remove() {
+            public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
                 removeAscending();
             }
         }
@@ -2188,7 +2188,7 @@ public class TreeMap<K,V>
             public Map.Entry<K,V> next(@NonEmpty DescendingSubMapEntryIterator this) {
                 return prevEntry();
             }
-            public void remove() {
+            public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
                 removeDescending();
             }
         }
@@ -2203,7 +2203,7 @@ public class TreeMap<K,V>
             public K next(@NonEmpty SubMapKeyIterator this) {
                 return nextEntry().key;
             }
-            public void remove() {
+            public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
                 removeAscending();
             }
             public Spliterator<K> trySplit() {
@@ -2241,7 +2241,7 @@ public class TreeMap<K,V>
             public K next(@NonEmpty DescendingSubMapKeyIterator this) {
                 return prevEntry().key;
             }
-            public void remove() {
+            public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
                 removeDescending();
             }
             public Spliterator<K> trySplit() {

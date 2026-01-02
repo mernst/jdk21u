@@ -1052,7 +1052,7 @@ public class ScheduledThreadPoolExecutor
             }
         }
 
-        public boolean remove(@UnknownSignedness Object x) {
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object x) {
             final ReentrantLock lock = this.lock;
             lock.lock();
             try {
@@ -1358,7 +1358,7 @@ public class ScheduledThreadPoolExecutor
                 return array[lastRet = cursor++];
             }
 
-            public void remove() {
+            public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
                 if (lastRet < 0)
                     throw new IllegalStateException();
                 DelayedWorkQueue.this.remove(array[lastRet]);

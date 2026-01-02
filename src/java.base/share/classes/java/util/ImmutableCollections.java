@@ -157,13 +157,13 @@ class ImmutableCollections {
         // all mutating methods throw UnsupportedOperationException
         @Override
         @EnsuresNonEmpty("this")
-        public boolean add(E e) { throw uoe(); }
-        @Override public boolean addAll(Collection<? extends E> c) { throw uoe(); }
+        public boolean add(@GuardSatisfied @Modifiable AbstractImmutableCollection<E> this, E e) { throw uoe(); }
+        @Override public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, Collection<? extends E> c) { throw uoe(); }
         @Override public void    clear() { throw uoe(); }
-        @Override public boolean remove(@UnknownSignedness Object o) { throw uoe(); }
-        @Override public boolean removeAll(Collection<? extends @UnknownSignedness Object> c) { throw uoe(); }
+        @Override public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object o) { throw uoe(); }
+        @Override public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, Collection<? extends @UnknownSignedness Object> c) { throw uoe(); }
         @Override public boolean removeIf(Predicate<? super E> filter) { throw uoe(); }
-        @Override public boolean retainAll(Collection<? extends @UnknownSignedness Object> c) { throw uoe(); }
+        @Override public boolean retainAll(@GuardSatisfied @Modifiable ThisClass<> this, Collection<? extends @UnknownSignedness Object> c) { throw uoe(); }
     }
 
     // ---------- List Static Factory Methods ----------
@@ -269,7 +269,7 @@ class ImmutableCollections {
 
         // all mutating methods throw UnsupportedOperationException
         @Override public void    add(int index, E element) { throw uoe(); }
-        @Override public boolean addAll(int index, Collection<? extends E> c) { throw uoe(); }
+        @Override public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, int index, Collection<? extends E> c) { throw uoe(); }
         @Override public E       remove(int index) { throw uoe(); }
         @Override public void    replaceAll(UnaryOperator<E> operator) { throw uoe(); }
         @Override public E       set(int index, E element) { throw uoe(); }
@@ -401,7 +401,7 @@ class ImmutableCollections {
             }
         }
 
-        public void remove() {
+        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
             throw uoe();
         }
 
@@ -440,11 +440,11 @@ class ImmutableCollections {
             return cursor - 1;
         }
 
-        public void set(E e) {
+        public void set(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
             throw uoe();
         }
 
-        public void add(E e) {
+        public void add(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
             throw uoe();
         }
     }
@@ -1118,10 +1118,10 @@ class ImmutableCollections {
         @Override public void putAll(Map<? extends K,? extends V> m) { throw uoe(); }
         @Override public V putIfAbsent(K key, V value) { throw uoe(); }
         @Override public V remove(Object key) { throw uoe(); }
-        @Override public boolean remove(@UnknownSignedness Object key, @UnknownSignedness Object value) { throw uoe(); }
+        @Override public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object key, @UnknownSignedness Object value) { throw uoe(); }
         @Override public V replace(K key, V value) { throw uoe(); }
         @Override public boolean replace(K key, V oldValue, V newValue) { throw uoe(); }
-        @Override public void replaceAll(BiFunction<? super K,? super V,? extends V> f) { throw uoe(); }
+        @Override public void replaceAll(@GuardSatisfied @Modifiable ThisClass<E> this, BiFunction<? super K,? super V,? extends V> f) { throw uoe(); }
 
         /**
          * @implNote {@code null} values are disallowed in these immutable maps,

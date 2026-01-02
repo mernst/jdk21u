@@ -231,7 +231,7 @@ public interface BlockingDeque<E extends @NonNull Object> extends BlockingQueue<
      * @throws NullPointerException if the specified element is null
      * @throws IllegalArgumentException {@inheritDoc}
      */
-    void addFirst(E e);
+    void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, E e);
 
     /**
      * Inserts the specified element at the end of this deque if it is
@@ -246,7 +246,7 @@ public interface BlockingDeque<E extends @NonNull Object> extends BlockingQueue<
      * @throws NullPointerException if the specified element is null
      * @throws IllegalArgumentException {@inheritDoc}
      */
-    void addLast(E e);
+    void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, E e);
 
     /**
      * Inserts the specified element at the front of this deque if it is
@@ -460,7 +460,7 @@ public interface BlockingDeque<E extends @NonNull Object> extends BlockingQueue<
      *         element prevents it from being added to this deque
      */
     @EnsuresNonEmpty("this")
-    boolean add(E e);
+    boolean add(@GuardSatisfied @Modifiable BlockingDeque<E> this, E e);
 
     /**
      * Inserts the specified element into the queue represented by this deque
@@ -531,7 +531,7 @@ public interface BlockingDeque<E extends @NonNull Object> extends BlockingQueue<
      * @return the head of the queue represented by this deque
      * @throws NoSuchElementException if this deque is empty
      */
-    E remove(@GuardSatisfied @NonEmpty @Shrinkable BlockingDeque<E> this);
+    E remove(@GuardSatisfied @NonEmpty @Modifiable @Shrinkable BlockingDeque<E> this);
 
     /**
      * Retrieves and removes the head of the queue represented by this deque
@@ -614,7 +614,7 @@ public interface BlockingDeque<E extends @NonNull Object> extends BlockingQueue<
      * @throws NullPointerException if the specified element is null
      * (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      */
-    boolean remove(@Shrinkable BlockingDeque<E> this, @UnknownSignedness Object o);
+    boolean remove(@Modifiable @Shrinkable BlockingDeque<E> this, @UnknownSignedness Object o);
 
     /**
      * Returns {@code true} if this deque contains the specified element.

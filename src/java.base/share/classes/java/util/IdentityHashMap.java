@@ -795,7 +795,7 @@ public class IdentityHashMap<K,V>
             return lastReturnedIndex;
         }
 
-        public void remove() {
+        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
             if (lastReturnedIndex == -1)
                 throw new IllegalStateException();
             if (modCount != expectedModCount)
@@ -897,7 +897,7 @@ public class IdentityHashMap<K,V>
             return lastReturnedEntry;
         }
 
-        public void remove() {
+        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
             lastReturnedIndex =
                 ((null == lastReturnedEntry) ? -1 : lastReturnedEntry.index);
             super.remove();
@@ -1038,7 +1038,7 @@ public class IdentityHashMap<K,V>
         public boolean contains(@Nullable @UnknownSignedness Object o) {
             return containsKey(o);
         }
-        public boolean remove(@Nullable @UnknownSignedness Object o) {
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @Nullable @UnknownSignedness Object o) {
             int oldSize = size;
             IdentityHashMap.this.remove(o);
             return size != oldSize;
@@ -1048,7 +1048,7 @@ public class IdentityHashMap<K,V>
          * the former contains an optimization that results in incorrect
          * behavior when c is a smaller "normal" (non-identity-based) Set.
          */
-        public boolean removeAll(Collection<? extends @UnknownSignedness Object> c) {
+        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, Collection<? extends @UnknownSignedness Object> c) {
             Objects.requireNonNull(c);
             boolean modified = false;
             for (Iterator<K> i = iterator(); i.hasNext(); ) {
@@ -1152,7 +1152,7 @@ public class IdentityHashMap<K,V>
         public boolean contains(@Nullable @UnknownSignedness Object o) {
             return containsValue(o);
         }
-        public boolean remove(@Nullable @UnknownSignedness Object o) {
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @Nullable @UnknownSignedness Object o) {
             for (Iterator<V> i = iterator(); i.hasNext(); ) {
                 if (i.next() == o) {
                     i.remove();
@@ -1263,7 +1263,7 @@ public class IdentityHashMap<K,V>
             return o instanceof Entry<?, ?> entry
                     && containsMapping(entry.getKey(), entry.getValue());
         }
-        public boolean remove(@Nullable @UnknownSignedness Object o) {
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @Nullable @UnknownSignedness Object o) {
             return o instanceof Entry<?, ?> entry
                     && removeMapping(entry.getKey(), entry.getValue());
         }
@@ -1279,7 +1279,7 @@ public class IdentityHashMap<K,V>
          * the former contains an optimization that results in incorrect
          * behavior when c is a smaller "normal" (non-identity-based) Set.
          */
-        public boolean removeAll(Collection<? extends @UnknownSignedness Object> c) {
+        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, Collection<? extends @UnknownSignedness Object> c) {
             Objects.requireNonNull(c);
             boolean modified = false;
             for (Iterator<Map.Entry<K,V>> i = iterator(); i.hasNext(); ) {
@@ -1466,7 +1466,7 @@ public class IdentityHashMap<K,V>
      * {@code false}.
      */
     @Override
-    public boolean remove(Object key, Object value) {
+    public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, Object key, Object value) {
         return removeMapping(key, value);
     }
 

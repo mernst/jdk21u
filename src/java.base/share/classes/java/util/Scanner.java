@@ -1516,7 +1516,7 @@ public final @UsesObjectEquals class Scanner implements Iterator<String>, Closea
      * @throws UnsupportedOperationException if this method is invoked.
      * @see java.util.Iterator
      */
-    public void remove(@GuardSatisfied Scanner this) {
+    public void remove(@GuardSatisfied @Modifiable Scanner this) {
         throw new UnsupportedOperationException();
     }
 

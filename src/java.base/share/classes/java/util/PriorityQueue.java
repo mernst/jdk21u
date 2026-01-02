@@ -330,7 +330,7 @@ public class PriorityQueue<E extends @NonNull Object> extends AbstractQueue<E>
      * @throws NullPointerException if the specified element is null
      */
     @EnsuresNonEmpty("this")
-    public boolean add(@GuardSatisfied PriorityQueue<E> this, E e) {
+    public boolean add(@GuardSatisfied @Modifiable PriorityQueue<E> this, E e) {
         return offer(e);
     }
 
@@ -381,7 +381,7 @@ public class PriorityQueue<E extends @NonNull Object> extends AbstractQueue<E>
      * @param o element to be removed from this queue, if present
      * @return {@code true} if this queue changed as a result of the call
      */
-    public boolean remove(@GuardSatisfied @Shrinkable PriorityQueue<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o) {
+    public boolean remove(@GuardSatisfied @Modifiable @Shrinkable PriorityQueue<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o) {
         int i = indexOf(o);
         if (i == -1)
             return false;
@@ -396,7 +396,7 @@ public class PriorityQueue<E extends @NonNull Object> extends AbstractQueue<E>
      *
      * @param o element to be removed from this queue, if present
      */
-    void removeEq(@GuardSatisfied @Shrinkable PriorityQueue<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o) {
+    void removeEq(@GuardSatisfied @Modifiable @Shrinkable PriorityQueue<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o) {
         final Object[] es = queue;
         for (int i = 0, n = size; i < n; i++) {
             if (o == es[i]) {
@@ -561,7 +561,7 @@ public class PriorityQueue<E extends @NonNull Object> extends AbstractQueue<E>
             throw new NoSuchElementException();
         }
 
-        public void remove() {
+        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
             if (expectedModCount != modCount)
                 throw new ConcurrentModificationException();
             if (lastRet != -1) {
@@ -593,7 +593,7 @@ public class PriorityQueue<E extends @NonNull Object> extends AbstractQueue<E>
      * Removes all of the elements from this priority queue.
      * The queue will be empty after this call returns.
      */
-    public void clear(@GuardSatisfied @Shrinkable PriorityQueue<E> this) {
+    public void clear(@GuardSatisfied @Modifiable @Shrinkable PriorityQueue<E> this) {
         modCount++;
         final Object[] es = queue;
         for (int i = 0, n = size; i < n; i++)
@@ -601,7 +601,7 @@ public class PriorityQueue<E extends @NonNull Object> extends AbstractQueue<E>
         size = 0;
     }
 
-    public @Nullable E poll(@GuardSatisfied @Shrinkable PriorityQueue<E> this) {
+    public @Nullable E poll(@GuardSatisfied @Modifiable @Shrinkable PriorityQueue<E> this) {
         final Object[] es;
         final E result;
 
@@ -924,7 +924,7 @@ public class PriorityQueue<E extends @NonNull Object> extends AbstractQueue<E>
     /**
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean removeIf(@GuardSatisfied @Shrinkable PriorityQueue<E> this, Predicate<? super E> filter) {
+    public boolean removeIf(@GuardSatisfied @Modifiable @Shrinkable PriorityQueue<E> this, Predicate<? super E> filter) {
         Objects.requireNonNull(filter);
         return bulkRemove(filter);
     }
@@ -932,7 +932,7 @@ public class PriorityQueue<E extends @NonNull Object> extends AbstractQueue<E>
     /**
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean removeAll(@GuardSatisfied @Shrinkable PriorityQueue<E> this, Collection<? extends @UnknownSignedness Object> c) {
+    public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable PriorityQueue<E> this, Collection<? extends @UnknownSignedness Object> c) {
         Objects.requireNonNull(c);
         return bulkRemove(e -> c.contains(e));
     }
@@ -940,7 +940,7 @@ public class PriorityQueue<E extends @NonNull Object> extends AbstractQueue<E>
     /**
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean retainAll(@GuardSatisfied @Shrinkable PriorityQueue<E> this, Collection<? extends @UnknownSignedness Object> c) {
+    public boolean retainAll(@GuardSatisfied @Modifiable @Shrinkable PriorityQueue<E> this, Collection<? extends @UnknownSignedness Object> c) {
         Objects.requireNonNull(c);
         return bulkRemove(e -> !c.contains(e));
     }

@@ -170,7 +170,7 @@ public class DelayQueue<E extends @NonNull Delayed> extends AbstractQueue<E>
      * @throws NullPointerException if the specified element is null
      */
     @EnsuresNonEmpty("this")
-    public boolean add(E e) {
+    public boolean add(@GuardSatisfied @Modifiable DelayQueue<E> this, E e) {
         return offer(e);
     }
 
@@ -229,7 +229,7 @@ public class DelayQueue<E extends @NonNull Delayed> extends AbstractQueue<E>
      * @return the <em>expired head</em> of this queue, or {@code null} if this
      *         queue has no elements with an expired delay
      */
-    public @Nullable E poll(@GuardSatisfied @Shrinkable DelayQueue<E> this) {
+    public @Nullable E poll(@GuardSatisfied @Modifiable @Shrinkable DelayQueue<E> this) {
         final ReentrantLock lock = this.lock;
         lock.lock();
         try {
@@ -250,7 +250,7 @@ public class DelayQueue<E extends @NonNull Delayed> extends AbstractQueue<E>
      * @return the <em>expired head</em> of this queue
      * @throws InterruptedException {@inheritDoc}
      */
-    public E take(@GuardSatisfied @Shrinkable DelayQueue<E> this) throws InterruptedException {
+    public E take(@GuardSatisfied @Modifiable @Shrinkable DelayQueue<E> this) throws InterruptedException {
         final ReentrantLock lock = this.lock;
         lock.lockInterruptibly();
         try {
@@ -295,7 +295,7 @@ public class DelayQueue<E extends @NonNull Delayed> extends AbstractQueue<E>
      *         an expired delay becomes available
      * @throws InterruptedException {@inheritDoc}
      */
-    public @Nullable E poll(@GuardSatisfied @Shrinkable DelayQueue<E> this, long timeout, TimeUnit unit) throws InterruptedException {
+    public @Nullable E poll(@GuardSatisfied @Modifiable @Shrinkable DelayQueue<E> this, long timeout, TimeUnit unit) throws InterruptedException {
         long nanos = unit.toNanos(timeout);
         final ReentrantLock lock = this.lock;
         lock.lockInterruptibly();
@@ -345,7 +345,7 @@ public class DelayQueue<E extends @NonNull Delayed> extends AbstractQueue<E>
      * @throws NoSuchElementException if this queue has no elements with an
      *         expired delay
      */
-    public E remove() {
+    public E remove(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this) {
         return super.remove();
     }
 
@@ -386,7 +386,7 @@ public class DelayQueue<E extends @NonNull Delayed> extends AbstractQueue<E>
      * @throws NullPointerException          {@inheritDoc}
      * @throws IllegalArgumentException      {@inheritDoc}
      */
-    public int drainTo(@GuardSatisfied @Shrinkable DelayQueue<E> this, Collection<? super E> c) {
+    public int drainTo(@GuardSatisfied @Modifiable @Shrinkable DelayQueue<E> this, Collection<? super E> c) {
         return drainTo(c, Integer.MAX_VALUE);
     }
 
@@ -396,7 +396,7 @@ public class DelayQueue<E extends @NonNull Delayed> extends AbstractQueue<E>
      * @throws NullPointerException          {@inheritDoc}
      * @throws IllegalArgumentException      {@inheritDoc}
      */
-    public int drainTo(@GuardSatisfied @Shrinkable DelayQueue<E> this, Collection<? super E> c, int maxElements) {
+    public int drainTo(@GuardSatisfied @Modifiable @Shrinkable DelayQueue<E> this, Collection<? super E> c, int maxElements) {
         Objects.requireNonNull(c);
         if (c == this)
             throw new IllegalArgumentException();
@@ -426,7 +426,7 @@ public class DelayQueue<E extends @NonNull Delayed> extends AbstractQueue<E>
      * Elements with an unexpired delay are not waited for; they are
      * simply discarded from the queue.
      */
-    public void clear(@GuardSatisfied @Shrinkable DelayQueue<E> this) {
+    public void clear(@GuardSatisfied @Modifiable @Shrinkable DelayQueue<E> this) {
         final ReentrantLock lock = this.lock;
         lock.lock();
         try {
@@ -520,7 +520,7 @@ public class DelayQueue<E extends @NonNull Delayed> extends AbstractQueue<E>
      * Removes a single instance of the specified element from this
      * queue, if it is present, whether or not it has expired.
      */
-    public boolean remove(@Shrinkable DelayQueue<E> this, @UnknownSignedness Object o) {
+    public boolean remove(@Modifiable @Shrinkable DelayQueue<E> this, @UnknownSignedness Object o) {
         final ReentrantLock lock = this.lock;
         lock.lock();
         try {
@@ -590,7 +590,7 @@ public class DelayQueue<E extends @NonNull Delayed> extends AbstractQueue<E>
             return (E)array[lastRet = cursor++];
         }
 
-        public void remove() {
+        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
             if (lastRet < 0)
                 throw new IllegalStateException();
             removeEQ(array[lastRet]);

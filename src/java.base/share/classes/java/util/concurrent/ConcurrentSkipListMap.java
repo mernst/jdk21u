@@ -1819,7 +1819,7 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
      *         with the keys currently in the map
      * @throws NullPointerException if the specified key is null
      */
-    public boolean remove(@GuardSatisfied @UnknownSignedness Object key, @GuardSatisfied @UnknownSignedness Object value) {
+    public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @GuardSatisfied @UnknownSignedness Object key, @GuardSatisfied @UnknownSignedness Object value) {
         if (key == null)
             throw new NullPointerException();
         return value != null && doRemove(key, value) != null;
@@ -1903,7 +1903,7 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
      * @throws UnsupportedOperationException always
      * @since 21
      */
-     public V putFirst(K k, V v) {
+     public V putFirst(@GuardSatisfied @Modifiable ThisClass<K,V> this, K k, V v) {
         throw new UnsupportedOperationException();
     }
 
@@ -1915,7 +1915,7 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
      * @throws UnsupportedOperationException always
      * @since 21
      */
-    public V putLast(K k, V v) {
+    public V putLast(@GuardSatisfied @Modifiable ThisClass<K,V> this, K k, V v) {
         throw new UnsupportedOperationException();
     }
 
@@ -2113,7 +2113,7 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
      * The returned entry does <em>not</em> support
      * the {@code Entry.setValue} method.
      */
-    public Map.Entry<K,V> pollFirstEntry() {
+    public Map.Entry<K,V> pollFirstEntry(@GuardSatisfied @Modifiable ThisClass<E> this) {
         return doRemoveFirstEntry();
     }
 
@@ -2123,7 +2123,7 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
      * The returned entry does <em>not</em> support
      * the {@code Entry.setValue} method.
      */
-    public Map.Entry<K,V> pollLastEntry() {
+    public Map.Entry<K,V> pollLastEntry(@GuardSatisfied @Modifiable ThisClass<E> this) {
         return doRemoveLastEntry();
     }
 
@@ -2163,7 +2163,7 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
             next = n;
         }
 
-        public final void remove() {
+        public final void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
             Node<K,V> n; K k;
             if ((n = lastReturned) == null || (k = n.key) == null)
                 throw new IllegalStateException();
@@ -2235,7 +2235,7 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
         @Pure
         @EnsuresNonEmptyIf(result = true, expression = "this")
         public boolean contains(@UnknownSignedness Object o) { return m.containsKey(o); }
-        public boolean remove(@UnknownSignedness Object o) { return m.remove(o) != null; }
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object o) { return m.remove(o) != null; }
         public void clear() { m.clear(); }
         public K lower(K e) { return m.lowerKey(e); }
         public K floor(K e) { return m.floorKey(e); }
@@ -2373,7 +2373,7 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
             V v = m.get(e.getKey());
             return v != null && v.equals(e.getValue());
         }
-        public boolean remove(@UnknownSignedness Object o) {
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object o) {
             if (!(o instanceof Map.Entry))
                 return false;
             Map.Entry<?,?> e = (Map.Entry<?,?>)o;
@@ -2759,7 +2759,7 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
             return m.putIfAbsent(key, value);
         }
 
-        public boolean remove(@UnknownSignedness Object key, @UnknownSignedness Object value) {
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object key, @UnknownSignedness Object value) {
             return inBounds(key, m.comparator) && m.remove(key, value);
         }
 
@@ -2917,11 +2917,11 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
             return isDescending ? lowestEntry() : highestEntry();
         }
 
-        public Map.Entry<K,V> pollFirstEntry() {
+        public Map.Entry<K,V> pollFirstEntry(@GuardSatisfied @Modifiable ThisClass<E> this) {
             return isDescending ? removeHighest() : removeLowest();
         }
 
-        public Map.Entry<K,V> pollLastEntry() {
+        public Map.Entry<K,V> pollLastEntry(@GuardSatisfied @Modifiable ThisClass<E> this) {
             return isDescending ? removeLowest() : removeHighest();
         }
 
@@ -3038,7 +3038,7 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
                 }
             }
 
-            public void remove() {
+            public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
                 Node<K,V> l = lastReturned;
                 if (l == null)
                     throw new IllegalStateException();

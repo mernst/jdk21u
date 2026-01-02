@@ -99,7 +99,7 @@ public abstract class AbstractQueue<E>
      *         prevents it from being added to this queue
      */
     @EnsuresNonEmpty("this")
-    public boolean add(@GuardSatisfied AbstractQueue<E> this, E e) {
+    public boolean add(@GuardSatisfied @Modifiable AbstractQueue<E> this, E e) {
         if (offer(e))
             return true;
         else
@@ -117,7 +117,7 @@ public abstract class AbstractQueue<E>
      * @return the head of this queue
      * @throws NoSuchElementException if this queue is empty
      */
-    public E remove(@GuardSatisfied @NonEmpty @Shrinkable AbstractQueue<E> this) {
+    public E remove(@GuardSatisfied @NonEmpty @Modifiable @Shrinkable AbstractQueue<E> this) {
         E x = poll();
         if (x != null)
             return x;
@@ -151,7 +151,7 @@ public abstract class AbstractQueue<E>
      * <p>This implementation repeatedly invokes {@link #poll poll} until it
      * returns {@code null}.
      */
-    public void clear(@GuardSatisfied @Shrinkable AbstractQueue<E> this) {
+    public void clear(@GuardSatisfied @Modifiable @Shrinkable AbstractQueue<E> this) {
         while (poll() != null)
             ;
     }
@@ -185,7 +185,7 @@ public abstract class AbstractQueue<E>
      *         this time due to insertion restrictions
      * @see #add(Object)
      */
-    public boolean addAll(@GuardSatisfied AbstractQueue<E> this, Collection<? extends E> c) {
+    public boolean addAll(@GuardSatisfied @Modifiable AbstractQueue<E> this, Collection<? extends E> c) {
         if (c == null)
             throw new NullPointerException();
         if (c == this)

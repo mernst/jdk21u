@@ -196,7 +196,7 @@ public interface ConcurrentMap<K extends @NonNull Object,V extends @NonNull Obje
      *         and this map does not permit null keys or values
      * (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      */
-    boolean remove(@UnknownSignedness Object key, @UnknownSignedness Object value);
+    boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object key, @UnknownSignedness Object value);
 
     /**
      * Replaces the entry for a key only if currently mapped to a given value.

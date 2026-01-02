@@ -174,7 +174,7 @@ public abstract class AbstractSet<E> extends AbstractCollection<E> implements Se
      * @see #remove(Object)
      * @see #contains(Object)
      */
-    public boolean removeAll(@GuardSatisfied AbstractSet<E> this, Collection<? extends @UnknownSignedness Object> c) {
+    public boolean removeAll(@GuardSatisfied @Modifiable AbstractSet<E> this, Collection<? extends @UnknownSignedness Object> c) {
         Objects.requireNonNull(c);
         boolean modified = false;
 

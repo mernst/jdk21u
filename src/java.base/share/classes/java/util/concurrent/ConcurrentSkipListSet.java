@@ -261,7 +261,7 @@ public class ConcurrentSkipListSet<E extends @NonNull Object>
      * @throws NullPointerException if the specified element is null
      */
     @EnsuresNonEmpty("this")
-    public boolean add(E e) {
+    public boolean add(@GuardSatisfied @Modifiable ConcurrentSkipListSet<E> this, E e) {
         return m.putIfAbsent(e, Boolean.TRUE) == null;
     }
 
@@ -279,14 +279,14 @@ public class ConcurrentSkipListSet<E extends @NonNull Object>
      *         with the elements currently in this set
      * @throws NullPointerException if the specified element is null
      */
-    public boolean remove(@GuardSatisfied @UnknownSignedness Object o) {
+    public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @GuardSatisfied @UnknownSignedness Object o) {
         return m.remove(o, Boolean.TRUE);
     }
 
     /**
      * Removes all of the elements from this set.
      */
-    public void clear() {
+    public void clear(@GuardSatisfied @Modifiable ConcurrentSkipListSet<E> this) {
         m.clear();
     }
 
@@ -354,7 +354,7 @@ public class ConcurrentSkipListSet<E extends @NonNull Object>
      * @throws NullPointerException if the specified collection or any
      *         of its elements are null
      */
-    public boolean removeAll(Collection<? extends @NonNull @UnknownSignedness Object> c) {
+    public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
         // Override AbstractSet version to avoid unnecessary call to size()
         boolean modified = false;
         for (Object e : c)
@@ -437,7 +437,7 @@ public class ConcurrentSkipListSet<E extends @NonNull Object>
      * @throws UnsupportedOperationException always
      * @since 21
      */
-    public void addFirst(E e) {
+    public void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
         throw new UnsupportedOperationException();
     }
 
@@ -449,7 +449,7 @@ public class ConcurrentSkipListSet<E extends @NonNull Object>
      * @throws UnsupportedOperationException always
      * @since 21
      */
-    public void addLast(E e) {
+    public void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
         throw new UnsupportedOperationException();
     }
 

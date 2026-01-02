@@ -103,7 +103,7 @@ public interface SequencedCollection<E> extends Collection<E> {
      * @throws UnsupportedOperationException if this collection implementation
      *         does not support this operation
      */
-    default void addFirst(E e) {
+    default void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
         throw new UnsupportedOperationException();
     }
 
@@ -121,7 +121,7 @@ public interface SequencedCollection<E> extends Collection<E> {
      * @throws UnsupportedOperationException if this collection implementation
      *         does not support this operation
      */
-    default void addLast(E e) {
+    default void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
         throw new UnsupportedOperationException();
     }
 
@@ -172,7 +172,7 @@ public interface SequencedCollection<E> extends Collection<E> {
      * @throws UnsupportedOperationException if this collection implementation
      *         does not support this operation
      */
-    default E removeFirst() {
+    default E removeFirst(@GuardSatisfied @Modifiable ThisClass<E> this) {
         var it = this.iterator();
         E e = it.next();
         it.remove();
@@ -194,7 +194,7 @@ public interface SequencedCollection<E> extends Collection<E> {
      * @throws UnsupportedOperationException if this collection implementation
      *         does not support this operation
      */
-    default E removeLast() {
+    default E removeLast(@GuardSatisfied @Modifiable ThisClass<E> this) {
         var it = this.reversed().iterator();
         E e = it.next();
         it.remove();

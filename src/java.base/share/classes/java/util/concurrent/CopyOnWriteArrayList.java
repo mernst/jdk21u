@@ -459,7 +459,7 @@ public class CopyOnWriteArrayList<E>
      *
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */
-    public E set(int index, E element) {
+    public E set(@GuardSatisfied @Modifiable CopyOnWriteArrayList<E> this, int index, E element) {
         synchronized (lock) {
             Object[] es = getArray();
             E oldValue = elementAt(es, index);
@@ -481,7 +481,7 @@ public class CopyOnWriteArrayList<E>
      * @return {@code true} (as specified by {@link Collection#add})
      */
     @EnsuresNonEmpty("this")
-    public boolean add(E e) {
+    public boolean add(@GuardSatisfied @Modifiable CopyOnWriteArrayList<E> this, E e) {
         synchronized (lock) {
             Object[] es = getArray();
             int len = es.length;
@@ -499,7 +499,7 @@ public class CopyOnWriteArrayList<E>
      *
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */
-    public void add(int index, E element) {
+    public void add(@GuardSatisfied @Modifiable ThisClass<E> this, @IndexOrHigh({"this"}) int index, E element) {
         synchronized (lock) {
             Object[] es = getArray();
             int len = es.length;
@@ -525,7 +525,7 @@ public class CopyOnWriteArrayList<E>
      *
      * @since 21
      */
-    public void addFirst(E e) {
+    public void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
         add(0, e);
     }
 
@@ -534,7 +534,7 @@ public class CopyOnWriteArrayList<E>
      *
      * @since 21
      */
-    public void addLast(E e) {
+    public void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
         synchronized (lock) {
             add(getArray().length, e);
         }
@@ -547,7 +547,7 @@ public class CopyOnWriteArrayList<E>
      *
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */
-    public E remove(@GuardSatisfied @Shrinkable CopyOnWriteArrayList<E> this, int index) {
+    public E remove(@GuardSatisfied @Modifiable @Shrinkable CopyOnWriteArrayList<E> this, int index) {
         synchronized (lock) {
             Object[] es = getArray();
             int len = es.length;
@@ -573,7 +573,7 @@ public class CopyOnWriteArrayList<E>
      * @throws NoSuchElementException {@inheritDoc}
      * @since 21
      */
-    public E removeFirst() {
+    public E removeFirst(@GuardSatisfied @Modifiable ThisClass<E> this) {
         synchronized (lock) {
             if (getArray().length == 0)
                 throw new NoSuchElementException();
@@ -588,7 +588,7 @@ public class CopyOnWriteArrayList<E>
      * @throws NoSuchElementException {@inheritDoc}
      * @since 21
      */
-    public E removeLast() {
+    public E removeLast(@GuardSatisfied @Modifiable ThisClass<E> this) {
         synchronized (lock) {
             int size = getArray().length;
             if (size == 0)
@@ -610,7 +610,7 @@ public class CopyOnWriteArrayList<E>
      * @param o element to be removed from this list, if present
      * @return {@code true} if this list contained the specified element
      */
-    public boolean remove(@Shrinkable CopyOnWriteArrayList<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o) {
+    public boolean remove(@Modifiable @Shrinkable CopyOnWriteArrayList<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o) {
         Object[] snapshot = getArray();
         int index = indexOfRange(o, snapshot, 0, snapshot.length);
         return index >= 0 && remove(o, snapshot, index);
@@ -620,7 +620,7 @@ public class CopyOnWriteArrayList<E>
      * A version of remove(Object) using the strong hint that given
      * recent snapshot contains o at the given index.
      */
-    private boolean remove(@Shrinkable CopyOnWriteArrayList<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o, Object[] snapshot, int index) {
+    private boolean remove(@Modifiable @Shrinkable CopyOnWriteArrayList<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o, Object[] snapshot, int index) {
         synchronized (lock) {
             Object[] current = getArray();
             int len = current.length;
@@ -663,7 +663,7 @@ public class CopyOnWriteArrayList<E>
      * @throws IndexOutOfBoundsException if fromIndex or toIndex out of range
      *         ({@code fromIndex < 0 || toIndex > size() || toIndex < fromIndex})
      */
-    void removeRange(@GuardSatisfied @Shrinkable CopyOnWriteArrayList<E> this, int fromIndex, int toIndex) {
+    void removeRange(@GuardSatisfied @Modifiable @Shrinkable CopyOnWriteArrayList<E> this, int fromIndex, int toIndex) {
         synchronized (lock) {
             Object[] es = getArray();
             int len = es.length;
@@ -758,7 +758,7 @@ public class CopyOnWriteArrayList<E>
      *         or if the specified collection is null
      * @see #remove(Object)
      */
-    public boolean removeAll(@Shrinkable CopyOnWriteArrayList<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
+    public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable CopyOnWriteArrayList<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
         Objects.requireNonNull(c);
         return bulkRemove(e -> c.contains(e));
     }
@@ -779,7 +779,7 @@ public class CopyOnWriteArrayList<E>
      *         or if the specified collection is null
      * @see #remove(Object)
      */
-    public boolean retainAll(@GuardSatisfied @Shrinkable CopyOnWriteArrayList<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
+    public boolean retainAll(@GuardSatisfied @Modifiable @Shrinkable CopyOnWriteArrayList<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
         Objects.requireNonNull(c);
         return bulkRemove(e -> !c.contains(e));
     }
@@ -826,7 +826,7 @@ public class CopyOnWriteArrayList<E>
      * Removes all of the elements from this list.
      * The list will be empty after this call returns.
      */
-    public void clear(@GuardSatisfied @Shrinkable CopyOnWriteArrayList<E> this) {
+    public void clear(@GuardSatisfied @Modifiable @Shrinkable CopyOnWriteArrayList<E> this) {
         synchronized (lock) {
             setArray(new Object[0]);
         }
@@ -842,7 +842,7 @@ public class CopyOnWriteArrayList<E>
      * @throws NullPointerException if the specified collection is null
      * @see #add(Object)
      */
-    public boolean addAll(Collection<? extends E> c) {
+    public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, Collection<? extends E> c) {
         Object[] cs = (c.getClass() == CopyOnWriteArrayList.class) ?
             ((CopyOnWriteArrayList<?>)c).getArray() : c.toArray();
         if (cs.length == 0)
@@ -879,7 +879,7 @@ public class CopyOnWriteArrayList<E>
      * @throws NullPointerException if the specified collection is null
      * @see #add(int,Object)
      */
-    public boolean addAll(int index, Collection<? extends E> c) {
+    public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, int index, Collection<? extends E> c) {
         Object[] cs = c.toArray();
         synchronized (lock) {
             Object[] es = getArray();
@@ -976,7 +976,7 @@ public class CopyOnWriteArrayList<E>
         }
     }
 
-    public void replaceAll(UnaryOperator<E> operator) {
+    public void replaceAll(@GuardSatisfied @Modifiable ThisClass<E> this, UnaryOperator<E> operator) {
         synchronized (lock) {
             replaceAllRange(operator, 0, getArray().length);
         }
@@ -1237,7 +1237,7 @@ public class CopyOnWriteArrayList<E>
          * @throws UnsupportedOperationException always; {@code remove}
          *         is not supported by this iterator.
          */
-        public void remove() {
+        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
             throw new UnsupportedOperationException();
         }
 
@@ -1246,7 +1246,7 @@ public class CopyOnWriteArrayList<E>
          * @throws UnsupportedOperationException always; {@code set}
          *         is not supported by this iterator.
          */
-        public void set(E e) {
+        public void set(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
             throw new UnsupportedOperationException();
         }
 
@@ -1255,7 +1255,7 @@ public class CopyOnWriteArrayList<E>
          * @throws UnsupportedOperationException always; {@code add}
          *         is not supported by this iterator.
          */
-        public void add(E e) {
+        public void add(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
             throw new UnsupportedOperationException();
         }
 
@@ -1462,7 +1462,7 @@ public class CopyOnWriteArrayList<E>
             return !it.hasNext();
         }
 
-        public E set(int index, E element) {
+        public E set(@GuardSatisfied @Modifiable COWSubList<E> this, int index, E element) {
             synchronized (lock) {
                 rangeCheck(index);
                 checkForComodification();
@@ -1507,7 +1507,7 @@ public class CopyOnWriteArrayList<E>
         }
 
         @EnsuresNonEmpty("this")
-        public boolean add(E element) {
+        public boolean add(@GuardSatisfied @Modifiable COWSubList this, E element) {
             synchronized (lock) {
                 checkForComodification();
                 CopyOnWriteArrayList.this.add(offset + size, element);
@@ -1517,7 +1517,7 @@ public class CopyOnWriteArrayList<E>
             return true;
         }
 
-        public void add(int index, E element) {
+        public void add(@GuardSatisfied @Modifiable ThisClass<E> this, @IndexOrHigh({"this"}) int index, E element) {
             synchronized (lock) {
                 checkForComodification();
                 rangeCheckForAdd(index);
@@ -1527,17 +1527,17 @@ public class CopyOnWriteArrayList<E>
             }
         }
 
-        public void addFirst(E e) {
+        public void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
             add(0, e);
         }
 
-        public void addLast(E e) {
+        public void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
             synchronized (lock) {
                 add(size, e);
             }
         }
 
-        public boolean addAll(Collection<? extends E> c) {
+        public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, Collection<? extends E> c) {
             synchronized (lock) {
                 final Object[] oldArray = getArrayChecked();
                 boolean modified =
@@ -1547,7 +1547,7 @@ public class CopyOnWriteArrayList<E>
             }
         }
 
-        public boolean addAll(int index, Collection<? extends E> c) {
+        public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, int index, Collection<? extends E> c) {
             synchronized (lock) {
                 rangeCheckForAdd(index);
                 final Object[] oldArray = getArrayChecked();
@@ -1567,7 +1567,7 @@ public class CopyOnWriteArrayList<E>
             }
         }
 
-        public E remove(int index) {
+        public E remove(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, @IndexFor({"this"}) int index) {
             synchronized (lock) {
                 rangeCheck(index);
                 checkForComodification();
@@ -1578,7 +1578,7 @@ public class CopyOnWriteArrayList<E>
             }
         }
 
-        public E removeFirst() {
+        public E removeFirst(@GuardSatisfied @Modifiable ThisClass<E> this) {
             synchronized (lock) {
                 if (size == 0)
                     throw new NoSuchElementException();
@@ -1587,7 +1587,7 @@ public class CopyOnWriteArrayList<E>
             }
         }
 
-        public E removeLast() {
+        public E removeLast(@GuardSatisfied @Modifiable ThisClass<E> this) {
             synchronized (lock) {
                 if (size == 0)
                     throw new NoSuchElementException();
@@ -1596,7 +1596,7 @@ public class CopyOnWriteArrayList<E>
             }
         }
 
-        public boolean remove(@Nullable @UnknownSignedness Object o) {
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @Nullable @UnknownSignedness Object o) {
             synchronized (lock) {
                 checkForComodification();
                 int index = indexOf(o);
@@ -1645,7 +1645,7 @@ public class CopyOnWriteArrayList<E>
                 action.accept(elementAt(es, i));
         }
 
-        public void replaceAll(UnaryOperator<E> operator) {
+        public void replaceAll(@GuardSatisfied @Modifiable ThisClass<E> this, UnaryOperator<E> operator) {
             synchronized (lock) {
                 checkForComodification();
                 replaceAllRange(operator, offset, offset + size);
@@ -1661,12 +1661,12 @@ public class CopyOnWriteArrayList<E>
             }
         }
 
-        public boolean removeAll(Collection<? extends @NonNull @UnknownSignedness Object> c) {
+        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
             Objects.requireNonNull(c);
             return bulkRemove(e -> c.contains(e));
         }
 
-        public boolean retainAll(Collection<? extends @NonNull @UnknownSignedness Object> c) {
+        public boolean retainAll(@GuardSatisfied @Modifiable ThisClass<> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
             Objects.requireNonNull(c);
             return bulkRemove(e -> !c.contains(e));
         }
@@ -1743,15 +1743,15 @@ public class CopyOnWriteArrayList<E>
             return it.previousIndex() - offset;
         }
 
-        public void remove() {
+        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
             throw new UnsupportedOperationException();
         }
 
-        public void set(E e) {
+        public void set(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
             throw new UnsupportedOperationException();
         }
 
-        public void add(E e) {
+        public void add(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
             throw new UnsupportedOperationException();
         }
 
@@ -1800,7 +1800,7 @@ public class CopyOnWriteArrayList<E>
             }
             public boolean hasNext() { return it.hasPrevious(); }
             public E next() { return it.previous(); }
-            public void remove() { it.remove(); }
+            public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) { it.remove(); }
         }
 
         class DescendingListIterator implements ListIterator<E> {
@@ -1840,15 +1840,15 @@ public class CopyOnWriteArrayList<E>
                 return nextIndex() - 1;
             }
 
-            public void remove() {
+            public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
                 throw new UnsupportedOperationException();
             }
 
-            public void set(E e) {
+            public void set(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
                 throw new UnsupportedOperationException();
             }
 
-            public void add(E e) {
+            public void add(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
                 throw new UnsupportedOperationException();
             }
         }
@@ -1870,12 +1870,12 @@ public class CopyOnWriteArrayList<E>
 
         // ========== Collection ==========
 
-        public boolean add(E e) {
+        public boolean add(@GuardSatisfied @Modifiable Reversed<E> this, E e) {
             base.add(0, e);
             return true;
         }
 
-        public boolean addAll(Collection<? extends E> c) {
+        public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, Collection<? extends E> c) {
             @SuppressWarnings("unchecked")
             E[] es = (E[]) c.toArray();
             if (es.length > 0) {
@@ -1933,7 +1933,7 @@ public class CopyOnWriteArrayList<E>
             return StreamSupport.stream(spliterator(), true);
         }
 
-        public boolean remove(Object o) {
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, Object o) {
             synchronized (lock) {
                 int index = indexOf(o);
                 if (index == -1)
@@ -1943,11 +1943,11 @@ public class CopyOnWriteArrayList<E>
             }
         }
 
-        public boolean removeAll(Collection<?> c) {
+        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, Collection<?> c) {
             return base.removeAll(c);
         }
 
-        public boolean retainAll(Collection<?> c) {
+        public boolean retainAll(@GuardSatisfied @Modifiable ThisClass<> this, Collection<?> c) {
             return base.retainAll(c);
         }
 
@@ -1992,21 +1992,21 @@ public class CopyOnWriteArrayList<E>
 
         // ========== List ==========
 
-        public void add(int index, E element) {
+        public void add(@GuardSatisfied @Modifiable ThisClass<E> this, @IndexOrHigh({"this"}) int index, E element) {
             synchronized (lock) {
                 base.add(base.size() - index, element);
             }
         }
 
-        public void addFirst(E e) {
+        public void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
             base.add(e);
         }
 
-        public void addLast(E e) {
+        public void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
             base.add(0, e);
         }
 
-        public boolean addAll(int index, Collection<? extends E> c) {
+        public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, int index, Collection<? extends E> c) {
             @SuppressWarnings("unchecked")
             E[] es = (E[]) c.toArray();
             if (es.length > 0) {
@@ -2067,13 +2067,13 @@ public class CopyOnWriteArrayList<E>
             return new DescendingListIterator(index);
         }
 
-        public E remove(int index) {
+        public E remove(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, @IndexFor({"this"}) int index) {
             synchronized (lock) {
                 return base.remove(base.size() - index - 1);
             }
         }
 
-        public E removeFirst() {
+        public E removeFirst(@GuardSatisfied @Modifiable ThisClass<E> this) {
             synchronized (lock) {
                 int size = base.size();
                 if (size == 0)
@@ -2083,7 +2083,7 @@ public class CopyOnWriteArrayList<E>
             }
         }
 
-        public E removeLast() {
+        public E removeLast(@GuardSatisfied @Modifiable ThisClass<E> this) {
             synchronized (lock) {
                 if (base.size() == 0)
                     throw new NoSuchElementException();
@@ -2096,7 +2096,7 @@ public class CopyOnWriteArrayList<E>
             return base.removeIf(filter);
         }
 
-        public void replaceAll(UnaryOperator<E> operator) {
+        public void replaceAll(@GuardSatisfied @Modifiable ThisClass<E> this, UnaryOperator<E> operator) {
             base.replaceAll(operator);
         }
 
@@ -2104,7 +2104,7 @@ public class CopyOnWriteArrayList<E>
             base.sort(Collections.reverseOrder(c));
         }
 
-        public E set(int index, E element) {
+        public E set(@GuardSatisfied @Modifiable Reversed<E> this, int index, E element) {
             synchronized (lock) {
                 return base.set(base.size() - index - 1, element);
             }

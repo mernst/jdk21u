@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//scratch/mernst/clones/types/libraries/jdk-fork-mernst-branch-modifiable-checker/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

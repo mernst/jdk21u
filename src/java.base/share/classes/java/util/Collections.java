@@ -29,6 +29,10 @@ import org.checkerframework.checker.index.qual.GTENegativeOne;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.index.qual.PolyGrowShrink;
 import org.checkerframework.checker.lock.qual.GuardSatisfied;
+import org.checkerframework.checker.modifiable.qual.AnyModifiable;
+import org.checkerframework.checker.modifiable.qual.Modifiable;
+import org.checkerframework.checker.modifiable.qual.PolyModifiable;
+import org.checkerframework.checker.modifiable.qual.Unmodifiable;
 import org.checkerframework.checker.nonempty.qual.EnsuresNonEmpty;
 import org.checkerframework.checker.nonempty.qual.EnsuresNonEmptyIf;
 import org.checkerframework.checker.nonempty.qual.NonEmpty;
@@ -200,7 +204,7 @@ public class Collections {
      * @see List#sort(Comparator)
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public static <T> void sort(List<T> list, @Nullable Comparator<? super T> c) {
+    public static <T> void sort(@Modifiable List<T> list, @Nullable Comparator<? super T> c) {
         list.sort(c);
     }
 
@@ -237,7 +241,7 @@ public class Collections {
      *         with the elements of the list.
      */
     public static <T>
-    int binarySearch(List<? extends Comparable<? super T>> list, T key) {
+    int binarySearch(@AnyModifiable List<? extends Comparable<? super T>> list, T key) {
         if (list instanceof RandomAccess || list.size()<BINARYSEARCH_THRESHOLD)
             return Collections.indexedBinarySearch(list, key);
         else
@@ -341,7 +345,7 @@ public class Collections {
      *         elements of the list using this comparator.
      */
     @SuppressWarnings("unchecked")
-    public static <T> int binarySearch(List<? extends T> list, T key, @Nullable Comparator<? super T> c) {
+    public static <T> int binarySearch(@AnyModifiable List<? extends T> list, T key, @Nullable Comparator<? super T> c) {
         if (c==null)
             return binarySearch((List<? extends Comparable<? super T>>) list, key);
 
@@ -406,7 +410,7 @@ public class Collections {
      * @see    List#reversed List.reversed
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public static void reverse(@GuardSatisfied List<?> list) {
+    public static void reverse(@Modifiable @GuardSatisfied List<?> list) {
         int size = list.size();
         if (size < REVERSE_THRESHOLD || list instanceof RandomAccess) {
             for (int i=0, mid=size>>1, j=size-1; i<mid; i++, j--)
@@ -453,7 +457,7 @@ public class Collections {
      * @throws UnsupportedOperationException if the specified list or
      *         its list-iterator does not support the {@code set} operation.
      */
-    public static void shuffle(@GuardSatisfied List<?> list) {
+    public static void shuffle(@Modifiable @GuardSatisfied List<?> list) {
         Random rnd = r;
         if (rnd == null)
             r = rnd = new Random(); // harmless race.
@@ -505,7 +509,7 @@ public class Collections {
      * @since 21
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public static void shuffle(@GuardSatisfied List<?> list, RandomGenerator rnd) {
+    public static void shuffle(@Modifiable @GuardSatisfied List<?> list, RandomGenerator rnd) {
         int size = list.size();
         if (size < SHUFFLE_THRESHOLD || list instanceof RandomAccess) {
             for (int i=size; i>1; i--)
@@ -543,7 +547,7 @@ public class Collections {
      * @since 1.4
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public static void swap(@GuardSatisfied List<?> list, int i, int j) {
+    public static void swap(@Modifiable @GuardSatisfied List<?> list, int i, int j) {
         // instead of using a raw type here, it's possible to capture
         // the wildcard but it will require a call to a supplementary
         // private method
@@ -572,7 +576,7 @@ public class Collections {
      * @throws UnsupportedOperationException if the specified list or its
      *         list-iterator does not support the {@code set} operation.
      */
-    public static <T> void fill(@GuardSatisfied List<? super T> list, T obj) {
+    public static <T> void fill(@Modifiable @GuardSatisfied List<? super T> list, T obj) {
         int size = list.size();
 
         if (size < FILL_THRESHOLD || list instanceof RandomAccess) {
@@ -605,7 +609,7 @@ public class Collections {
      * @throws UnsupportedOperationException if the destination list's
      *         list-iterator does not support the {@code set} operation.
      */
-    public static <T> void copy(List<? super T> dest, List<? extends T> src) {
+    public static <T> void copy(@Modifiable List<? super T> dest, @AnyModifiable List<? extends T> src) {
         int srcSize = src.size();
         if (srcSize > dest.size())
             throw new IndexOutOfBoundsException("Source does not fit in dest");
@@ -648,7 +652,7 @@ public class Collections {
      */
     @Pure
     @StaticallyExecutable
-    public static <T extends Object & Comparable<? super T>> T min(Collection<? extends T> coll) {
+    public static <T extends Object & Comparable<? super T>> T min(@AnyModifiable Collection<? extends T> coll) {
         Iterator<? extends T> i = coll.iterator();
         T candidate = i.next();
 
@@ -686,7 +690,7 @@ public class Collections {
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Pure
     @StaticallyExecutable
-    public static <T> T min(Collection<? extends T> coll, @Nullable Comparator<? super T> comp) {
+    public static <T> T min(@AnyModifiable Collection<? extends T> coll, @Nullable Comparator<? super T> comp) {
         if (comp==null)
             return (T)min((Collection<Comparable<Object>>) coll);
 
@@ -725,7 +729,7 @@ public class Collections {
      */
     @Pure
     @StaticallyExecutable
-    public static <T extends Object & Comparable<? super T>> T max(Collection<? extends T> coll) {
+    public static <T extends Object & Comparable<? super T>> T max(@AnyModifiable Collection<? extends T> coll) {
         Iterator<? extends T> i = coll.iterator();
         T candidate = i.next();
 
@@ -763,7 +767,7 @@ public class Collections {
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Pure
     @StaticallyExecutable
-    public static <T> T max(Collection<? extends T> coll, @Nullable Comparator<? super T> comp) {
+    public static <T> T max(@AnyModifiable Collection<? extends T> coll, @Nullable Comparator<? super T> comp) {
         if (comp==null)
             return (T)max((Collection<Comparable<Object>>) coll);
 
@@ -833,7 +837,7 @@ public class Collections {
      *         its list-iterator does not support the {@code set} operation.
      * @since 1.4
      */
-    public static void rotate(@GuardSatisfied List<?> list, int distance) {
+    public static void rotate(@Modifiable @GuardSatisfied List<?> list, int distance) {
         if (list instanceof RandomAccess || list.size() < ROTATE_THRESHOLD)
             rotate1(list, distance);
         else
@@ -898,7 +902,7 @@ public class Collections {
      *         its list-iterator does not support the {@code set} operation.
      * @since  1.4
      */
-    public static <T> boolean replaceAll(List<T> list, @Nullable T oldVal, T newVal) {
+    public static <T> boolean replaceAll(@Modifiable List<T> list, @Nullable T oldVal, T newVal) {
         boolean result = false;
         int size = list.size();
         if (size < REPLACEALL_THRESHOLD || list instanceof RandomAccess) {
@@ -959,7 +963,7 @@ public class Collections {
      * @since  1.4
      */
     @Pure
-    public static @GTENegativeOne int indexOfSubList(@GuardSatisfied List<?> source, @GuardSatisfied List<?> target) {
+    public static @GTENegativeOne int indexOfSubList(@AnyModifiable @GuardSatisfied List<?> source, @AnyModifiable @GuardSatisfied List<?> target) {
         int sourceSize = source.size();
         int targetSize = target.size();
         int maxCandidate = sourceSize - targetSize;
@@ -1013,7 +1017,7 @@ public class Collections {
      * @since  1.4
      */
     @Pure
-    public static @GTENegativeOne int lastIndexOfSubList(@GuardSatisfied List<?> source, @GuardSatisfied List<?> target) {
+    public static @GTENegativeOne int lastIndexOfSubList(@AnyModifiable @GuardSatisfied List<?> source, @AnyModifiable @GuardSatisfied List<?> target) {
         int sourceSize = source.size();
         int targetSize = target.size();
         int maxCandidate = sourceSize - targetSize;
@@ -1077,7 +1081,7 @@ public class Collections {
      */
     @SuppressWarnings("unchecked")
     @SideEffectFree
-    public static <T> @PolyGrowShrink @PolyNonEmpty Collection<T> unmodifiableCollection(@PolyGrowShrink @PolyNonEmpty Collection<? extends T> c) {
+    public static <T> @Unmodifiable @PolyGrowShrink @PolyNonEmpty Collection<T> unmodifiableCollection(@AnyModifiable @PolyGrowShrink @PolyNonEmpty Collection<? extends T> c) {
         if (c.getClass() == UnmodifiableCollection.class) {
             return (Collection<T>) c;
         }
@@ -1125,7 +1129,7 @@ public class Collections {
                 public boolean hasNext() {return i.hasNext();}
                 @SideEffectsOnly("this")
                 public E next(/*@NonEmpty Iterator<E> this*/)          {return i.next();}
-                public void remove() {
+                public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
                     throw new UnsupportedOperationException();
                 }
                 @Override
@@ -1137,10 +1141,10 @@ public class Collections {
         }
 
         @EnsuresNonEmpty("this")
-        public boolean add(E e) {
+        public boolean add(@GuardSatisfied @Modifiable UnmodifiableCollection<E> this, E e) {
             throw new UnsupportedOperationException();
         }
-        public boolean remove(@UnknownSignedness Object o) {
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object o) {
             throw new UnsupportedOperationException();
         }
 
@@ -1148,16 +1152,16 @@ public class Collections {
         public boolean containsAll(Collection<? extends @UnknownSignedness Object> coll) {
             return c.containsAll(coll);
         }
-        public boolean addAll(Collection<? extends E> coll) {
+        public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, Collection<? extends E> coll) {
             throw new UnsupportedOperationException();
         }
-        public boolean removeAll(Collection<? extends @UnknownSignedness Object> coll) {
+        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, Collection<? extends @UnknownSignedness Object> coll) {
             throw new UnsupportedOperationException();
         }
-        public boolean retainAll(Collection<? extends @UnknownSignedness Object> coll) {
+        public boolean retainAll(@GuardSatisfied @Modifiable ThisClass<> this, Collection<? extends @UnknownSignedness Object> coll) {
             throw new UnsupportedOperationException();
         }
-        public void clear() {
+        public void clear(@GuardSatisfied @Modifiable @Shrinkable UnmodifiableCollection<E> this) {
             throw new UnsupportedOperationException();
         }
 
@@ -1244,11 +1248,11 @@ public class Collections {
             return new UnmodifiableSequencedCollection<>(sc().reversed());
         }
 
-        public void addFirst(E e) {
+        public void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
             throw new UnsupportedOperationException();
         }
 
-        public void addLast(E e) {
+        public void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
             throw new UnsupportedOperationException();
         }
 
@@ -1260,11 +1264,11 @@ public class Collections {
             return sc().getLast();
         }
 
-        public E removeFirst() {
+        public E removeFirst(@GuardSatisfied @Modifiable ThisClass<E> this) {
             throw new UnsupportedOperationException();
         }
 
-        public E removeLast() {
+        public E removeLast(@GuardSatisfied @Modifiable ThisClass<E> this) {
             throw new UnsupportedOperationException();
         }
     }
@@ -1285,7 +1289,7 @@ public class Collections {
      */
     @SuppressWarnings("unchecked")
     @SideEffectFree
-    public static <T> @PolyNonEmpty Set<T> unmodifiableSet(@PolyNonEmpty Set<? extends T> s) {
+    public static <T> @Unmodifiable @PolyNonEmpty Set<T> unmodifiableSet(@AnyModifiable @PolyNonEmpty Set<? extends T> s) {
         // Not checking for subclasses because of heap pollution and information leakage.
         if (s.getClass() == UnmodifiableSet.class) {
             return (Set<T>) s;
@@ -1373,7 +1377,7 @@ public class Collections {
      *        returned.
      * @return an unmodifiable view of the specified sorted set.
      */
-    public static <T> @PolyNonEmpty SortedSet<T> unmodifiableSortedSet(@PolyNonEmpty SortedSet<T> s) {
+    public static <T> @Unmodifiable @PolyNonEmpty SortedSet<T> unmodifiableSortedSet(@AnyModifiable @PolyNonEmpty SortedSet<T> s) {
         // Not checking for subclasses because of heap pollution and information leakage.
         if (s.getClass() == UnmodifiableSortedSet.class) {
             return s;
@@ -1428,7 +1432,7 @@ public class Collections {
      * @return an unmodifiable view of the specified navigable set
      * @since 1.8
      */
-    public static <T> @PolyNonEmpty NavigableSet<T> unmodifiableNavigableSet(@PolyNonEmpty NavigableSet<T> s) {
+    public static <T> @Unmodifiable @PolyNonEmpty NavigableSet<T> unmodifiableNavigableSet(@AnyModifiable @PolyNonEmpty NavigableSet<T> s) {
         if (s.getClass() == UnmodifiableNavigableSet.class) {
             return s;
         }
@@ -1523,7 +1527,7 @@ public class Collections {
      * @return an unmodifiable view of the specified list.
      */
     @SuppressWarnings("unchecked")
-    public static <T> @PolyGrowShrink @PolyNonEmpty List<T> unmodifiableList(@PolyGrowShrink @PolyNonEmpty List<? extends T> list) {
+    public static <T> @Unmodifiable @PolyGrowShrink @PolyNonEmpty List<T> unmodifiableList(@PolyGrowShrink @AnyModifiable @PolyNonEmpty List<? extends T> list) {
         if (list.getClass() == UnmodifiableList.class || list.getClass() == UnmodifiableRandomAccessList.class) {
            return (List<T>) list;
         }
@@ -1553,23 +1557,23 @@ public class Collections {
         public int hashCode()           {return list.hashCode();}
 
         public E get(int index) {return list.get(index);}
-        public E set(int index, E element) {
+        public E set(@GuardSatisfied @Modifiable UnmodifiableList<E> this, int index, E element) {
             throw new UnsupportedOperationException();
         }
-        public void add(int index, E element) {
+        public void add(@GuardSatisfied @Modifiable ThisClass<E> this, @IndexOrHigh({"this"}) int index, E element) {
             throw new UnsupportedOperationException();
         }
-        public E remove(int index) {
+        public E remove(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, @IndexFor({"this"} int index) {
             throw new UnsupportedOperationException();
         }
         public int indexOf(Object o)            {return list.indexOf(o);}
         public int lastIndexOf(Object o)        {return list.lastIndexOf(o);}
-        public boolean addAll(int index, Collection<? extends E> c) {
+        public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, int index, Collection<? extends E> c) {
             throw new UnsupportedOperationException();
         }
 
         @Override
-        public void replaceAll(UnaryOperator<E> operator) {
+        public void replaceAll(@GuardSatisfied @Modifiable ThisClass<E> this, UnaryOperator<E> operator) {
             throw new UnsupportedOperationException();
         }
         @Override
@@ -1596,13 +1600,13 @@ public class Collections {
                 public int nextIndex()       {return i.nextIndex();}
                 public int previousIndex()   {return i.previousIndex();}
 
-                public void remove() {
+                public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
                     throw new UnsupportedOperationException();
                 }
-                public void set(E e) {
+                public void set(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
                     throw new UnsupportedOperationException();
                 }
-                public void add(E e) {
+                public void add(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
                     throw new UnsupportedOperationException();
                 }
 
@@ -1684,7 +1688,7 @@ public class Collections {
      * @return an unmodifiable view of the specified map.
      */
     @SuppressWarnings("unchecked")
-    public static <K,V> @PolyNonEmpty Map<K,V> unmodifiableMap(@PolyNonEmpty Map<? extends K, ? extends V> m) {
+    public static <K,V> @Unmodifiable @PolyNonEmpty Map<K,V> unmodifiableMap(@AnyModifiable @PolyNonEmpty Map<? extends K, ? extends V> m) {
         // Not checking for subclasses because of heap pollution and information leakage.
         if (m.getClass() == UnmodifiableMap.class) {
             return (Map<K,V>) m;
@@ -1730,7 +1734,7 @@ public class Collections {
         public void putAll(Map<? extends K, ? extends V> m) {
             throw new UnsupportedOperationException();
         }
-        public void clear() {
+        public void clear(UnmodifiableMap<K,V> this) {
             throw new UnsupportedOperationException();
         }
 
@@ -1776,7 +1780,7 @@ public class Collections {
         }
 
         @Override
-        public void replaceAll(BiFunction<? super K, ? super V, ? extends V> function) {
+        public void replaceAll(@GuardSatisfied @Modifiable ThisClass<E> this, BiFunction<? super K, ? super V, ? extends V> function) {
             throw new UnsupportedOperationException();
         }
 
@@ -1787,7 +1791,7 @@ public class Collections {
         }
 
         @Override
-        public boolean remove(@UnknownSignedness Object key, @UnknownSignedness Object value) {
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object key, @UnknownSignedness Object value) {
             throw new UnsupportedOperationException();
         }
 
@@ -1935,7 +1939,7 @@ public class Collections {
                     public Map.Entry<K,V> next(/*@NonEmpty Iterator<Map.Entry<K,V>> this*/) {
                         return new UnmodifiableEntry<>(i.next());
                     }
-                    public void remove() {
+                    public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
                         throw new UnsupportedOperationException();
                     }
                     public void forEachRemaining(Consumer<? super Map.Entry<K, V>> action) {
@@ -2088,19 +2092,19 @@ public class Collections {
             return new UnmodifiableSequencedMap<>(sm().reversed());
         }
 
-        public Entry<K, V> pollFirstEntry() {
+        public Entry<K, V> pollFirstEntry(@GuardSatisfied @Modifiable ThisClass<E> this) {
             throw new UnsupportedOperationException();
         }
 
-        public Entry<K, V> pollLastEntry() {
+        public Entry<K, V> pollLastEntry(@GuardSatisfied @Modifiable ThisClass<E> this) {
             throw new UnsupportedOperationException();
         }
 
-        public V putFirst(K k, V v) {
+        public V putFirst(@GuardSatisfied @Modifiable ThisClass<K,V> this, K k, V v) {
             throw new UnsupportedOperationException();
         }
 
-        public V putLast(K k, V v) {
+        public V putLast(@GuardSatisfied @Modifiable ThisClass<K,V> this, K k, V v) {
             throw new UnsupportedOperationException();
         }
     }
@@ -2124,7 +2128,7 @@ public class Collections {
      * @return an unmodifiable view of the specified sorted map.
      */
     @SuppressWarnings("unchecked")
-    public static <K,V> @PolyNonEmpty SortedMap<K,V> unmodifiableSortedMap(@PolyNonEmpty SortedMap<K, ? extends V> m) {
+    public static <K,V> @Unmodifiable @PolyNonEmpty SortedMap<K,V> unmodifiableSortedMap(@AnyModifiable @PolyNonEmpty SortedMap<K, ? extends V> m) {
         // Not checking for subclasses because of heap pollution and information leakage.
         if (m.getClass() == UnmodifiableSortedMap.class) {
             return (SortedMap<K,V>) m;
@@ -2179,7 +2183,7 @@ public class Collections {
      * @since 1.8
      */
     @SuppressWarnings("unchecked")
-    public static <K,V> @PolyNonEmpty NavigableMap<K,V> unmodifiableNavigableMap(@PolyNonEmpty NavigableMap<K, ? extends V> m) {
+    public static <K,V> @Unmodifiable @PolyNonEmpty NavigableMap<K,V> unmodifiableNavigableMap(@AnyModifiable @PolyNonEmpty NavigableMap<K, ? extends V> m) {
         if (m.getClass() == UnmodifiableNavigableMap.class) {
             return (NavigableMap<K,V>) m;
         }
@@ -2288,9 +2292,9 @@ public class Collections {
                 : null;
         }
 
-        public Entry<K, V> pollFirstEntry()
+        public Entry<K, V> pollFirstEntry(@GuardSatisfied @Modifiable ThisClass<E> this)
                                  { throw new UnsupportedOperationException(); }
-        public Entry<K, V> pollLastEntry()
+        public Entry<K, V> pollLastEntry(@GuardSatisfied @Modifiable ThisClass<E> this)
                                  { throw new UnsupportedOperationException(); }
         @SideEffectFree
         public NavigableMap<K, V> descendingMap()
@@ -2351,11 +2355,11 @@ public class Collections {
      * @param  c the collection to be "wrapped" in a synchronized collection.
      * @return a synchronized view of the specified collection.
      */
-    public static <T> @PolyGrowShrink @PolyNonEmpty Collection<T> synchronizedCollection(@PolyGrowShrink @PolyNonEmpty Collection<T> c) {
+    public static <T> @PolyGrowShrink @PolyModifiable @PolyNonEmpty Collection<T> synchronizedCollection(@PolyGrowShrink @PolyModifiable @PolyNonEmpty Collection<T> c) {
         return new SynchronizedCollection<>(c);
     }
 
-    static <T> @PolyGrowShrink @PolyNonEmpty Collection<T> synchronizedCollection(@PolyGrowShrink @PolyNonEmpty Collection<T> c, Object mutex) {
+    static <T> @PolyGrowShrink @PolyModifiable @PolyNonEmpty Collection<T> synchronizedCollection(@PolyGrowShrink @PolyModifiable @PolyNonEmpty Collection<T> c, Object mutex) {
         return new SynchronizedCollection<>(c, mutex);
     }
 
@@ -2413,10 +2417,10 @@ public class Collections {
         }
 
         @EnsuresNonEmpty("this")
-        public boolean add(E e) {
+        public boolean add(@GuardSatisfied @Modifiable SynchronizedCollection<E> this, E e) {
             synchronized (mutex) {return c.add(e);}
         }
-        public boolean remove(@UnknownSignedness Object o) {
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object o) {
             synchronized (mutex) {return c.remove(o);}
         }
 
@@ -2424,16 +2428,16 @@ public class Collections {
         public boolean containsAll(Collection<? extends @UnknownSignedness Object> coll) {
             synchronized (mutex) {return c.containsAll(coll);}
         }
-        public boolean addAll(Collection<? extends E> coll) {
+        public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, Collection<? extends E> coll) {
             synchronized (mutex) {return c.addAll(coll);}
         }
-        public boolean removeAll(Collection<? extends @UnknownSignedness Object> coll) {
+        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, Collection<? extends @UnknownSignedness Object> coll) {
             synchronized (mutex) {return c.removeAll(coll);}
         }
-        public boolean retainAll(Collection<? extends @UnknownSignedness Object> coll) {
+        public boolean retainAll(@GuardSatisfied @Modifiable ThisClass<> this, Collection<? extends @UnknownSignedness Object> coll) {
             synchronized (mutex) {return c.retainAll(coll);}
         }
-        public void clear() {
+        public void clear(@GuardSatisfied @Modifiable @Shrinkable SynchronizedCollection<E> this) {
             synchronized (mutex) {c.clear();}
         }
         public String toString() {
@@ -2494,7 +2498,7 @@ public class Collections {
      * @param  s the set to be "wrapped" in a synchronized set.
      * @return a synchronized view of the specified set.
      */
-    public static <T> Set<T> synchronizedSet(Set<T> s) {
+    public static <T> @PolyModifiable Set<T> synchronizedSet(@PolyModifiable Set<T> s) {
         return new SynchronizedSet<>(s);
     }
 
@@ -2567,7 +2571,7 @@ public class Collections {
      * @param  s the sorted set to be "wrapped" in a synchronized sorted set.
      * @return a synchronized view of the specified sorted set.
      */
-    public static <T> SortedSet<T> synchronizedSortedSet(SortedSet<T> s) {
+    public static <T> @PolyModifiable SortedSet<T> synchronizedSortedSet(@PolyModifiable SortedSet<T> s) {
         return new SynchronizedSortedSet<>(s);
     }
 
@@ -2663,7 +2667,7 @@ public class Collections {
      * @return a synchronized view of the specified navigable set
      * @since 1.8
      */
-    public static <T> NavigableSet<T> synchronizedNavigableSet(NavigableSet<T> s) {
+    public static <T> @PolyModifiable NavigableSet<T> synchronizedNavigableSet(@PolyModifiable NavigableSet<T> s) {
         return new SynchronizedNavigableSet<>(s);
     }
 
@@ -2767,13 +2771,13 @@ public class Collections {
      * @param  list the list to be "wrapped" in a synchronized list.
      * @return a synchronized view of the specified list.
      */
-    public static <T> @PolyGrowShrink @PolyNonEmpty List<T> synchronizedList(@PolyGrowShrink @PolyNonEmpty List<T> list) {
+    public static <T> @PolyGrowShrink @PolyModifiable @PolyNonEmpty List<T> synchronizedList(@PolyGrowShrink @PolyModifiable @PolyNonEmpty List<T> list) {
         return (list instanceof RandomAccess ?
                 new SynchronizedRandomAccessList<>(list) :
                 new SynchronizedList<>(list));
     }
 
-    static <T> @PolyGrowShrink @PolyNonEmpty List<T> synchronizedList(@PolyGrowShrink @PolyNonEmpty List<T> list, Object mutex) {
+    static <T> @PolyGrowShrink @PolyModifiable @PolyNonEmpty List<T> synchronizedList(@PolyGrowShrink @PolyModifiable @PolyNonEmpty List<T> list, Object mutex) {
         return (list instanceof RandomAccess ?
                 new SynchronizedRandomAccessList<>(list, mutex) :
                 new SynchronizedList<>(list, mutex));
@@ -2812,13 +2816,13 @@ public class Collections {
         public E get(int index) {
             synchronized (mutex) {return list.get(index);}
         }
-        public E set(int index, E element) {
+        public E set(@GuardSatisfied @Modifiable SynchronizedList<E> this, int index, E element) {
             synchronized (mutex) {return list.set(index, element);}
         }
-        public void add(int index, E element) {
+        public void add(@GuardSatisfied @Modifiable ThisClass<E> this, @IndexOrHigh({"this"}) int index, E element) {
             synchronized (mutex) {list.add(index, element);}
         }
-        public E remove(int index) {
+        public E remove(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, @IndexFor({"this"}) int index) {
             synchronized (mutex) {return list.remove(index);}
         }
 
@@ -2829,7 +2833,7 @@ public class Collections {
             synchronized (mutex) {return list.lastIndexOf(o);}
         }
 
-        public boolean addAll(int index, Collection<? extends E> c) {
+        public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, int index, Collection<? extends E> c) {
             synchronized (mutex) {return list.addAll(index, c);}
         }
 
@@ -2849,7 +2853,7 @@ public class Collections {
         }
 
         @Override
-        public void replaceAll(UnaryOperator<E> operator) {
+        public void replaceAll(@GuardSatisfied @Modifiable ThisClass<E> this, UnaryOperator<E> operator) {
             synchronized (mutex) {list.replaceAll(operator);}
         }
         @Override
@@ -2944,7 +2948,7 @@ public class Collections {
      * @param  m the map to be "wrapped" in a synchronized map.
      * @return a synchronized view of the specified map.
      */
-    public static <K,V> Map<K,V> synchronizedMap(Map<K,V> m) {
+    public static <K,V> @PolyModifiable Map<K,V> synchronizedMap(@PolyModifiable Map<K,V> m) {
         return new SynchronizedMap<>(m);
     }
 
@@ -3059,7 +3063,7 @@ public class Collections {
             synchronized (mutex) {m.forEach(action);}
         }
         @Override
-        public void replaceAll(BiFunction<? super K, ? super V, ? extends V> function) {
+        public void replaceAll(@GuardSatisfied @Modifiable ThisClass<E> this, BiFunction<? super K, ? super V, ? extends V> function) {
             synchronized (mutex) {m.replaceAll(function);}
         }
         @EnsuresKeyFor(value={"#1"}, map={"this"})
@@ -3068,7 +3072,7 @@ public class Collections {
             synchronized (mutex) {return m.putIfAbsent(key, value);}
         }
         @Override
-        public boolean remove(@UnknownSignedness Object key, @UnknownSignedness Object value) {
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object key, @UnknownSignedness Object value) {
             synchronized (mutex) {return m.remove(key, value);}
         }
         @Override
@@ -3151,7 +3155,7 @@ public class Collections {
      * @param  m the sorted map to be "wrapped" in a synchronized sorted map.
      * @return a synchronized view of the specified sorted map.
      */
-    public static <K,V> SortedMap<K,V> synchronizedSortedMap(SortedMap<K,V> m) {
+    public static <K,V> @PolyModifiable SortedMap<K,V> synchronizedSortedMap(@PolyModifiable SortedMap<K,V> m) {
         return new SynchronizedSortedMap<>(m);
     }
 
@@ -3256,7 +3260,7 @@ public class Collections {
      * @return a synchronized view of the specified navigable map.
      * @since 1.8
      */
-    public static <K,V> NavigableMap<K,V> synchronizedNavigableMap(NavigableMap<K,V> m) {
+    public static <K,V> @PolyModifiable NavigableMap<K,V> synchronizedNavigableMap(@PolyModifiable NavigableMap<K,V> m) {
         return new SynchronizedNavigableMap<>(m);
     }
 
@@ -3304,9 +3308,9 @@ public class Collections {
                            { synchronized (mutex) { return nm.firstEntry(); } }
         public Entry<K, V> lastEntry()
                             { synchronized (mutex) { return nm.lastEntry(); } }
-        public Entry<K, V> pollFirstEntry()
+        public Entry<K, V> pollFirstEntry(@GuardSatisfied @Modifiable ThisClass<E> this)
                        { synchronized (mutex) { return nm.pollFirstEntry(); } }
-        public Entry<K, V> pollLastEntry()
+        public Entry<K, V> pollLastEntry(@GuardSatisfied @Modifiable ThisClass<E> this)
                         { synchronized (mutex) { return nm.pollLastEntry(); } }
 
         @SideEffectFree
@@ -3444,7 +3448,7 @@ public class Collections {
      * @return a dynamically typesafe view of the specified collection
      * @since 1.5
      */
-    public static <E> @PolyGrowShrink @PolyNonEmpty Collection<E> checkedCollection(@PolyGrowShrink @PolyNonEmpty Collection<E> c,
+    public static <E> @PolyGrowShrink @PolyModifiable @PolyNonEmpty Collection<E> checkedCollection(@PolyGrowShrink @PolyModifiable @PolyNonEmpty Collection<E> c,
                                                       Class<E> type) {
         return new CheckedCollection<>(c, type);
     }
@@ -3497,17 +3501,17 @@ public class Collections {
         public <T> @Nullable T[] toArray(@PolyNull T[] a)              { return c.toArray(a); }
         public <T> T[] toArray(IntFunction<T[]> f) { return c.toArray(f); }
         public String toString()                   { return c.toString(); }
-        public boolean remove(@UnknownSignedness Object o)            { return c.remove(o); }
-        public void clear()                        {        c.clear(); }
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object o)            { return c.remove(o); }
+        public void clear(@GuardSatisfied @Modifiable @Shrinkable Collections.CheckedCollection<E> this)                        {        c.clear(); }
 
         @Pure
         public boolean containsAll(Collection<? extends @UnknownSignedness Object> coll) {
             return c.containsAll(coll);
         }
-        public boolean removeAll(Collection<? extends @UnknownSignedness Object> coll) {
+        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, Collection<? extends @UnknownSignedness Object> coll) {
             return c.removeAll(coll);
         }
-        public boolean retainAll(Collection<? extends @UnknownSignedness Object> coll) {
+        public boolean retainAll(@GuardSatisfied @Modifiable ThisClass<> this, Collection<? extends @UnknownSignedness Object> coll) {
             return c.retainAll(coll);
         }
 
@@ -3522,7 +3526,7 @@ public class Collections {
                 public boolean hasNext() { return it.hasNext(); }
                 @SideEffectsOnly("this")
                 public E next(/*@NonEmpty Iterator<E> this*/)          { return it.next(); }
-                public void remove()     {        it.remove(); }
+                public void remove(@GuardSatisfied @Modifiable ThisClass<E> this)     {        it.remove(); }
                 public void forEachRemaining(Consumer<? super E> action) {
                     it.forEachRemaining(action);
                 }
@@ -3530,7 +3534,7 @@ public class Collections {
         }
 
         @EnsuresNonEmpty("this")
-        public boolean add(E e)          { return c.add(typeCheck(e)); }
+        public boolean add(@GuardSatisfied @Modifiable CheckedCollection<E> this, E e)          { return c.add(typeCheck(e)); }
 
         @SuppressWarnings("serial") // Conditionally serializable
         private E[] zeroLengthElementArray; // Lazily initialized
@@ -3563,7 +3567,7 @@ public class Collections {
             return (Collection<E>) Arrays.asList(a);
         }
 
-        public boolean addAll(Collection<? extends E> coll) {
+        public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, Collection<? extends E> coll) {
             // Doing things this way insulates us from concurrent changes
             // in the contents of coll and provides all-or-nothing
             // semantics (which we wouldn't get if we type-checked each
@@ -3614,7 +3618,7 @@ public class Collections {
      * @return a dynamically typesafe view of the specified queue
      * @since 1.8
      */
-    public static <E> @PolyGrowShrink @PolyNonEmpty Queue<E> checkedQueue(@PolyGrowShrink @PolyNonEmpty Queue<E> queue, Class<E> type) {
+    public static <E> @PolyGrowShrink @PolyModifiable @PolyNonEmpty Queue<E> checkedQueue(@PolyGrowShrink @PolyModifiable @PolyNonEmpty Queue<E> queue, Class<E> type) {
         return new CheckedQueue<>(queue, type);
     }
 
@@ -3643,7 +3647,7 @@ public class Collections {
         @Pure
         public E peek()                 {return queue.peek();}
         public E poll()                 {return queue.poll();}
-        public E remove()               {return queue.remove();}
+        public E remove(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this)               {return queue.remove();}
         public boolean offer(E e)       {return queue.offer(typeCheck(e));}
     }
 
@@ -3674,7 +3678,7 @@ public class Collections {
      * @return a dynamically typesafe view of the specified set
      * @since 1.5
      */
-    public static <E> Set<E> checkedSet(Set<E> s, Class<E> type) {
+    public static <E> @PolyModifiable Set<E> checkedSet(@PolyModifiable Set<E> s, Class<E> type) {
         return new CheckedSet<>(s, type);
     }
 
@@ -3721,7 +3725,7 @@ public class Collections {
      * @return a dynamically typesafe view of the specified sorted set
      * @since 1.5
      */
-    public static <E> SortedSet<E> checkedSortedSet(SortedSet<E> s,
+    public static <E> @PolyModifiable SortedSet<E> checkedSortedSet(@PolyModifiable SortedSet<E> s,
                                                     Class<E> type) {
         return new CheckedSortedSet<>(s, type);
     }
@@ -3786,7 +3790,7 @@ public class Collections {
      * @return a dynamically typesafe view of the specified navigable set
      * @since 1.8
      */
-    public static <E> NavigableSet<E> checkedNavigableSet(NavigableSet<E> s,
+    public static <E> @PolyModifiable NavigableSet<E> checkedNavigableSet(@PolyModifiable NavigableSet<E> s,
                                                     Class<E> type) {
         return new CheckedNavigableSet<>(s, type);
     }
@@ -3869,7 +3873,7 @@ public class Collections {
      * @return a dynamically typesafe view of the specified list
      * @since 1.5
      */
-    public static <E> @PolyGrowShrink @PolyNonEmpty List<E> checkedList(@PolyGrowShrink @PolyNonEmpty List<E> list, Class<E> type) {
+    public static <E> @PolyGrowShrink @PolyModifiable @PolyNonEmpty List<E> checkedList(@PolyGrowShrink @PolyModifiable @PolyNonEmpty List<E> list, Class<E> type) {
         return (list instanceof RandomAccess ?
                 new CheckedRandomAccessList<>(list, type) :
                 new CheckedList<>(list, type));
@@ -3895,19 +3899,19 @@ public class Collections {
         public boolean equals(Object o)  { return o == this || list.equals(o); }
         public int hashCode()            { return list.hashCode(); }
         public E get(int index)          { return list.get(index); }
-        public E remove(int index)       { return list.remove(index); }
+        public E remove(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, @IndexFor({"this"}) int index)       { return list.remove(index); }
         public int indexOf(Object o)     { return list.indexOf(o); }
         public int lastIndexOf(Object o) { return list.lastIndexOf(o); }
 
-        public E set(int index, E element) {
+        public E set(@GuardSatisfied @Modifiable CheckedList<E> this, int index, E element) {
             return list.set(index, typeCheck(element));
         }
 
-        public void add(int index, E element) {
+        public void add(@GuardSatisfied @Modifiable ThisClass<E> this, @IndexOrHigh({"this"}) int index, E element) {
             list.add(index, typeCheck(element));
         }
 
-        public boolean addAll(int index, Collection<? extends E> c) {
+        public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, int index, Collection<? extends E> c) {
             return list.addAll(index, checkedCopyOf(c));
         }
         public ListIterator<E> listIterator()   { return listIterator(0); }
@@ -3925,13 +3929,13 @@ public class Collections {
                 public E previous()          { return i.previous(); }
                 public int nextIndex()       { return i.nextIndex(); }
                 public int previousIndex()   { return i.previousIndex(); }
-                public void remove()         {        i.remove(); }
+                public void remove(@GuardSatisfied @Modifiable ThisClass<E> this)         {        i.remove(); }
 
-                public void set(E e) {
+                public void set(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
                     i.set(typeCheck(e));
                 }
 
-                public void add(E e) {
+                public void add(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
                     i.add(typeCheck(e));
                 }
 
@@ -3955,7 +3959,7 @@ public class Collections {
          *         already been replaced.
          */
         @Override
-        public void replaceAll(UnaryOperator<E> operator) {
+        public void replaceAll(@GuardSatisfied @Modifiable ThisClass<E> this, UnaryOperator<E> operator) {
             Objects.requireNonNull(operator);
             list.replaceAll(e -> typeCheck(operator.apply(e)));
         }
@@ -4021,7 +4025,7 @@ public class Collections {
      * @return a dynamically typesafe view of the specified map
      * @since 1.5
      */
-    public static <K, V> Map<K, V> checkedMap(Map<K, V> m,
+    public static <K, V> @PolyModifiable Map<K, V> checkedMap(@PolyModifiable Map<K, V> m,
                                               Class<K> keyType,
                                               Class<V> valueType) {
         return new CheckedMap<>(m, keyType, valueType);
@@ -4140,7 +4144,7 @@ public class Collections {
         }
 
         @Override
-        public void replaceAll(BiFunction<? super K, ? super V, ? extends V> function) {
+        public void replaceAll(@GuardSatisfied @Modifiable ThisClass<E> this, BiFunction<? super K, ? super V, ? extends V> function) {
             m.replaceAll(typeCheck(function));
         }
 
@@ -4152,7 +4156,7 @@ public class Collections {
         }
 
         @Override
-        public boolean remove(@UnknownSignedness Object key, @UnknownSignedness Object value) {
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object key, @UnknownSignedness Object value) {
             return m.remove(key, value);
         }
 
@@ -4226,13 +4230,13 @@ public class Collections {
             public boolean isEmpty() { return s.isEmpty(); }
             public String toString() { return s.toString(); }
             public int hashCode()    { return s.hashCode(); }
-            public void clear()      {        s.clear(); }
+            public void clear(@GuardSatisfied @Modifiable @Shrinkable CheckedEntrySet<K,V> this)      {        s.clear(); }
 
             @EnsuresNonEmpty("this")
-            public boolean add(Map.Entry<K, V> e) {
+            public boolean add(@GuardSatisfied @Modifiable CheckedEntrySet<K,V> this, Map.Entry<K, V> e) {
                 throw new UnsupportedOperationException();
             }
-            public boolean addAll(Collection<? extends Map.Entry<K, V>> coll) {
+            public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, Collection<? extends Map.Entry<K, V>> coll) {
                 throw new UnsupportedOperationException();
             }
 
@@ -4244,7 +4248,7 @@ public class Collections {
                     @EnsuresNonEmptyIf(result = true, expression = "this")
                     public boolean hasNext() { return i.hasNext(); }
                     @SideEffectsOnly("this")
-                    public void remove()     { i.remove(); }
+                    public void remove(@GuardSatisfied @Modifiable ThisClass<E> this)     { i.remove(); }
 
                     public Map.Entry<K,V> next(/*@NonEmpty Iterator<Map.Entry<K,V>> this*/) {
                         return checkedEntry(i.next(), valueType);
@@ -4321,17 +4325,17 @@ public class Collections {
                 return true;
             }
 
-            public boolean remove(@UnknownSignedness Object o) {
+            public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object o) {
                 if (!(o instanceof Map.Entry))
                     return false;
                 return s.remove(new AbstractMap.SimpleImmutableEntry
                                 <>((Map.Entry<?,?>)o));
             }
 
-            public boolean removeAll(Collection<? extends @UnknownSignedness Object> c) {
+            public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, Collection<? extends @UnknownSignedness Object> c) {
                 return batchRemove(c, false);
             }
-            public boolean retainAll(Collection<? extends @UnknownSignedness Object> c) {
+            public boolean retainAll(@GuardSatisfied @Modifiable ThisClass<> this, Collection<? extends @UnknownSignedness Object> c) {
                 return batchRemove(c, true);
             }
             private boolean batchRemove(Collection<?> c, boolean complement) {
@@ -4440,7 +4444,7 @@ public class Collections {
      * @return a dynamically typesafe view of the specified map
      * @since 1.5
      */
-    public static <K,V> SortedMap<K,V> checkedSortedMap(SortedMap<K, V> m,
+    public static <K,V> @PolyModifiable SortedMap<K,V> checkedSortedMap(@PolyModifiable SortedMap<K, V> m,
                                                         Class<K> keyType,
                                                         Class<V> valueType) {
         return new CheckedSortedMap<>(m, keyType, valueType);
@@ -4519,7 +4523,7 @@ public class Collections {
      * @return a dynamically typesafe view of the specified map
      * @since 1.8
      */
-    public static <K,V> NavigableMap<K,V> checkedNavigableMap(NavigableMap<K, V> m,
+    public static <K,V> @PolyModifiable NavigableMap<K,V> checkedNavigableMap(@PolyModifiable NavigableMap<K, V> m,
                                                         Class<K> keyType,
                                                         Class<V> valueType) {
         return new CheckedNavigableMap<>(m, keyType, valueType);
@@ -4597,14 +4601,14 @@ public class Collections {
                 : null;
         }
 
-        public Entry<K, V> pollFirstEntry() {
+        public Entry<K, V> pollFirstEntry(@GuardSatisfied @Modifiable ThisClass<E> this) {
             Entry<K,V> entry = nm.pollFirstEntry();
             return (null == entry)
                 ? null
                 : new CheckedMap.CheckedEntrySet.CheckedEntry<>(entry, valueType);
         }
 
-        public Entry<K, V> pollLastEntry() {
+        public Entry<K, V> pollLastEntry(@GuardSatisfied @Modifiable ThisClass<E> this) {
             Entry<K,V> entry = nm.pollLastEntry();
             return (null == entry)
                 ? null
@@ -4688,7 +4692,7 @@ public class Collections {
      */
     @SuppressWarnings("unchecked")
     @SideEffectFree
-    public static <T> Iterator<T> emptyIterator() {
+    public static <T> @Unmodifiable Iterator<T> emptyIterator() {
         return (Iterator<T>) EmptyIterator.EMPTY_ITERATOR;
     }
 
@@ -4701,7 +4705,7 @@ public class Collections {
         public boolean hasNext() { return false; }
         @SideEffectsOnly("this")
         public E next(@NonEmpty EmptyIterator<E> this) { throw new NoSuchElementException(); }
-        public void remove(@NonEmpty EmptyIterator<E> this) { throw new IllegalStateException(); }
+        public void remove(@GuardSatisfied @Modifiable @NonEmpty EmptyIterator<E> this) { throw new IllegalStateException(); }
         @Override
         public void forEachRemaining(Consumer<? super E> action) {
             Objects.requireNonNull(action);
@@ -4736,7 +4740,7 @@ public class Collections {
      */
     @SuppressWarnings("unchecked")
     @SideEffectFree
-    public static <T> ListIterator<T> emptyListIterator() {
+    public static <T> @Unmodifiable ListIterator<T> emptyListIterator() {
         return (ListIterator<T>) EmptyListIterator.EMPTY_ITERATOR;
     }
 
@@ -4751,8 +4755,8 @@ public class Collections {
         public E previous() { throw new NoSuchElementException(); }
         public int nextIndex()     { return 0; }
         public int previousIndex() { return -1; }
-        public void set(E e) { throw new IllegalStateException(); }
-        public void add(E e) { throw new UnsupportedOperationException(); }
+        public void set(@GuardSatisfied @Modifiable ThisClass<E> this, E e) { throw new IllegalStateException(); }
+        public void add(@GuardSatisfied @Modifiable ThisClass<E> this, E e) { throw new UnsupportedOperationException(); }
     }
 
     /**
@@ -4774,7 +4778,7 @@ public class Collections {
      */
     @SuppressWarnings("unchecked")
     @SideEffectFree
-    public static <T> Enumeration<T> emptyEnumeration() {
+    public static <T> @Unmodifiable Enumeration<T> emptyEnumeration() {
         return (Enumeration<T>) EmptyEnumeration.EMPTY_ENUMERATION;
     }
 
@@ -4794,7 +4798,7 @@ public class Collections {
      * @see #emptySet()
      */
     @SuppressWarnings("rawtypes")
-    public static final Set EMPTY_SET = new EmptySet<>();
+    public static final @Unmodifiable Set EMPTY_SET = new EmptySet<>();
 
     /**
      * Returns an empty set (immutable).  This set is serializable.
@@ -4817,14 +4821,14 @@ public class Collections {
      */
     @SuppressWarnings("unchecked")
     @SideEffectFree
-    public static final <T> Set<T> emptySet() {
+    public static final <T> @Unmodifiable Set<T> emptySet() {
         return (Set<T>) EMPTY_SET;
     }
 
     /**
      * @serial include
      */
-    private static class EmptySet<E>
+    private static @Unmodifiable class EmptySet<E>
         extends AbstractSet<E>
         implements Serializable
     {
@@ -4839,7 +4843,7 @@ public class Collections {
         @Pure
         @EnsuresNonEmptyIf(result = false, expression = "this")
         public boolean isEmpty() {return true;}
-        public void clear() {}
+        public void clear(@GuardSatisfied @Modifiable @Shrinkable EmptySet<E> this) {}
 
         @Pure
         @EnsuresNonEmptyIf(result = true, expression = "this")
@@ -4901,7 +4905,7 @@ public class Collections {
      */
     @SuppressWarnings("unchecked")
     @SideEffectFree
-    public static <E> SortedSet<E> emptySortedSet() {
+    public static <E> @Unmodifiable SortedSet<E> emptySortedSet() {
         return (SortedSet<E>) UnmodifiableNavigableSet.EMPTY_NAVIGABLE_SET;
     }
 
@@ -4923,7 +4927,7 @@ public class Collections {
      */
     @SuppressWarnings("unchecked")
     @SideEffectFree
-    public static <E> NavigableSet<E> emptyNavigableSet() {
+    public static <E> @Unmodifiable NavigableSet<E> emptyNavigableSet() {
         return (NavigableSet<E>) UnmodifiableNavigableSet.EMPTY_NAVIGABLE_SET;
     }
 
@@ -4933,7 +4937,7 @@ public class Collections {
      * @see #emptyList()
      */
     @SuppressWarnings("rawtypes")
-    public static final List EMPTY_LIST = new EmptyList<>();
+    public static final @Unmodifiable List EMPTY_LIST = new EmptyList<>();
 
     /**
      * Returns an empty list (immutable).  This list is serializable.
@@ -4957,14 +4961,14 @@ public class Collections {
      */
     @SuppressWarnings("unchecked")
     @SideEffectFree
-    public static final <T> List<T> emptyList() {
+    public static final <T> @Unmodifiable List<T> emptyList() {
         return (List<T>) EMPTY_LIST;
     }
 
     /**
      * @serial include
      */
-    private static class EmptyList<E>
+    private static @Unmodifiable class EmptyList<E>
         extends AbstractList<E>
         implements RandomAccess, Serializable {
         @java.io.Serial
@@ -4983,7 +4987,7 @@ public class Collections {
         @Pure
         @EnsuresNonEmptyIf(result = false, expression = "this")
         public boolean isEmpty() {return true;}
-        public void clear() {}
+        public void clear(@GuardSatisfied @Modifiable @Shrinkable EmptyList<E> this) {}
 
         @Pure
         @EnsuresNonEmptyIf(result = true, expression = "this")
@@ -5017,7 +5021,7 @@ public class Collections {
             return false;
         }
         @Override
-        public void replaceAll(UnaryOperator<E> operator) {
+        public void replaceAll(@GuardSatisfied @Modifiable ThisClass<E> this, UnaryOperator<E> operator) {
             Objects.requireNonNull(operator);
         }
         @Override
@@ -5048,7 +5052,7 @@ public class Collections {
      * @since 1.3
      */
     @SuppressWarnings("rawtypes")
-    public static final Map EMPTY_MAP = new EmptyMap<>();
+    public static final @Unmodifiable Map EMPTY_MAP = new EmptyMap<>();
 
     /**
      * Returns an empty map (immutable).  This map is serializable.
@@ -5070,7 +5074,7 @@ public class Collections {
      */
     @SuppressWarnings("unchecked")
     @SideEffectFree
-    public static final <K,V> Map<K,V> emptyMap() {
+    public static final <K,V> @Unmodifiable Map<K,V> emptyMap() {
         return (Map<K,V>) EMPTY_MAP;
     }
 
@@ -5092,7 +5096,7 @@ public class Collections {
      */
     @SuppressWarnings("unchecked")
     @SideEffectFree
-    public static final <K,V> SortedMap<K,V> emptySortedMap() {
+    public static final <K,V> @Unmodifiable SortedMap<K,V> emptySortedMap() {
         return (SortedMap<K,V>) UnmodifiableNavigableMap.EMPTY_NAVIGABLE_MAP;
     }
 
@@ -5114,7 +5118,7 @@ public class Collections {
      */
     @SuppressWarnings("unchecked")
     @SideEffectFree
-    public static final <K,V> NavigableMap<K,V> emptyNavigableMap() {
+    public static final <K,V> @Unmodifiable NavigableMap<K,V> emptyNavigableMap() {
         return (NavigableMap<K,V>) UnmodifiableNavigableMap.EMPTY_NAVIGABLE_MAP;
     }
 
@@ -5164,7 +5168,7 @@ public class Collections {
         }
 
         @Override
-        public void replaceAll(BiFunction<? super K, ? super V, ? extends V> function) {
+        public void replaceAll(@GuardSatisfied @Modifiable ThisClass<E> this, BiFunction<? super K, ? super V, ? extends V> function) {
             Objects.requireNonNull(function);
         }
 
@@ -5175,7 +5179,7 @@ public class Collections {
         }
 
         @Override
-        public boolean remove(@UnknownSignedness Object key, @UnknownSignedness Object value) {
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object key, @UnknownSignedness Object value) {
             throw new UnsupportedOperationException();
         }
 
@@ -5230,7 +5234,7 @@ public class Collections {
      * @param o the sole object to be stored in the returned set.
      * @return an immutable set containing only the specified object.
      */
-    public static <T> Set<T> singleton(T o) {
+    public static <T> @Unmodifiable Set<T> singleton(T o) {
         return new SingletonSet<>(o);
     }
 
@@ -5250,7 +5254,7 @@ public class Collections {
                 }
                 throw new NoSuchElementException();
             }
-            public void remove() {
+            public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
                 throw new UnsupportedOperationException();
             }
             @Override
@@ -5366,7 +5370,7 @@ public class Collections {
      * @return an immutable list containing only the specified object.
      * @since 1.3
      */
-    public static <T> @ArrayLen(1) List<T> singletonList(T o) {
+    public static <T> @Unmodifiable @ArrayLen(1) List<T> singletonList(T o) {
         return new SingletonList<>(o);
     }
 
@@ -5415,7 +5419,7 @@ public class Collections {
             throw new UnsupportedOperationException();
         }
         @Override
-        public void replaceAll(UnaryOperator<E> operator) {
+        public void replaceAll(@GuardSatisfied @Modifiable ThisClass<E> this, UnaryOperator<E> operator) {
             throw new UnsupportedOperationException();
         }
         @Override
@@ -5444,7 +5448,7 @@ public class Collections {
      *         mapping.
      * @since 1.3
      */
-    public static <K,V> Map<K,V> singletonMap(K key, V value) {
+    public static <K,V> @Unmodifiable Map<K,V> singletonMap(K key, V value) {
         return new SingletonMap<>(key, value);
     }
 
@@ -5516,7 +5520,7 @@ public class Collections {
         }
 
         @Override
-        public void replaceAll(BiFunction<? super K, ? super V, ? extends V> function) {
+        public void replaceAll(@GuardSatisfied @Modifiable ThisClass<E> this, BiFunction<? super K, ? super V, ? extends V> function) {
             throw new UnsupportedOperationException();
         }
 
@@ -5527,7 +5531,7 @@ public class Collections {
         }
 
         @Override
-        public boolean remove(@UnknownSignedness Object key, @UnknownSignedness Object value) {
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object key, @UnknownSignedness Object value) {
             throw new UnsupportedOperationException();
         }
 
@@ -5590,7 +5594,7 @@ public class Collections {
      * @see    List#addAll(Collection)
      * @see    List#addAll(int, Collection)
      */
-    public static <T> List<T> nCopies(@NonNegative int n, T o) {
+    public static <T> @Unmodifiable List<T> nCopies(@NonNegative int n, T o) {
         if (n < 0)
             throw new IllegalArgumentException("List length = " + n);
         return new CopiesList<>(n, o);
@@ -5973,7 +5977,7 @@ public class Collections {
      * @throws NullPointerException if {@code c} is null
      * @since 1.5
      */
-    public static @NonNegative int frequency(Collection<?> c, @Nullable Object o) {
+    public static @NonNegative int frequency(@AnyModifiable Collection<?> c, @Nullable Object o) {
         int result = 0;
         if (o == null) {
             for (Object e : c)
@@ -6025,7 +6029,7 @@ public class Collections {
      * (<a href="Collection.html#optional-restrictions">optional</a>)
      * @since 1.5
      */
-    public static boolean disjoint(Collection<?> c1, Collection<?> c2) {
+    public static boolean disjoint(@AnyModifiable Collection<?> c1, @AnyModifiable Collection<?> c2) {
         // The collection to be used for contains(). Preference is given to
         // the collection who's contains() has lower O() complexity.
         Collection<?> contains = c2;
@@ -6104,7 +6108,7 @@ public class Collections {
      * @since 1.5
      */
     @SafeVarargs
-    public static <T> boolean addAll(@GuardSatisfied Collection<? super T> c, T... elements) {
+    public static <T> boolean addAll(@Modifiable @GuardSatisfied @Modifiable Collection<? super T> c, T... elements) {
         boolean result = false;
         for (T element : elements)
             result |= c.add(element);
@@ -6143,7 +6147,7 @@ public class Collections {
      * @since 1.6
      */
     @SideEffectFree
-    public static <E> Set<E> newSetFromMap(Map<E, Boolean> map) {
+    public static <E> @PolyModifiable Set<E> newSetFromMap(@PolyModifiable Map<E, Boolean> map) {
         if (! map.isEmpty()) // implicit null check
             throw new IllegalArgumentException("Map is non-empty");
         return new SetFromMap<>(map);
@@ -6164,7 +6168,7 @@ public class Collections {
             s = map.keySet();
         }
 
-        public void clear()               {        m.clear(); }
+        public void clear(@GuardSatisfied @Modifiable @Shrinkable SetFromMap<E> this)               {        m.clear(); }
         @Pure
         public @NonNegative int size()                 { return m.size(); }
         @Pure
@@ -6173,9 +6177,9 @@ public class Collections {
         @Pure
         @EnsuresNonEmptyIf(result = true, expression = "this")
         public boolean contains(@UnknownSignedness Object o) { return m.containsKey(o); }
-        public boolean remove(@UnknownSignedness Object o)   { return m.remove(o) != null; }
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object o)   { return m.remove(o) != null; }
         @EnsuresNonEmpty("this")
-        public boolean add(E e) { return m.put(e, Boolean.TRUE) == null; }
+        public boolean add(@GuardSatisfied @Modifiable SetFromMap<E> this, E e) { return m.put(e, Boolean.TRUE) == null; }
         @SideEffectFree
         public Iterator<E> iterator()     { return s.iterator(); }
         @SideEffectFree
@@ -6187,8 +6191,8 @@ public class Collections {
         public boolean equals(Object o)   { return o == this || s.equals(o); }
         @Pure
         public boolean containsAll(Collection<? extends @UnknownSignedness Object> c) {return s.containsAll(c);}
-        public boolean removeAll(Collection<? extends @UnknownSignedness Object> c)   {return s.removeAll(c);}
-        public boolean retainAll(Collection<? extends @UnknownSignedness Object> c)   {return s.retainAll(c);}
+        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, Collection<? extends @UnknownSignedness Object> c)   {return s.removeAll(c);}
+        public boolean retainAll(@GuardSatisfied @Modifiable @Shrinkable ThisClass<> this, Collection<? extends @UnknownSignedness Object> c)   {return s.retainAll(c);}
         // addAll is the only inherited implementation
 
         // Override default methods in Collection
@@ -6295,12 +6299,12 @@ public class Collections {
         // serializable.
         public SequencedSet<E> reversed() { return new SequencedSetFromMap<>(map().reversed()); }
 
-        public void addFirst(E e) { map().putFirst(e, Boolean.TRUE); }
-        public void addLast(E e)  { map().putLast(e, Boolean.TRUE); }
+        public void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, E e) { map().putFirst(e, Boolean.TRUE); }
+        public void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, E e)  { map().putLast(e, Boolean.TRUE); }
         public E getFirst()       { return nsee(map().firstEntry()); }
         public E getLast()        { return nsee(map().lastEntry()); }
-        public E removeFirst()    { return nsee(map().pollFirstEntry()); }
-        public E removeLast()     { return nsee(map().pollLastEntry()); }
+        public E removeFirst(@GuardSatisfied @Modifiable ThisClass<E> this)    { return nsee(map().pollFirstEntry()); }
+        public E removeLast(@GuardSatisfied @Modifiable ThisClass<E> this)     { return nsee(map().pollLastEntry()); }
 
         @java.io.Serial
         private static final long serialVersionUID = -3943479744841433802L;
@@ -6329,7 +6333,7 @@ public class Collections {
      * @return the queue
      * @since  1.6
      */
-    public static <T> @PolyGrowShrink @PolyNonEmpty Queue<T> asLifoQueue(@PolyGrowShrink @PolyNonEmpty Deque<T> deque) {
+    public static <T> @PolyGrowShrink @PolyModifiable @PolyNonEmpty Queue<T> asLifoQueue(@PolyGrowShrink @PolyModifiable @PolyNonEmpty Deque<T> deque) {
         return new AsLIFOQueue<>(Objects.requireNonNull(deque));
     }
 
@@ -6344,14 +6348,14 @@ public class Collections {
         private final Deque<E> q;
         AsLIFOQueue(Deque<E> q)                     { this.q = q; }
         @EnsuresNonEmpty("this")
-        public boolean add(E e)                     { q.addFirst(e); return true; }
+        public boolean add(@GuardSatisfied @Modifiable AsLIFOQueue<E> this, E e)                     { q.addFirst(e); return true; }
         public boolean offer(E e)                   { return q.offerFirst(e); }
         public E poll()                             { return q.pollFirst(); }
-        public E remove()                           { return q.removeFirst(); }
+        public E remove(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this)                           { return q.removeFirst(); }
         @Pure
         public E peek()                             { return q.peekFirst(); }
         public E element()                          { return q.getFirst(); }
-        public void clear()                         {        q.clear(); }
+        public void clear(@GuardSatisfied @Modifiable @Shrinkable AsLIFOQueue<E> this)                         {        q.clear(); }
         @Pure
         public @NonNegative int size()                           { return q.size(); }
         @Pure
@@ -6360,7 +6364,7 @@ public class Collections {
         @Pure
         @EnsuresNonEmptyIf(result = true, expression = "this")
         public boolean contains(@UnknownSignedness Object o)           { return q.contains(o); }
-        public boolean remove(@UnknownSignedness Object o)             { return q.remove(o); }
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object o)             { return q.remove(o); }
         @SideEffectFree
         public Iterator<E> iterator()               { return q.iterator(); }
         @SideEffectFree
@@ -6371,8 +6375,8 @@ public class Collections {
         public String toString()                    { return q.toString(); }
         @Pure
         public boolean containsAll(Collection<? extends @UnknownSignedness Object> c) { return q.containsAll(c); }
-        public boolean removeAll(Collection<? extends @UnknownSignedness Object> c)   { return q.removeAll(c); }
-        public boolean retainAll(Collection<? extends @UnknownSignedness Object> c)   { return q.retainAll(c); }
+        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, Collection<? extends @UnknownSignedness Object> c)   { return q.removeAll(c); }
+        public boolean retainAll(@GuardSatisfied @Modifiable @Shrinkable ThisClass<> this, Collection<? extends @UnknownSignedness Object> c)   { return q.retainAll(c); }
         // We use inherited addAll; forwarding addAll would be wrong
 
         // Override default methods in Collection

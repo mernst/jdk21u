@@ -237,7 +237,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      *         element prevents it from being added to this deque
      */
     @EnsuresNonEmpty("this")
-    void addFirst(@GuardSatisfied Deque<E> this, E e);
+    void addFirst(@GuardSatisfied @Modifiable Deque<E> this, E e);
 
     /**
      * Inserts the specified element at the end of this deque if it is
@@ -259,7 +259,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      *         element prevents it from being added to this deque
      */
     @EnsuresNonEmpty("this")
-    void addLast(@GuardSatisfied Deque<E> this, E e);
+    void addLast(@GuardSatisfied @Modifiable Deque<E> this, E e);
 
     /**
      * Inserts the specified element at the front of this deque unless it would
@@ -305,7 +305,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      * @return the head of this deque
      * @throws NoSuchElementException if this deque is empty
      */
-    E removeFirst(@GuardSatisfied @NonEmpty @Shrinkable Deque<E> this);
+    E removeFirst(@GuardSatisfied @NonEmpty @Modifiable @Shrinkable Deque<E> this);
 
     /**
      * Retrieves and removes the last element of this deque.  This method
@@ -315,7 +315,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      * @return the tail of this deque
      * @throws NoSuchElementException if this deque is empty
      */
-    E removeLast(@GuardSatisfied @NonEmpty @Shrinkable Deque<E> this);
+    E removeLast(@GuardSatisfied @NonEmpty @Modifiable @Shrinkable Deque<E> this);
 
     /**
      * Retrieves and removes the first element of this deque,
@@ -323,7 +323,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      *
      * @return the head of this deque, or {@code null} if this deque is empty
      */
-    @Nullable E pollFirst(@GuardSatisfied @Shrinkable Deque<E> this);
+    @Nullable E pollFirst(@GuardSatisfied @Modifiable @Shrinkable Deque<E> this);
 
     /**
      * Retrieves and removes the last element of this deque,
@@ -331,7 +331,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      *
      * @return the tail of this deque, or {@code null} if this deque is empty
      */
-    @Nullable E pollLast(@GuardSatisfied @Shrinkable Deque<E> this);
+    @Nullable E pollLast(@GuardSatisfied @Modifiable @Shrinkable Deque<E> this);
 
     /**
      * Retrieves, but does not remove, the first element of this deque.
@@ -389,7 +389,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      *         deque does not permit null elements
      *         ({@linkplain Collection##optional-restrictions optional})
      */
-    boolean removeFirstOccurrence(@GuardSatisfied @Shrinkable Deque<E> this, Object o);
+    boolean removeFirstOccurrence(@GuardSatisfied @AnyModifiable @Shrinkable Deque<E> this, Object o);
 
     /**
      * Removes the last occurrence of the specified element from this deque.
@@ -408,7 +408,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      *         deque does not permit null elements
      *         ({@linkplain Collection##optional-restrictions optional})
      */
-    boolean removeLastOccurrence(@GuardSatisfied @Shrinkable Deque<E> this, Object o);
+    boolean removeLastOccurrence(@GuardSatisfied @AnyModifiable @Shrinkable Deque<E> this, Object o);
 
     // *** Queue methods ***
 
@@ -435,7 +435,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      *         element prevents it from being added to this deque
      */
     @EnsuresNonEmpty("this")
-    boolean add(@GuardSatisfied Deque<E> this, E e);
+    boolean add(@GuardSatisfied @Modifiable Deque<E> this, E e);
 
     /**
      * Inserts the specified element into the queue represented by this deque
@@ -471,7 +471,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      * @return the head of the queue represented by this deque
      * @throws NoSuchElementException if this deque is empty
      */
-    E remove(@GuardSatisfied @NonEmpty @Shrinkable Deque<E> this);
+    E remove(@GuardSatisfied @NonEmpty @Modifiable @Shrinkable Deque<E> this);
 
     /**
      * Retrieves and removes the head of the queue represented by this deque
@@ -483,7 +483,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      * @return the first element of this deque, or {@code null} if
      *         this deque is empty
      */
-    @Nullable E poll(@GuardSatisfied @Shrinkable Deque<E> this);
+    @Nullable E poll(@GuardSatisfied @Modifiable @Shrinkable Deque<E> this);
 
     /**
      * Retrieves, but does not remove, the head of the queue represented by
@@ -534,7 +534,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      * @throws IllegalArgumentException if some property of an element of the
      *         specified collection prevents it from being added to this deque
      */
-    boolean addAll(Collection<? extends E> c);
+    boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, Collection<? extends E> c);
 
     // *** Stack methods ***
 
@@ -592,7 +592,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      *         deque does not permit null elements
      *         ({@linkplain Collection##optional-restrictions optional})
      */
-    boolean remove(@GuardSatisfied @Shrinkable Deque<E> this, @UnknownSignedness Object o);
+    boolean remove(@GuardSatisfied @AnyModifiable @Shrinkable Deque<E> this, @UnknownSignedness Object o);
 
     /**
      * Returns {@code true} if this deque contains the specified element.
@@ -610,7 +610,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      */
     @Pure
     @EnsuresNonEmptyIf(result = true, expression = "this")
-    boolean contains(@GuardSatisfied Deque<E> this, @UnknownSignedness Object o);
+    boolean contains(@GuardSatisfied @AnyModifiable Deque<E> this, @UnknownSignedness Object o);
 
     /**
      * Returns the number of elements in this deque.

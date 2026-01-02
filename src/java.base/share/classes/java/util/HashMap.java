@@ -1023,7 +1023,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
         @Pure
         @EnsuresNonEmptyIf(result = true, expression = "this")
         public final boolean contains(@Nullable @UnknownSignedness Object o) { return containsKey(o); }
-        public final boolean remove(@Nullable @UnknownSignedness Object key) {
+        public final boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @Nullable @UnknownSignedness Object key) {
             return removeNode(hash(key), key, null, false, true) != null;
         }
         @SideEffectFree
@@ -1157,7 +1157,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
             Node<K,V> candidate = getNode(key);
             return candidate != null && candidate.equals(e);
         }
-        public final boolean remove(@Nullable @UnknownSignedness Object o) {
+        public final boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @Nullable @UnknownSignedness Object o) {
             if (o instanceof Map.Entry<?, ?> e) {
                 Object key = e.getKey();
                 Object value = e.getValue();
@@ -1201,7 +1201,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
     }
 
     @Override
-    public boolean remove(@GuardSatisfied @Nullable @UnknownSignedness Object key, @GuardSatisfied @Nullable @UnknownSignedness Object value) {
+    public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @GuardSatisfied @Nullable @UnknownSignedness Object key, @GuardSatisfied @Nullable @UnknownSignedness Object value) {
         return removeNode(hash(key), key, value, true, true) != null;
     }
 
@@ -1663,7 +1663,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
             return e;
         }
 
-        public final void remove() {
+        public final void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
             Node<K,V> p = current;
             if (p == null)
                 throw new IllegalStateException();

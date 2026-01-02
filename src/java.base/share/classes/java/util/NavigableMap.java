@@ -251,7 +251,7 @@ public interface NavigableMap<K,V> extends SortedMap<K,V> {
      * @return the removed first entry of this map,
      *         or {@code null} if this map is empty
      */
-    Map.@Nullable Entry<K,V> pollFirstEntry(@GuardSatisfied NavigableMap<K, V> this);
+    Map.@Nullable Entry<K,V> pollFirstEntry(@GuardSatisfied @Modifiable NavigableMap<K, V> this);
 
     /**
      * Removes and returns a key-value mapping associated with
@@ -260,7 +260,7 @@ public interface NavigableMap<K,V> extends SortedMap<K,V> {
      * @return the removed last entry of this map,
      *         or {@code null} if this map is empty
      */
-    Map.@Nullable Entry<K,V> pollLastEntry(@GuardSatisfied NavigableMap<K, V> this);
+    Map.@Nullable Entry<K,V> pollLastEntry(@GuardSatisfied @Modifiable NavigableMap<K, V> this);
 
     /**
      * Returns a reverse order view of the mappings contained in this map.

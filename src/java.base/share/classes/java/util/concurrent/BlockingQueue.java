@@ -208,7 +208,7 @@ public interface BlockingQueue<E extends @NonNull Object> extends Queue<E> {
      *         element prevents it from being added to this queue
      */
     @EnsuresNonEmpty("this")
-    boolean add(E e);
+    boolean add(@GuardSatisfied @Modifiable BlockingQueue<E> this, E e);
 
     /**
      * Inserts the specified element into this queue if it is possible to do
@@ -319,7 +319,7 @@ public interface BlockingQueue<E extends @NonNull Object> extends Queue<E> {
      * @throws NullPointerException if the specified element is null
      * (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      */
-    boolean remove(@Shrinkable BlockingQueue<E> this, @UnknownSignedness Object o);
+    boolean remove(@Modifiable @Shrinkable BlockingQueue<E> this, @UnknownSignedness Object o);
 
     /**
      * Returns {@code true} if this queue contains the specified element.
@@ -361,7 +361,7 @@ public interface BlockingQueue<E extends @NonNull Object> extends Queue<E> {
      *         queue, or some property of an element of this queue prevents
      *         it from being added to the specified collection
      */
-    int drainTo(@GuardSatisfied @Shrinkable BlockingQueue<E> this, Collection<? super E> c);
+    int drainTo(@GuardSatisfied @Modifiable @Shrinkable BlockingQueue<E> this, Collection<? super E> c);
 
     /**
      * Removes at most the given number of available elements from
@@ -386,5 +386,5 @@ public interface BlockingQueue<E extends @NonNull Object> extends Queue<E> {
      *         queue, or some property of an element of this queue prevents
      *         it from being added to the specified collection
      */
-    int drainTo(@GuardSatisfied @Shrinkable BlockingQueue<E> this, Collection<? super E> c, int maxElements);
+    int drainTo(@GuardSatisfied @Modifiable @Shrinkable BlockingQueue<E> this, Collection<? super E> c, int maxElements);
 }

@@ -116,7 +116,7 @@ public interface Iterator<E> {
      *         been called after the last call to the {@code next}
      *         method
      */
-    default void remove(@GuardSatisfied @Shrinkable Iterator<E> this) {
+    default void remove(@GuardSatisfied @Modifiable ThisClass<E> this, @GuardSatisfied @Modifiable @Shrinkable Iterator<E> this) {
         throw new UnsupportedOperationException("remove");
     }
 

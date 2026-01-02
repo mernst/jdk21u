@@ -298,7 +298,7 @@ public class ConcurrentLinkedQueue<E extends @NonNull Object> extends AbstractQu
      * @throws NullPointerException if the specified element is null
      */
     @EnsuresNonEmpty("this")
-    public boolean add(E e) {
+    public boolean add(@GuardSatisfied @Modifiable ConcurrentLinkedQueue<E> this, E e) {
         return offer(e);
     }
 
@@ -399,7 +399,7 @@ public class ConcurrentLinkedQueue<E extends @NonNull Object> extends AbstractQu
         }
     }
 
-    public @Nullable E poll(@GuardSatisfied @Shrinkable ConcurrentLinkedQueue<E> this) {
+    public @Nullable E poll(@GuardSatisfied @Modifiable @Shrinkable ConcurrentLinkedQueue<E> this) {
         restartFromHead: for (;;) {
             for (Node<E> h = head, p = h, q;; p = q) {
                 final E item;
@@ -543,7 +543,7 @@ public class ConcurrentLinkedQueue<E extends @NonNull Object> extends AbstractQu
      * @param o element to be removed from this queue, if present
      * @return {@code true} if this queue changed as a result of the call
      */
-    public boolean remove(@Shrinkable ConcurrentLinkedQueue<E> this, @GuardSatisfied @UnknownSignedness Object o) {
+    public boolean remove(@Modifiable @Shrinkable ConcurrentLinkedQueue<E> this, @GuardSatisfied @UnknownSignedness Object o) {
         if (o == null) return false;
         restartFromHead: for (;;) {
             for (Node<E> p = head, pred = null; p != null; ) {
@@ -579,7 +579,7 @@ public class ConcurrentLinkedQueue<E extends @NonNull Object> extends AbstractQu
      *         of its elements are null
      * @throws IllegalArgumentException if the collection is this queue
      */
-    public boolean addAll(Collection<? extends E> c) {
+    public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, Collection<? extends E> c) {
         if (c == this)
             // As historically specified in AbstractQueue#addAll
             throw new IllegalArgumentException();
@@ -825,7 +825,7 @@ public class ConcurrentLinkedQueue<E extends @NonNull Object> extends AbstractQu
 
         // Default implementation of forEachRemaining is "good enough".
 
-        public void remove() {
+        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
             Node<E> l = lastRet;
             if (l == null) throw new IllegalStateException();
             // rely on a future traversal to relink.
@@ -999,7 +999,7 @@ public class ConcurrentLinkedQueue<E extends @NonNull Object> extends AbstractQu
     /**
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean removeAll(@Shrinkable ConcurrentLinkedQueue<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
+    public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ConcurrentLinkedQueue<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
         Objects.requireNonNull(c);
         return bulkRemove(e -> c.contains(e));
     }
@@ -1007,12 +1007,12 @@ public class ConcurrentLinkedQueue<E extends @NonNull Object> extends AbstractQu
     /**
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean retainAll(@GuardSatisfied @Shrinkable ConcurrentLinkedQueue<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
+    public boolean retainAll(@GuardSatisfied @Modifiable @Shrinkable ConcurrentLinkedQueue<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
         Objects.requireNonNull(c);
         return bulkRemove(e -> !c.contains(e));
     }
 
-    public void clear(@GuardSatisfied @Shrinkable ConcurrentLinkedQueue<E> this) {
+    public void clear(@GuardSatisfied @Modifiable @Shrinkable ConcurrentLinkedQueue<E> this) {
         bulkRemove(e -> true);
     }
 

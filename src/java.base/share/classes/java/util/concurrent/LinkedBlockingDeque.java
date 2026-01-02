@@ -331,7 +331,7 @@ public class LinkedBlockingDeque<E extends Object>
      * @throws IllegalStateException if this deque is full
      * @throws NullPointerException {@inheritDoc}
      */
-    public void addFirst(E e) {
+    public void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
         if (!offerFirst(e))
             throw new IllegalStateException("Deque full");
     }
@@ -340,7 +340,7 @@ public class LinkedBlockingDeque<E extends Object>
      * @throws IllegalStateException if this deque is full
      * @throws NullPointerException  {@inheritDoc}
      */
-    public void addLast(E e) {
+    public void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
         if (!offerLast(e))
             throw new IllegalStateException("Deque full");
     }
@@ -458,7 +458,7 @@ public class LinkedBlockingDeque<E extends Object>
     /**
      * @throws NoSuchElementException {@inheritDoc}
      */
-    public E removeFirst(@GuardSatisfied @NonEmpty @Shrinkable LinkedBlockingDeque<E> this) {
+    public E removeFirst(@GuardSatisfied @NonEmpty @Modifiable @Shrinkable LinkedBlockingDeque<E> this) {
         E x = pollFirst();
         if (x == null) throw new NoSuchElementException();
         return x;
@@ -467,13 +467,13 @@ public class LinkedBlockingDeque<E extends Object>
     /**
      * @throws NoSuchElementException {@inheritDoc}
      */
-    public E removeLast(@GuardSatisfied @NonEmpty @Shrinkable LinkedBlockingDeque<E> this) {
+    public E removeLast(@GuardSatisfied @NonEmpty @Modifiable @Shrinkable LinkedBlockingDeque<E> this) {
         E x = pollLast();
         if (x == null) throw new NoSuchElementException();
         return x;
     }
 
-    public @Nullable E pollFirst(@GuardSatisfied @Shrinkable LinkedBlockingDeque<E> this) {
+    public @Nullable E pollFirst(@GuardSatisfied @Modifiable @Shrinkable LinkedBlockingDeque<E> this) {
         final ReentrantLock lock = this.lock;
         lock.lock();
         try {
@@ -483,7 +483,7 @@ public class LinkedBlockingDeque<E extends Object>
         }
     }
 
-    public @Nullable E pollLast(@GuardSatisfied @Shrinkable LinkedBlockingDeque<E> this) {
+    public @Nullable E pollLast(@GuardSatisfied @Modifiable @Shrinkable LinkedBlockingDeque<E> this) {
         final ReentrantLock lock = this.lock;
         lock.lock();
         try {
@@ -493,7 +493,7 @@ public class LinkedBlockingDeque<E extends Object>
         }
     }
 
-    public E takeFirst(@GuardSatisfied @Shrinkable LinkedBlockingDeque<E> this) throws InterruptedException {
+    public E takeFirst(@GuardSatisfied @Modifiable @Shrinkable LinkedBlockingDeque<E> this) throws InterruptedException {
         final ReentrantLock lock = this.lock;
         lock.lock();
         try {
@@ -506,7 +506,7 @@ public class LinkedBlockingDeque<E extends Object>
         }
     }
 
-    public E takeLast(@GuardSatisfied @Shrinkable LinkedBlockingDeque<E> this) throws InterruptedException {
+    public E takeLast(@GuardSatisfied @Modifiable @Shrinkable LinkedBlockingDeque<E> this) throws InterruptedException {
         final ReentrantLock lock = this.lock;
         lock.lock();
         try {
@@ -519,7 +519,7 @@ public class LinkedBlockingDeque<E extends Object>
         }
     }
 
-    public @Nullable E pollFirst(@GuardSatisfied @Shrinkable LinkedBlockingDeque<E> this, long timeout, TimeUnit unit)
+    public @Nullable E pollFirst(@GuardSatisfied @Modifiable @Shrinkable LinkedBlockingDeque<E> this, long timeout, TimeUnit unit)
         throws InterruptedException {
         long nanos = unit.toNanos(timeout);
         final ReentrantLock lock = this.lock;
@@ -537,7 +537,7 @@ public class LinkedBlockingDeque<E extends Object>
         }
     }
 
-    public @Nullable E pollLast(@GuardSatisfied @Shrinkable LinkedBlockingDeque<E> this, long timeout, TimeUnit unit)
+    public @Nullable E pollLast(@GuardSatisfied @Modifiable @Shrinkable LinkedBlockingDeque<E> this, long timeout, TimeUnit unit)
         throws InterruptedException {
         long nanos = unit.toNanos(timeout);
         final ReentrantLock lock = this.lock;
@@ -642,7 +642,7 @@ public class LinkedBlockingDeque<E extends Object>
      * @throws NullPointerException if the specified element is null
      */
     @EnsuresNonEmpty("this")
-    public boolean add(E e) {
+    public boolean add(@GuardSatisfied @Modifiable LinkedBlockingDeque<E> this, E e) {
         addLast(e);
         return true;
     }
@@ -681,19 +681,19 @@ public class LinkedBlockingDeque<E extends Object>
      * @return the head of the queue represented by this deque
      * @throws NoSuchElementException if this deque is empty
      */
-    public E remove(@GuardSatisfied @NonEmpty @Shrinkable LinkedBlockingDeque<E> this) {
+    public E remove(@GuardSatisfied @NonEmpty @Modifiable @Shrinkable LinkedBlockingDeque<E> this) {
         return removeFirst();
     }
 
-    public @Nullable E poll(@GuardSatisfied @Shrinkable LinkedBlockingDeque<E> this) {
+    public @Nullable E poll(@GuardSatisfied @Modifiable @Shrinkable LinkedBlockingDeque<E> this) {
         return pollFirst();
     }
 
-    public E take(@GuardSatisfied @Shrinkable LinkedBlockingDeque<E> this) throws InterruptedException {
+    public E take(@GuardSatisfied @Modifiable @Shrinkable LinkedBlockingDeque<E> this) throws InterruptedException {
         return takeFirst();
     }
 
-    public @Nullable E poll(@GuardSatisfied @Shrinkable LinkedBlockingDeque<E> this, long timeout, TimeUnit unit) throws InterruptedException {
+    public @Nullable E poll(@GuardSatisfied @Modifiable @Shrinkable LinkedBlockingDeque<E> this, long timeout, TimeUnit unit) throws InterruptedException {
         return pollFirst(timeout, unit);
     }
 
@@ -743,7 +743,7 @@ public class LinkedBlockingDeque<E extends Object>
      * @throws NullPointerException          {@inheritDoc}
      * @throws IllegalArgumentException      {@inheritDoc}
      */
-    public int drainTo(@GuardSatisfied @Shrinkable LinkedBlockingDeque<E> this, Collection<? super E> c) {
+    public int drainTo(@GuardSatisfied @Modifiable @Shrinkable LinkedBlockingDeque<E> this, Collection<? super E> c) {
         return drainTo(c, Integer.MAX_VALUE);
     }
 
@@ -753,7 +753,7 @@ public class LinkedBlockingDeque<E extends Object>
      * @throws NullPointerException          {@inheritDoc}
      * @throws IllegalArgumentException      {@inheritDoc}
      */
-    public int drainTo(@GuardSatisfied @Shrinkable LinkedBlockingDeque<E> this, Collection<? super E> c, int maxElements) {
+    public int drainTo(@GuardSatisfied @Modifiable @Shrinkable LinkedBlockingDeque<E> this, Collection<? super E> c, int maxElements) {
         Objects.requireNonNull(c);
         if (c == this)
             throw new IllegalArgumentException();
@@ -806,7 +806,7 @@ public class LinkedBlockingDeque<E extends Object>
      * @param o element to be removed from this deque, if present
      * @return {@code true} if this deque changed as a result of the call
      */
-    public boolean remove(@Shrinkable LinkedBlockingDeque<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o) {
+    public boolean remove(@Modifiable @Shrinkable LinkedBlockingDeque<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o) {
         return removeFirstOccurrence(o);
     }
 
@@ -864,7 +864,7 @@ public class LinkedBlockingDeque<E extends Object>
      * @throws IllegalStateException if this deque is full
      * @see #add(Object)
      */
-    public boolean addAll(Collection<? extends E> c) {
+    public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, Collection<? extends E> c) {
         if (c == this)
             // As historically specified in AbstractQueue#addAll
             throw new IllegalArgumentException();
@@ -1001,7 +1001,7 @@ public class LinkedBlockingDeque<E extends Object>
      * Atomically removes all of the elements from this deque.
      * The deque will be empty after this call returns.
      */
-    public void clear(@GuardSatisfied @Shrinkable LinkedBlockingDeque<E> this) {
+    public void clear(@GuardSatisfied @Modifiable @Shrinkable LinkedBlockingDeque<E> this) {
         final ReentrantLock lock = this.lock;
         lock.lock();
         try {
@@ -1170,7 +1170,7 @@ public class LinkedBlockingDeque<E extends Object>
             } while (n > 0 && p != null);
         }
 
-        public void remove() {
+        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
             Node<E> n = lastRet;
             if (n == null)
                 throw new IllegalStateException();
@@ -1365,7 +1365,7 @@ public class LinkedBlockingDeque<E extends Object>
     /**
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean removeAll(@Shrinkable LinkedBlockingDeque<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
+    public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable LinkedBlockingDeque<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
         Objects.requireNonNull(c);
         return bulkRemove(e -> c.contains(e));
     }
@@ -1373,7 +1373,7 @@ public class LinkedBlockingDeque<E extends Object>
     /**
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean retainAll(@GuardSatisfied @Shrinkable LinkedBlockingDeque<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
+    public boolean retainAll(@GuardSatisfied @Modifiable @Shrinkable LinkedBlockingDeque<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
         Objects.requireNonNull(c);
         return bulkRemove(e -> !c.contains(e));
     }

@@ -280,7 +280,7 @@ public class TreeSet<E> extends AbstractSet<E>
      *         does not permit null elements
      */
     @EnsuresNonEmpty("this")
-    public boolean add(@GuardSatisfied TreeSet<E> this, E e) {
+    public boolean add(@GuardSatisfied @Modifiable TreeSet<E> this, E e) {
         return m.put(e, PRESENT)==null;
     }
 
@@ -301,7 +301,7 @@ public class TreeSet<E> extends AbstractSet<E>
      *         and this set uses natural ordering, or its comparator
      *         does not permit null elements
      */
-    public boolean remove(@GuardSatisfied TreeSet<E> this, @GuardSatisfied @UnknownSignedness Object o) {
+    public boolean remove(@GuardSatisfied @Modifiable TreeSet<E> this, @GuardSatisfied @UnknownSignedness Object o) {
         return m.remove(o)==PRESENT;
     }
 
@@ -309,7 +309,7 @@ public class TreeSet<E> extends AbstractSet<E>
      * Removes all of the elements from this set.
      * The set will be empty after this call returns.
      */
-    public void clear(@GuardSatisfied TreeSet<E> this) {
+    public void clear(@GuardSatisfied @Modifiable TreeSet<E> this) {
         m.clear();
     }
 
@@ -324,7 +324,7 @@ public class TreeSet<E> extends AbstractSet<E>
      *         if any element is null and this set uses natural ordering, or
      *         its comparator does not permit null elements
      */
-    public  boolean addAll(@GuardSatisfied TreeSet<E> this, Collection<? extends E> c) {
+    public  boolean addAll(@GuardSatisfied @Modifiable TreeSet<E> this, Collection<? extends E> c) {
         // Use linear-time version if applicable
         if (m.size()==0 && c.size() > 0 &&
             c instanceof SortedSet &&
@@ -506,7 +506,7 @@ public class TreeSet<E> extends AbstractSet<E>
      * @throws UnsupportedOperationException always
      * @since 21
      */
-    public void addFirst(E e) {
+    public void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
         throw new UnsupportedOperationException();
     }
 
@@ -518,7 +518,7 @@ public class TreeSet<E> extends AbstractSet<E>
      * @throws UnsupportedOperationException always
      * @since 21
      */
-    public void addLast(E e) {
+    public void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
         throw new UnsupportedOperationException();
     }
 

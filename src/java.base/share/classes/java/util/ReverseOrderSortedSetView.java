@@ -116,12 +116,12 @@ class ReverseOrderSortedSetView<E> implements SortedSet<E> {
 
     // ========== Collection ==========
 
-    public boolean add(E e) {
+    public boolean add(@GuardSatisfied @Modifiable ReverseOrderSortedSetView<E> this, E e) {
         base.add(e);
         return true;
     }
 
-    public boolean addAll(Collection<? extends E> c) {
+    public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, Collection<? extends E> c) {
         return base.addAll(c);
     }
 
@@ -145,16 +145,16 @@ class ReverseOrderSortedSetView<E> implements SortedSet<E> {
         return StreamSupport.stream(spliterator(), true);
     }
 
-    public boolean remove(Object o) {
+    public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, Object o) {
         return base.remove(o);
     }
 
-    public boolean removeAll(Collection<?> c) {
+    public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, Collection<?> c) {
         return base.removeAll(c);
     }
 
     // copied from AbstractCollection
-    public boolean retainAll(Collection<?> c) {
+    public boolean retainAll(@GuardSatisfied @Modifiable ThisClass<> this, Collection<?> c) {
         return base.retainAll(c);
     }
 
@@ -221,7 +221,7 @@ class ReverseOrderSortedSetView<E> implements SortedSet<E> {
                 return t;
             }
 
-            public void remove() {
+            public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
                 if (prev == null) {
                     throw new IllegalStateException();
                 } else {
@@ -304,14 +304,14 @@ class ReverseOrderSortedSetView<E> implements SortedSet<E> {
             };
         }
 
-        public boolean add(E e) {
+        public boolean add(@GuardSatisfied @Modifiable Subset this, E e) {
             if (aboveHead(e) && belowTail(e))
                 return base.add(e);
             else
                 throw new IllegalArgumentException();
         }
 
-        public boolean remove(Object o) {
+        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, Object o) {
             @SuppressWarnings("unchecked")
             E e = (E) o;
             if (aboveHead(e) && belowTail(e))

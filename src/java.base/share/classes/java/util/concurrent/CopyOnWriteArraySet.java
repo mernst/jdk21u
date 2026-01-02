@@ -246,7 +246,7 @@ public class CopyOnWriteArraySet<E> extends AbstractSet<E>
      * Removes all of the elements from this set.
      * The set will be empty after this call returns.
      */
-    public void clear() {
+    public void clear(@GuardSatisfied @Modifiable CopyOnWriteArraySet<E> this) {
         al.clear();
     }
 
@@ -261,7 +261,7 @@ public class CopyOnWriteArraySet<E> extends AbstractSet<E>
      * @param o object to be removed from this set, if present
      * @return {@code true} if this set contained the specified element
      */
-    public boolean remove(@GuardSatisfied @Nullable @UnknownSignedness Object o) {
+    public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @GuardSatisfied @Nullable @UnknownSignedness Object o) {
         return al.remove(o);
     }
 
@@ -278,7 +278,7 @@ public class CopyOnWriteArraySet<E> extends AbstractSet<E>
      *         element
      */
     @EnsuresNonEmpty("this")
-    public boolean add(E e) {
+    public boolean add(@GuardSatisfied @Modifiable CopyOnWriteArraySet<E> this, E e) {
         return al.addIfAbsent(e);
     }
 
@@ -348,7 +348,7 @@ public class CopyOnWriteArraySet<E> extends AbstractSet<E>
      * @throws NullPointerException if the specified collection is null
      * @see #add(Object)
      */
-    public boolean addAll(Collection<? extends E> c) {
+    public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, Collection<? extends E> c) {
         return al.addAllAbsent(c) > 0;
     }
 
@@ -369,7 +369,7 @@ public class CopyOnWriteArraySet<E> extends AbstractSet<E>
      *         or if the specified collection is null
      * @see #remove(Object)
      */
-    public boolean removeAll(Collection<? extends @NonNull @UnknownSignedness Object> c) {
+    public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
         return al.removeAll(c);
     }
 
@@ -392,7 +392,7 @@ public class CopyOnWriteArraySet<E> extends AbstractSet<E>
      *         or if the specified collection is null
      * @see #remove(Object)
      */
-    public boolean retainAll(Collection<? extends @NonNull @UnknownSignedness Object> c) {
+    public boolean retainAll(@GuardSatisfied @Modifiable ThisClass<> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
         return al.retainAll(c);
     }
 

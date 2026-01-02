@@ -4324,7 +4324,7 @@ public final class Arrays {
         }
 
         @Override
-        public E set(int index, E element) {
+        public E set(@GuardSatisfied @Modifiable ArrayList<E> this, int index, E element) {
             E oldValue = a[index];
             a[index] = element;
             return oldValue;
@@ -4366,7 +4366,7 @@ public final class Arrays {
         }
 
         @Override
-        public void replaceAll(UnaryOperator<E> operator) {
+        public void replaceAll(@GuardSatisfied @Modifiable ThisClass<E> this, UnaryOperator<E> operator) {
             Objects.requireNonNull(operator);
             E[] a = this.a;
             for (int i = 0; i < a.length; i++) {

@@ -33,6 +33,10 @@ import org.checkerframework.checker.index.qual.PolyGrowShrink;
 import org.checkerframework.checker.index.qual.Shrinkable;
 import org.checkerframework.checker.lock.qual.GuardSatisfied;
 import org.checkerframework.checker.lock.qual.ReleasesNoLocks;
+import org.checkerframework.checker.modifiable.qual.AnyModifiable;
+import org.checkerframework.checker.modifiable.qual.Modifiable;
+import org.checkerframework.checker.modifiable.qual.PolyModifiable;
+import org.checkerframework.checker.modifiable.qual.Unmodifiable;
 import org.checkerframework.checker.nonempty.qual.EnsuresNonEmpty;
 import org.checkerframework.checker.nonempty.qual.EnsuresNonEmptyIf;
 import org.checkerframework.checker.nonempty.qual.NonEmpty;
@@ -173,7 +177,7 @@ public interface List<E> extends SequencedCollection<E> {
      * @return the number of elements in this list
      */
     @Pure
-    @NonNegative int size(@GuardSatisfied List<E> this);
+    @NonNegative int size(@AnyModifiable @GuardSatisfied List<E> this);
 
     /**
      * Returns {@code true} if this list contains no elements.
@@ -182,7 +186,7 @@ public interface List<E> extends SequencedCollection<E> {
      */
     @Pure
     @EnsuresNonEmptyIf(result = false, expression = "this")
-    boolean isEmpty(@GuardSatisfied List<E> this);
+    boolean isEmpty(@AnyModifiable @GuardSatisfied List<E> this);
 
     /**
      * Returns {@code true} if this list contains the specified element.
@@ -201,7 +205,7 @@ public interface List<E> extends SequencedCollection<E> {
      */
     @Pure
     @EnsuresNonEmptyIf(result = true, expression = "this")
-    boolean contains(@GuardSatisfied List<E> this, @UnknownSignedness Object o);
+    boolean contains(@AnyModifiable @GuardSatisfied List<E> this, @UnknownSignedness Object o);
 
     /**
      * Returns an iterator over the elements in this list in proper sequence.
@@ -300,7 +304,7 @@ public interface List<E> extends SequencedCollection<E> {
     @ReleasesNoLocks
     @SideEffectsOnly("this")
     @EnsuresNonEmpty("this")
-    boolean add(@GuardSatisfied List<E> this, E e);
+    boolean add(@GuardSatisfied @Modifiable List<E> this, E e);
 
     /**
      * Removes the first occurrence of the specified element from this list,
@@ -324,7 +328,7 @@ public interface List<E> extends SequencedCollection<E> {
      *         is not supported by this list
      */
     @SideEffectsOnly("this")
-    boolean remove(@GuardSatisfied @Shrinkable List<E> this, @UnknownSignedness Object o);
+    boolean remove(@GuardSatisfied @Modifiable @Shrinkable List<E> this, @UnknownSignedness Object o);
 
 
     // Bulk Modification Operations
@@ -348,7 +352,7 @@ public interface List<E> extends SequencedCollection<E> {
      * @see #contains(Object)
      */
     @Pure
-    boolean containsAll(@GuardSatisfied List<E> this, Collection<? extends @UnknownSignedness Object> c);
+    boolean containsAll(@GuardSatisfied @AnyModifiable List<E> this, Collection<? extends @UnknownSignedness Object> c);
 
     /**
      * Appends all of the elements in the specified collection to the end of
@@ -373,7 +377,7 @@ public interface List<E> extends SequencedCollection<E> {
      */
     @SideEffectsOnly("this")
     @EnsuresNonEmptyIf(result = true, expression = "this")
-    boolean addAll(@GuardSatisfied List<E> this, Collection<? extends E> c);
+    boolean addAll(@GuardSatisfied @Modifiable List<E> this, Collection<? extends E> c);
 
     /**
      * Inserts all of the elements in the specified collection into this
@@ -404,7 +408,7 @@ public interface List<E> extends SequencedCollection<E> {
      */
     @SideEffectsOnly("this")
     @EnsuresNonEmptyIf(result = true, expression = "this")
-    boolean addAll(@GuardSatisfied List<E> this, @IndexOrHigh({"this"}) int index, Collection<? extends E> c);
+    boolean addAll(@GuardSatisfied @Modifiable List<E> this, @IndexOrHigh({"this"}) int index, Collection<? extends E> c);
 
     /**
      * Removes from this list all of its elements that are contained in the
@@ -424,7 +428,7 @@ public interface List<E> extends SequencedCollection<E> {
      * @see #remove(Object)
      * @see #contains(Object)
      */
-    boolean removeAll(@GuardSatisfied @Shrinkable List<E> this, Collection<? extends @UnknownSignedness Object> c);
+    boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable List<E> this, Collection<? extends @UnknownSignedness Object> c);
 
     /**
      * Retains only the elements in this list that are contained in the
@@ -446,7 +450,7 @@ public interface List<E> extends SequencedCollection<E> {
      * @see #remove(Object)
      * @see #contains(Object)
      */
-    boolean retainAll(@GuardSatisfied @Shrinkable List<E> this, Collection<? extends @UnknownSignedness Object> c);
+    boolean retainAll(@GuardSatisfied @Modifiable @Shrinkable List<E> this, Collection<? extends @UnknownSignedness Object> c);
 
     /**
      * Replaces each element of this list with the result of applying the
@@ -477,7 +481,7 @@ public interface List<E> extends SequencedCollection<E> {
      *         (<a href="Collection.html#optional-restrictions">optional</a>)
      * @since 1.8
      */
-    default void replaceAll(UnaryOperator<E> operator) {
+    default void replaceAll(@GuardSatisfied @Modifiable List<E> this, UnaryOperator<E> operator) {
         Objects.requireNonNull(operator);
         final ListIterator<E> li = this.listIterator();
         while (li.hasNext()) {
@@ -562,7 +566,7 @@ public interface List<E> extends SequencedCollection<E> {
      * @throws UnsupportedOperationException if the {@code clear} operation
      *         is not supported by this list
      */
-    void clear(@GuardSatisfied @Shrinkable List<E> this);
+    void clear(@GuardSatisfied @Modifiable @Shrinkable List<E> this);
 
 
     // Comparison and hashing
@@ -582,7 +586,7 @@ public interface List<E> extends SequencedCollection<E> {
      * @return {@code true} if the specified object is equal to this list
      */
     @Pure
-    boolean equals(@GuardSatisfied List<E> this, @Nullable Object o);
+    boolean equals(@AnyModifiable @GuardSatisfied List<E> this, @Nullable Object o);
 
     /**
      * Returns the hash code value for this list.  The hash code of a list
@@ -602,7 +606,7 @@ public interface List<E> extends SequencedCollection<E> {
      * @see #equals(Object)
      */
     @Pure
-    int hashCode(@GuardSatisfied List<E> this);
+    int hashCode(@AnyModifiable @GuardSatisfied List<E> this);
 
 
     // Positional Access Operations
@@ -616,7 +620,7 @@ public interface List<E> extends SequencedCollection<E> {
      *         ({@code index < 0 || index >= size()})
      */
     @Pure
-    E get(@GuardSatisfied List<E> this, @IndexFor({"this"}) int index);
+    E get(@AnyModifiable @GuardSatisfied List<E> this, @IndexFor({"this"}) int index);
 
     /**
      * Replaces the element at the specified position in this list with the
@@ -636,7 +640,7 @@ public interface List<E> extends SequencedCollection<E> {
      * @throws IndexOutOfBoundsException if the index is out of range
      *         ({@code index < 0 || index >= size()})
      */
-    E set(@GuardSatisfied List<E> this, @IndexFor({"this"}) int index, E element);
+    E set(@GuardSatisfied @Modifiable List<E> this, @IndexFor({"this"}) int index, E element);
 
     /**
      * Inserts the specified element at the specified position in this list
@@ -659,7 +663,7 @@ public interface List<E> extends SequencedCollection<E> {
      */
     @ReleasesNoLocks
     @SideEffectsOnly("this")
-    void add(@GuardSatisfied List<E> this, @IndexOrHigh({"this"}) int index, E element);
+    void add(@GuardSatisfied @Modifiable List<E> this, @IndexOrHigh({"this"}) int index, E element);
 
     /**
      * Removes the element at the specified position in this list (optional
@@ -675,7 +679,7 @@ public interface List<E> extends SequencedCollection<E> {
      *         ({@code index < 0 || index >= size()})
      */
     @ReleasesNoLocks
-    E remove(@GuardSatisfied @Shrinkable List<E> this, @IndexFor({"this"}) int index);
+    E remove(@GuardSatisfied @Modifiable @Shrinkable List<E> this, @IndexFor({"this"}) int index);
 
 
     // Search Operations
@@ -698,7 +702,7 @@ public interface List<E> extends SequencedCollection<E> {
      *         (<a href="Collection.html#optional-restrictions">optional</a>)
      */
     @Pure
-    @GTENegativeOne int indexOf(@GuardSatisfied List<E> this, @GuardSatisfied @UnknownSignedness Object o);
+    @GTENegativeOne int indexOf(@AnyModifiable @GuardSatisfied List<E> this, @GuardSatisfied @UnknownSignedness Object o);
 
     /**
      * Returns the index of the last occurrence of the specified element
@@ -718,7 +722,7 @@ public interface List<E> extends SequencedCollection<E> {
      *         (<a href="Collection.html#optional-restrictions">optional</a>)
      */
     @Pure
-    @GTENegativeOne int lastIndexOf(@GuardSatisfied List<E> this, @GuardSatisfied @UnknownSignedness Object o);
+    @GTENegativeOne int lastIndexOf(@AnyModifiable @GuardSatisfied List<E> this, @GuardSatisfied @UnknownSignedness Object o);
 
 
     // List Iterators
@@ -730,7 +734,7 @@ public interface List<E> extends SequencedCollection<E> {
      * @return a list iterator over the elements in this list (in proper
      *         sequence)
      */
-    @PolyGrowShrink @PolyNonEmpty ListIterator<E> listIterator(@PolyGrowShrink @PolyNonEmpty List<E> this);
+    @PolyGrowShrink @PolyModifiable @PolyNonEmpty ListIterator<E> listIterator(@PolyGrowShrink @PolyModifiable @PolyNonEmpty List<E> this);
 
     /**
      * Returns a list iterator over the elements in this list (in proper
@@ -747,7 +751,7 @@ public interface List<E> extends SequencedCollection<E> {
      * @throws IndexOutOfBoundsException if the index is out of range
      *         ({@code index < 0 || index > size()})
      */
-    @PolyGrowShrink @PolyNonEmpty ListIterator<E> listIterator(@PolyGrowShrink @PolyNonEmpty List<E> this, @IndexOrHigh({"this"}) int index);
+    @PolyGrowShrink @PolyModifiable @PolyNonEmpty ListIterator<E> listIterator(@PolyGrowShrink @PolyModifiable @PolyNonEmpty List<E> this, @IndexOrHigh({"this"}) int index);
 
     // View
 
@@ -843,7 +847,7 @@ public interface List<E> extends SequencedCollection<E> {
      * @throws UnsupportedOperationException {@inheritDoc}
      * @since 21
      */
-    default void addFirst(E e) {
+    default void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
         this.add(0, e);
     }
 
@@ -857,7 +861,7 @@ public interface List<E> extends SequencedCollection<E> {
      * @throws UnsupportedOperationException {@inheritDoc}
      * @since 21
      */
-    default void addLast(E e) {
+    default void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
         this.add(e);
     }
 
@@ -908,7 +912,7 @@ public interface List<E> extends SequencedCollection<E> {
      * @throws UnsupportedOperationException {@inheritDoc}
      * @since 21
      */
-    default E removeFirst() {
+    default E removeFirst(@GuardSatisfied @Modifiable ThisClass<E> this) {
         if (this.isEmpty()) {
             throw new NoSuchElementException();
         } else {
@@ -927,7 +931,7 @@ public interface List<E> extends SequencedCollection<E> {
      * @throws UnsupportedOperationException {@inheritDoc}
      * @since 21
      */
-    default E removeLast() {
+    default E removeLast(@GuardSatisfied @Modifiable ThisClass<E> this) {
         if (this.isEmpty()) {
             throw new NoSuchElementException();
         } else {
@@ -968,7 +972,7 @@ public interface List<E> extends SequencedCollection<E> {
      * @since 9
      */
     @SuppressWarnings("unchecked")
-    static <E> List<E> of() {
+    static <E> @Unmodifiable List<E> of() {
         return (List<E>) ImmutableCollections.EMPTY_LIST;
     }
 
@@ -984,7 +988,7 @@ public interface List<E> extends SequencedCollection<E> {
      *
      * @since 9
      */
-    static <E extends Object> @NonEmpty List<E> of(E e1) {
+    static <E extends Object> @Unmodifiable @NonEmpty List<E> of(E e1) {
         return new ImmutableCollections.List12<>(e1);
     }
 
@@ -1001,7 +1005,7 @@ public interface List<E> extends SequencedCollection<E> {
      *
      * @since 9
      */
-    static <E extends Object> @NonEmpty List<E> of(E e1, E e2) {
+    static <E extends Object> @Unmodifiable @NonEmpty List<E> of(E e1, E e2) {
         return new ImmutableCollections.List12<>(e1, e2);
     }
 
@@ -1019,7 +1023,7 @@ public interface List<E> extends SequencedCollection<E> {
      *
      * @since 9
      */
-    static <E extends Object> @NonEmpty List<E> of(E e1, E e2, E e3) {
+    static <E extends Object> @Unmodifiable @NonEmpty List<E> of(E e1, E e2, E e3) {
         return ImmutableCollections.listFromTrustedArray(e1, e2, e3);
     }
 
@@ -1038,7 +1042,7 @@ public interface List<E> extends SequencedCollection<E> {
      *
      * @since 9
      */
-    static <E extends Object> @NonEmpty List<E> of(E e1, E e2, E e3, E e4) {
+    static <E extends Object> @Unmodifiable @NonEmpty List<E> of(E e1, E e2, E e3, E e4) {
         return ImmutableCollections.listFromTrustedArray(e1, e2, e3, e4);
     }
 
@@ -1058,7 +1062,7 @@ public interface List<E> extends SequencedCollection<E> {
      *
      * @since 9
      */
-    static <E extends Object> @NonEmpty List<E> of(E e1, E e2, E e3, E e4, E e5) {
+    static <E extends Object> @Unmodifiable @NonEmpty List<E> of(E e1, E e2, E e3, E e4, E e5) {
         return ImmutableCollections.listFromTrustedArray(e1, e2, e3, e4, e5);
     }
 
@@ -1079,7 +1083,7 @@ public interface List<E> extends SequencedCollection<E> {
      *
      * @since 9
      */
-    static <E extends Object> @NonEmpty List<E> of(E e1, E e2, E e3, E e4, E e5, E e6) {
+    static <E extends Object> @Unmodifiable @NonEmpty List<E> of(E e1, E e2, E e3, E e4, E e5, E e6) {
         return ImmutableCollections.listFromTrustedArray(e1, e2, e3, e4, e5,
                                                          e6);
     }
@@ -1102,7 +1106,7 @@ public interface List<E> extends SequencedCollection<E> {
      *
      * @since 9
      */
-    static <E extends Object> @NonEmpty List<E> of(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
+    static <E extends Object> @Unmodifiable @NonEmpty List<E> of(E e1, E e2, E e3, E e4, E e5, E e6, E e7) {
         return ImmutableCollections.listFromTrustedArray(e1, e2, e3, e4, e5,
                                                          e6, e7);
     }
@@ -1126,7 +1130,7 @@ public interface List<E> extends SequencedCollection<E> {
      *
      * @since 9
      */
-    static <E extends Object> @NonEmpty List<E> of(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
+    static <E extends Object> @Unmodifiable @NonEmpty List<E> of(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8) {
         return ImmutableCollections.listFromTrustedArray(e1, e2, e3, e4, e5,
                                                          e6, e7, e8);
     }
@@ -1151,7 +1155,7 @@ public interface List<E> extends SequencedCollection<E> {
      *
      * @since 9
      */
-    static <E extends Object> @NonEmpty List<E> of(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
+    static <E extends Object> @Unmodifiable @NonEmpty List<E> of(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9) {
         return ImmutableCollections.listFromTrustedArray(e1, e2, e3, e4, e5,
                                                          e6, e7, e8, e9);
     }
@@ -1177,7 +1181,7 @@ public interface List<E> extends SequencedCollection<E> {
      *
      * @since 9
      */
-    static <E extends Object> @NonEmpty List<E> of(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
+    static <E extends Object> @Unmodifiable @NonEmpty List<E> of(E e1, E e2, E e3, E e4, E e5, E e6, E e7, E e8, E e9, E e10) {
         return ImmutableCollections.listFromTrustedArray(e1, e2, e3, e4, e5,
                                                          e6, e7, e8, e9, e10);
     }
@@ -1209,7 +1213,7 @@ public interface List<E> extends SequencedCollection<E> {
      */
     @SafeVarargs
     @SuppressWarnings("varargs")
-    static <E extends Object> @PolyNonEmpty List<E> of(E @PolyNonEmpty... elements) {
+    static <E extends Object> @Unmodifiable @PolyNonEmpty List<E> of(E @PolyNonEmpty... elements) {
         switch (elements.length) { // implicit null check of elements
             case 0:
                 @SuppressWarnings("unchecked")
@@ -1240,7 +1244,7 @@ public interface List<E> extends SequencedCollection<E> {
      * @throws NullPointerException if coll is null, or if it contains any nulls
      * @since 10
      */
-    static <E extends Object> @PolyNonEmpty List<E> copyOf(@PolyNonEmpty Collection<? extends E> coll) {
+    static <E extends Object> @Unmodifiable @PolyNonEmpty List<E> copyOf(@AnyModifiable @PolyNonEmpty Collection<? extends E> coll) {
         return ImmutableCollections.listCopy(coll);
     }
 }

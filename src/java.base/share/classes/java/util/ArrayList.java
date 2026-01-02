@@ -504,7 +504,7 @@ public class ArrayList<E> extends AbstractList<E>
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */
     @SideEffectsOnly("this")
-    public E set(@GuardSatisfied ArrayList<E> this, @NonNegative int index, E element) {
+    public E set(@GuardSatisfied @Modifiable ArrayList<E> this, @NonNegative int index, E element) {
         Objects.checkIndex(index, size);
         E oldValue = elementData(index);
         elementData[index] = element;
@@ -517,7 +517,7 @@ public class ArrayList<E> extends AbstractList<E>
      * which helps when add(E) is called in a C1-compiled loop.
      */
     @SideEffectsOnly("this")
-    private void add(E e, Object[] elementData, int s) {
+    private void add(@GuardSatisfied @Modifiable ThisClass<E> this, E e, Object[] elementData, int s) {
         if (s == elementData.length)
             elementData = grow();
         elementData[s] = e;
@@ -532,7 +532,7 @@ public class ArrayList<E> extends AbstractList<E>
      */
     @SideEffectsOnly("this")
     @EnsuresNonEmpty("this")
-    public boolean add(@GuardSatisfied ArrayList<E> this, E e) {
+    public boolean add(@GuardSatisfied @Modifiable ArrayList<E> this, E e) {
         modCount++;
         add(e, elementData, size);
         return true;
@@ -548,7 +548,7 @@ public class ArrayList<E> extends AbstractList<E>
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */
     @SideEffectsOnly("this")
-    public void add(@GuardSatisfied ArrayList<E> this, @NonNegative int index, E element) {
+    public void add(@GuardSatisfied @Modifiable ArrayList<E> this, @NonNegative int index, E element) {
         rangeCheckForAdd(index);
         modCount++;
         final int s;
@@ -567,7 +567,7 @@ public class ArrayList<E> extends AbstractList<E>
      *
      * @since 21
      */
-    public void addFirst(E element) {
+    public void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, E element) {
         add(0, element);
     }
 
@@ -576,7 +576,7 @@ public class ArrayList<E> extends AbstractList<E>
      *
      * @since 21
      */
-    public void addLast(E element) {
+    public void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, E element) {
         add(element);
     }
 
@@ -589,7 +589,7 @@ public class ArrayList<E> extends AbstractList<E>
      * @return the element that was removed from the list
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */
-    public E remove(@GuardSatisfied @Shrinkable ArrayList<E> this, @NonNegative int index) {
+    public E remove(@GuardSatisfied @Modifiable @Shrinkable ArrayList<E> this, @NonNegative int index) {
         Objects.checkIndex(index, size);
         final Object[] es = elementData;
 
@@ -605,7 +605,7 @@ public class ArrayList<E> extends AbstractList<E>
      * @throws NoSuchElementException {@inheritDoc}
      * @since 21
      */
-    public E removeFirst() {
+    public E removeFirst(@GuardSatisfied @Modifiable ThisClass<E> this) {
         if (size == 0) {
             throw new NoSuchElementException();
         } else {
@@ -622,7 +622,7 @@ public class ArrayList<E> extends AbstractList<E>
      * @throws NoSuchElementException {@inheritDoc}
      * @since 21
      */
-    public E removeLast() {
+    public E removeLast(@GuardSatisfied @Modifiable ThisClass<E> this) {
         int last = size - 1;
         if (last < 0) {
             throw new NoSuchElementException();
@@ -736,7 +736,7 @@ public class ArrayList<E> extends AbstractList<E>
      * @param o element to be removed from this list, if present
      * @return {@code true} if this list contained the specified element
      */
-    public boolean remove(@GuardSatisfied @Shrinkable ArrayList<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o) {
+    public boolean remove(@GuardSatisfied @Modifiable @Shrinkable ArrayList<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o) {
         final Object[] es = elementData;
         final int size = this.size;
         int i = 0;
@@ -772,7 +772,7 @@ public class ArrayList<E> extends AbstractList<E>
      * Removes all of the elements from this list.  The list will
      * be empty after this call returns.
      */
-    public void clear(@GuardSatisfied @Shrinkable ArrayList<E> this) {
+    public void clear(@GuardSatisfied @Modifiable @Shrinkable ArrayList<E> this) {
         modCount++;
         final Object[] es = elementData;
         for (int to = size, i = size = 0; i < to; i++)
@@ -793,7 +793,7 @@ public class ArrayList<E> extends AbstractList<E>
      * @throws NullPointerException if the specified collection is null
      */
     @SideEffectsOnly("this")
-    public boolean addAll(@GuardSatisfied ArrayList<E> this, Collection<? extends E> c) {
+    public boolean addAll(@GuardSatisfied @Modifiable ArrayList<E> this, Collection<? extends E> c) {
         Object[] a = c.toArray();
         modCount++;
         int numNew = a.length;
@@ -824,7 +824,7 @@ public class ArrayList<E> extends AbstractList<E>
      * @throws NullPointerException if the specified collection is null
      */
     @SideEffectsOnly("this")
-    public boolean addAll(@GuardSatisfied ArrayList<E> this, @NonNegative int index, Collection<? extends E> c) {
+    public boolean addAll(@GuardSatisfied @Modifiable ArrayList<E> this, @NonNegative int index, Collection<? extends E> c) {
         rangeCheckForAdd(index);
 
         Object[] a = c.toArray();
@@ -860,7 +860,7 @@ public class ArrayList<E> extends AbstractList<E>
      *          toIndex > size() ||
      *          toIndex < fromIndex})
      */
-    protected void removeRange(@GuardSatisfied @Shrinkable ArrayList<E> this, int fromIndex, int toIndex) {
+    protected void removeRange(@GuardSatisfied @Modifiable @Shrinkable ArrayList<E> this, int fromIndex, int toIndex) {
         if (fromIndex > toIndex) {
             throw new IndexOutOfBoundsException(
                     outOfBoundsMsg(fromIndex, toIndex));
@@ -915,7 +915,7 @@ public class ArrayList<E> extends AbstractList<E>
      *         or if the specified collection is null
      * @see Collection#contains(Object)
      */
-    public boolean removeAll(@Shrinkable ArrayList<E> this, Collection<? extends @UnknownSignedness Object> c) {
+    public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ArrayList<E> this, Collection<? extends @UnknownSignedness Object> c) {
         return batchRemove(c, false, 0, size);
     }
 
@@ -935,7 +935,7 @@ public class ArrayList<E> extends AbstractList<E>
      *         or if the specified collection is null
      * @see Collection#contains(Object)
      */
-    public boolean retainAll(@GuardSatisfied @Shrinkable ArrayList<E> this, Collection<? extends @UnknownSignedness Object> c) {
+    public boolean retainAll(@GuardSatisfied @Modifiable @Shrinkable ArrayList<E> this, Collection<? extends @UnknownSignedness Object> c) {
         return batchRemove(c, true, 0, size);
     }
 
@@ -1107,7 +1107,7 @@ public class ArrayList<E> extends AbstractList<E>
             return (E) elementData[lastRet = i];
         }
 
-        public void remove() {
+        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
             if (lastRet < 0)
                 throw new IllegalStateException();
             checkForComodification();
@@ -1181,7 +1181,7 @@ public class ArrayList<E> extends AbstractList<E>
             return (E) elementData[lastRet = i];
         }
 
-        public void set(E e) {
+        public void set(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
             if (lastRet < 0)
                 throw new IllegalStateException();
             checkForComodification();
@@ -1193,7 +1193,7 @@ public class ArrayList<E> extends AbstractList<E>
             }
         }
 
-        public void add(E e) {
+        public void add(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
             checkForComodification();
 
             try {
@@ -1270,7 +1270,7 @@ public class ArrayList<E> extends AbstractList<E>
             this.modCount = parent.modCount;
         }
 
-        public E set(@NonNegative int index, E element) {
+        public E set(@GuardSatisfied @Modifiable SubList<E> this, @NonNegative int index, E element) {
             Objects.checkIndex(index, size);
             checkForComodification();
             E oldValue = root.elementData(offset + index);
@@ -1290,14 +1290,14 @@ public class ArrayList<E> extends AbstractList<E>
             return size;
         }
 
-        public void add(@NonNegative int index, E element) {
+        public void add(@GuardSatisfied @Modifiable ThisClass<E> this, @NonNegative int index, E element) {
             rangeCheckForAdd(index);
             checkForComodification();
             root.add(offset + index, element);
             updateSizeAndModCount(1);
         }
 
-        public E remove(@NonNegative int index) {
+        public E remove(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, @IndexFor({"this"}) int index) {
             Objects.checkIndex(index, size);
             checkForComodification();
             E result = root.remove(offset + index);
@@ -1311,11 +1311,11 @@ public class ArrayList<E> extends AbstractList<E>
             updateSizeAndModCount(fromIndex - toIndex);
         }
 
-        public boolean addAll(Collection<? extends E> c) {
+        public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, Collection<? extends E> c) {
             return addAll(this.size, c);
         }
 
-        public boolean addAll(@NonNegative int index, Collection<? extends E> c) {
+        public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, @NonNegative int index, Collection<? extends E> c) {
             rangeCheckForAdd(index);
             int cSize = c.size();
             if (cSize==0)
@@ -1326,15 +1326,15 @@ public class ArrayList<E> extends AbstractList<E>
             return true;
         }
 
-        public void replaceAll(UnaryOperator<E> operator) {
+        public void replaceAll(@GuardSatisfied @Modifiable ThisClass<E> this, UnaryOperator<E> operator) {
             root.replaceAllRange(operator, offset, offset + size);
         }
 
-        public boolean removeAll(Collection<? extends @UnknownSignedness Object> c) {
+        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, Collection<? extends @UnknownSignedness Object> c) {
             return batchRemove(c, false);
         }
 
-        public boolean retainAll(Collection<? extends @UnknownSignedness Object> c) {
+        public boolean retainAll(@GuardSatisfied @Modifiable ThisClass<> this, Collection<? extends @UnknownSignedness Object> c) {
             return batchRemove(c, true);
         }
 
@@ -1487,7 +1487,7 @@ public class ArrayList<E> extends AbstractList<E>
                     return cursor - 1;
                 }
 
-                public void remove() {
+                public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
                     if (lastRet < 0)
                         throw new IllegalStateException();
                     checkForComodification();
@@ -1502,7 +1502,7 @@ public class ArrayList<E> extends AbstractList<E>
                     }
                 }
 
-                public void set(E e) {
+                public void set(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
                     if (lastRet < 0)
                         throw new IllegalStateException();
                     checkForComodification();
@@ -1514,7 +1514,7 @@ public class ArrayList<E> extends AbstractList<E>
                     }
                 }
 
-                public void add(E e) {
+                public void add(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
                     checkForComodification();
 
                     try {
@@ -1841,7 +1841,7 @@ public class ArrayList<E> extends AbstractList<E>
 
     @SuppressWarnings({"unchecked"})
     @Override
-    public void replaceAll(UnaryOperator<E> operator) {
+    public void replaceAll(@GuardSatisfied @Modifiable ThisClass<E> this, UnaryOperator<E> operator) {
         replaceAllRange(operator, 0, size);
         // TODO(8203662): remove increment of modCount from ...
         modCount++;
