@@ -1504,7 +1504,7 @@ public class ArrayList<E> extends AbstractList<E>
                     }
                 }
 
-                public void set(/*@GuardSatisfied @Modifiable ListIterator<E> this*/, E e) {
+                public void set(/*@GuardSatisfied @Modifiable ListIterator<E> this,*/ E e) {
                     if (lastRet < 0)
                         throw new IllegalStateException();
                     checkForComodification();
@@ -1516,7 +1516,7 @@ public class ArrayList<E> extends AbstractList<E>
                     }
                 }
 
-                public void add(/*@GuardSatisfied @Modifiable ListIterator<E> this*/, E e) {
+                public void add(/*@GuardSatisfied @Modifiable ListIterator<E> this,*/ E e) {
                     checkForComodification();
 
                     try {

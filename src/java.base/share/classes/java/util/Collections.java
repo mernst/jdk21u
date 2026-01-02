@@ -3504,8 +3504,8 @@ public class Collections {
         public <T> @Nullable T[] toArray(@PolyNull T[] a)              { return c.toArray(a); }
         public <T> T[] toArray(IntFunction<T[]> f) { return c.toArray(f); }
         public String toString()                   { return c.toString(); }
-        public boolean remove(@GuardSatisfied @Modifiable CheckedCollection<E> this, @UnknownSignedness Object o)            { return c.remove(o); }
-        public void clear(@GuardSatisfied @Modifiable @Shrinkable Collections.CheckedCollection<E> this)                        {        c.clear(); }
+        public boolean remove(@GuardSatisfied @Modifiable @Shrinkable CheckedCollection<E> this, @UnknownSignedness Object o)            { return c.remove(o); }
+        public void clear(@GuardSatisfied @Modifiable @Shrinkable CheckedCollection<E> this)                        {        c.clear(); }
 
         @Pure
         public boolean containsAll(Collection<? extends @UnknownSignedness Object> coll) {
@@ -3514,7 +3514,7 @@ public class Collections {
         public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable CheckedCollection<E> this, Collection<? extends @UnknownSignedness Object> coll) {
             return c.removeAll(coll);
         }
-        public boolean retainAll(@GuardSatisfied @Modifiable CheckedCollection<E> this, Collection<? extends @UnknownSignedness Object> coll) {
+        public boolean retainAll(@GuardSatisfied @Modifiable @Shrinkable CheckedCollection<E> this, Collection<? extends @UnknownSignedness Object> coll) {
             return c.retainAll(coll);
         }
 
