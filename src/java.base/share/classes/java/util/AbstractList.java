@@ -917,11 +917,11 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
                     updateSizeAndModCount(-1);
                 }
 
-                public void set(/*@GuardSatisfied @Modifiable ListIterator<E> this, E e*/) {
+                public void set(/*@GuardSatisfied @Modifiable ListIterator<E> this,*/ E e) {
                     i.set(e);
                 }
 
-                public void add(/*@GuardSatisfied @Modifiable ListIterator<E> this, E e*/) {
+                public void add(/*@GuardSatisfied @Modifiable ListIterator<E> this,*/ E e) {
                     i.add(e);
                     updateSizeAndModCount(1);
                 }
