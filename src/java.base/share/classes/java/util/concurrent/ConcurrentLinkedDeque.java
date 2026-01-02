@@ -843,7 +843,7 @@ public class ConcurrentLinkedDeque<E extends @NonNull Object>
      *
      * @throws NullPointerException if the specified element is null
      */
-    public void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+    public void addFirst(@GuardSatisfied @Modifiable ConcurrentLinkedDeque<E> this, E e) {
         linkFirst(e);
     }
 
@@ -856,7 +856,7 @@ public class ConcurrentLinkedDeque<E extends @NonNull Object>
      *
      * @throws NullPointerException if the specified element is null
      */
-    public void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+    public void addLast(@GuardSatisfied @Modifiable ConcurrentLinkedDeque<E> this, E e) {
         linkLast(e);
     }
 
@@ -1184,7 +1184,7 @@ public class ConcurrentLinkedDeque<E extends @NonNull Object>
      *         of its elements are null
      * @throws IllegalArgumentException if the collection is this deque
      */
-    public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, Collection<? extends E> c) {
+    public boolean addAll(@GuardSatisfied @Modifiable ConcurrentLinkedDeque<E> this, Collection<? extends E> c) {
         if (c == this)
             // As historically specified in AbstractQueue#addAll
             throw new IllegalArgumentException();
@@ -1454,7 +1454,7 @@ public class ConcurrentLinkedDeque<E extends @NonNull Object>
             return item;
         }
 
-        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+        public void remove(@GuardSatisfied @Modifiable AbstractItr this) {
             Node<E> l = lastRet;
             if (l == null) throw new IllegalStateException();
             l.item = null;

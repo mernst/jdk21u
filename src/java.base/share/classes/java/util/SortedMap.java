@@ -314,7 +314,7 @@ public interface SortedMap<K,V> extends SequencedMap<K,V> {
      * @throws UnsupportedOperationException always
      * @since 21
      */
-     default V putFirst(@GuardSatisfied @Modifiable ThisClass<K,V> this, K k, V v) {
+     default V putFirst(@GuardSatisfied @Modifiable SortedMap<K,V> this, K k, V v) {
         throw new UnsupportedOperationException();
     }
 
@@ -329,7 +329,7 @@ public interface SortedMap<K,V> extends SequencedMap<K,V> {
      * @throws UnsupportedOperationException always
      * @since 21
      */
-    default V putLast(@GuardSatisfied @Modifiable ThisClass<K,V> this, K k, V v) {
+    default V putLast(@GuardSatisfied @Modifiable SortedMap<K,V> this, K k, V v) {
         throw new UnsupportedOperationException();
     }
 

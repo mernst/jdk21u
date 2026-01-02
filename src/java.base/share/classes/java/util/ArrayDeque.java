@@ -302,7 +302,7 @@ public class ArrayDeque<E extends @NonNull Object> extends AbstractCollection<E>
      * @param e the element to add
      * @throws NullPointerException if the specified element is null
      */
-    public void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+    public void addFirst(@GuardSatisfied @Modifiable ArrayDeque<E> this, E e) {
         if (e == null)
             throw new NullPointerException();
         final Object[] es = elements;
@@ -319,7 +319,7 @@ public class ArrayDeque<E extends @NonNull Object> extends AbstractCollection<E>
      * @param e the element to add
      * @throws NullPointerException if the specified element is null
      */
-    public void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+    public void addLast(@GuardSatisfied @Modifiable ArrayDeque<E> this, E e) {
         if (e == null)
             throw new NullPointerException();
         final Object[] es = elements;
@@ -338,7 +338,7 @@ public class ArrayDeque<E extends @NonNull Object> extends AbstractCollection<E>
      * @throws NullPointerException if the specified collection or any
      *         of its elements are null
      */
-    public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, Collection<? extends E> c) {
+    public boolean addAll(@GuardSatisfied @Modifiable ArrayDeque<E> this, Collection<? extends E> c) {
         final int s, needed;
         if ((needed = (s = size()) + c.size() + 1 - elements.length) > 0)
             grow(needed);
@@ -741,7 +741,7 @@ public class ArrayDeque<E extends @NonNull Object> extends AbstractCollection<E>
                 cursor = dec(cursor, elements.length);
         }
 
-        public final void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+        public final void remove(@GuardSatisfied @Modifiable DeqIterator this) {
             if (lastRet < 0)
                 throw new IllegalStateException();
             postDelete(delete(lastRet));

@@ -813,7 +813,7 @@ public class Vector<E>
      * bytecode size under 35 (the -XX:MaxInlineSize default value),
      * which helps when add(E) is called in a C1-compiled loop.
      */
-    private void add(@GuardSatisfied @Modifiable ThisClass<E> this, E e, Object[] elementData, int s) {
+    private void add(@GuardSatisfied @Modifiable Vector<E> this, E e, Object[] elementData, int s) {
         if (s == elementData.length)
             elementData = grow();
         elementData[s] = e;
@@ -1302,7 +1302,7 @@ public class Vector<E>
             }
         }
 
-        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+        public void remove(@GuardSatisfied @Modifiable Itr this) {
             if (lastRet == -1)
                 throw new IllegalStateException();
             synchronized (Vector.this) {
@@ -1373,7 +1373,7 @@ public class Vector<E>
             }
         }
 
-        public void set(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+        public void set(@GuardSatisfied @Modifiable ListItr this, E e) {
             if (lastRet == -1)
                 throw new IllegalStateException();
             synchronized (Vector.this) {
@@ -1382,7 +1382,7 @@ public class Vector<E>
             }
         }
 
-        public void add(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+        public void add(@GuardSatisfied @Modifiable ListItr this, E e) {
             int i = cursor;
             synchronized (Vector.this) {
                 checkForComodification();
@@ -1414,7 +1414,7 @@ public class Vector<E>
      */
     @SuppressWarnings({"unchecked"})
     @Override
-    public synchronized void replaceAll(@GuardSatisfied @Modifiable ThisClass<E> this, UnaryOperator<E> operator) {
+    public synchronized void replaceAll(@GuardSatisfied @Modifiable Vector<E> this, UnaryOperator<E> operator) {
         Objects.requireNonNull(operator);
         final int expectedModCount = modCount;
         final Object[] es = elementData;

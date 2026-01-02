@@ -292,7 +292,7 @@ public interface SortedSet<E> extends Set<E>, SequencedSet<E> {
      * @throws UnsupportedOperationException always
      * @since 21
      */
-    default void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+    default void addFirst(@GuardSatisfied @Modifiable SortedSet<E> this, E e) {
         throw new UnsupportedOperationException();
     }
 
@@ -307,7 +307,7 @@ public interface SortedSet<E> extends Set<E>, SequencedSet<E> {
      * @throws UnsupportedOperationException always
      * @since 21
      */
-    default void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+    default void addLast(@GuardSatisfied @Modifiable SortedSet<E> this, E e) {
         throw new UnsupportedOperationException();
     }
 
@@ -349,7 +349,7 @@ public interface SortedSet<E> extends Set<E>, SequencedSet<E> {
      * @throws UnsupportedOperationException {@inheritDoc}
      * @since 21
      */
-    default E removeFirst(@GuardSatisfied @Modifiable ThisClass<E> this) {
+    default E removeFirst(@GuardSatisfied @Modifiable SortedSet<E> this) {
         E e = this.first();
         this.remove(e);
         return e;
@@ -367,7 +367,7 @@ public interface SortedSet<E> extends Set<E>, SequencedSet<E> {
      * @throws UnsupportedOperationException {@inheritDoc}
      * @since 21
      */
-    default E removeLast(@GuardSatisfied @Modifiable ThisClass<E> this) {
+    default E removeLast(@GuardSatisfied @Modifiable SortedSet<E> this) {
         E e = this.last();
         this.remove(e);
         return e;

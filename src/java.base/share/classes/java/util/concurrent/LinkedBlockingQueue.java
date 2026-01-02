@@ -868,7 +868,7 @@ public class LinkedBlockingQueue<E extends Object> extends AbstractQueue<E>
             } while (n > 0 && p != null);
         }
 
-        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+        public void remove(@GuardSatisfied @Modifiable Itr this) {
             Node<E> p = lastRet;
             if (p == null)
                 throw new IllegalStateException();

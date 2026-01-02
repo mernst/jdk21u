@@ -518,7 +518,7 @@ public class ArrayList<E> extends AbstractList<E>
      * which helps when add(E) is called in a C1-compiled loop.
      */
     @SideEffectsOnly("this")
-    private void add(@GuardSatisfied @Modifiable ThisClass<E> this, E e, Object[] elementData, int s) {
+    private void add(@GuardSatisfied @Modifiable ArrayList<E> this, E e, Object[] elementData, int s) {
         if (s == elementData.length)
             elementData = grow();
         elementData[s] = e;
@@ -568,7 +568,7 @@ public class ArrayList<E> extends AbstractList<E>
      *
      * @since 21
      */
-    public void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, E element) {
+    public void addFirst(@GuardSatisfied @Modifiable ArrayList<E> this, E element) {
         add(0, element);
     }
 
@@ -577,7 +577,7 @@ public class ArrayList<E> extends AbstractList<E>
      *
      * @since 21
      */
-    public void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, E element) {
+    public void addLast(@GuardSatisfied @Modifiable ArrayList<E> this, E element) {
         add(element);
     }
 
@@ -606,7 +606,7 @@ public class ArrayList<E> extends AbstractList<E>
      * @throws NoSuchElementException {@inheritDoc}
      * @since 21
      */
-    public E removeFirst(@GuardSatisfied @Modifiable ThisClass<E> this) {
+    public E removeFirst(@GuardSatisfied @Modifiable ArrayList<E> this) {
         if (size == 0) {
             throw new NoSuchElementException();
         } else {
@@ -623,7 +623,7 @@ public class ArrayList<E> extends AbstractList<E>
      * @throws NoSuchElementException {@inheritDoc}
      * @since 21
      */
-    public E removeLast(@GuardSatisfied @Modifiable ThisClass<E> this) {
+    public E removeLast(@GuardSatisfied @Modifiable ArrayList<E> this) {
         int last = size - 1;
         if (last < 0) {
             throw new NoSuchElementException();
@@ -1108,7 +1108,7 @@ public class ArrayList<E> extends AbstractList<E>
             return (E) elementData[lastRet = i];
         }
 
-        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+        public void remove(@GuardSatisfied @Modifiable Itr this) {
             if (lastRet < 0)
                 throw new IllegalStateException();
             checkForComodification();
@@ -1182,7 +1182,7 @@ public class ArrayList<E> extends AbstractList<E>
             return (E) elementData[lastRet = i];
         }
 
-        public void set(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+        public void set(@GuardSatisfied @Modifiable ListItr this, E e) {
             if (lastRet < 0)
                 throw new IllegalStateException();
             checkForComodification();
@@ -1194,7 +1194,7 @@ public class ArrayList<E> extends AbstractList<E>
             }
         }
 
-        public void add(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+        public void add(@GuardSatisfied @Modifiable ListItr this, E e) {
             checkForComodification();
 
             try {
@@ -1291,14 +1291,14 @@ public class ArrayList<E> extends AbstractList<E>
             return size;
         }
 
-        public void add(@GuardSatisfied @Modifiable ThisClass<E> this, @NonNegative int index, E element) {
+        public void add(@GuardSatisfied @Modifiable SubList<E> this, @NonNegative int index, E element) {
             rangeCheckForAdd(index);
             checkForComodification();
             root.add(offset + index, element);
             updateSizeAndModCount(1);
         }
 
-        public E remove(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, @IndexFor({"this"}) int index) {
+        public E remove(@GuardSatisfied @Modifiable @Shrinkable SubList<E> this, @IndexFor({"this"}) int index) {
             Objects.checkIndex(index, size);
             checkForComodification();
             E result = root.remove(offset + index);
@@ -1312,11 +1312,11 @@ public class ArrayList<E> extends AbstractList<E>
             updateSizeAndModCount(fromIndex - toIndex);
         }
 
-        public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, Collection<? extends E> c) {
+        public boolean addAll(@GuardSatisfied @Modifiable SubList<E> this, Collection<? extends E> c) {
             return addAll(this.size, c);
         }
 
-        public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, @NonNegative int index, Collection<? extends E> c) {
+        public boolean addAll(@GuardSatisfied @Modifiable SubList<E> this, @NonNegative int index, Collection<? extends E> c) {
             rangeCheckForAdd(index);
             int cSize = c.size();
             if (cSize==0)
@@ -1327,15 +1327,15 @@ public class ArrayList<E> extends AbstractList<E>
             return true;
         }
 
-        public void replaceAll(@GuardSatisfied @Modifiable ThisClass<E> this, UnaryOperator<E> operator) {
+        public void replaceAll(@GuardSatisfied @Modifiable SubList<E> this, UnaryOperator<E> operator) {
             root.replaceAllRange(operator, offset, offset + size);
         }
 
-        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, Collection<? extends @UnknownSignedness Object> c) {
+        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable SubList<E> this, Collection<? extends @UnknownSignedness Object> c) {
             return batchRemove(c, false);
         }
 
-        public boolean retainAll(@GuardSatisfied @Modifiable ThisClass<> this, Collection<? extends @UnknownSignedness Object> c) {
+        public boolean retainAll(@GuardSatisfied @Modifiable SubList<> this, Collection<? extends @UnknownSignedness Object> c) {
             return batchRemove(c, true);
         }
 
@@ -1488,7 +1488,7 @@ public class ArrayList<E> extends AbstractList<E>
                     return cursor - 1;
                 }
 
-                public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+                public void remove(@GuardSatisfied @Modifiable ListIterator<E> this) {
                     if (lastRet < 0)
                         throw new IllegalStateException();
                     checkForComodification();
@@ -1503,7 +1503,7 @@ public class ArrayList<E> extends AbstractList<E>
                     }
                 }
 
-                public void set(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+                public void set(@GuardSatisfied @Modifiable ListIterator<E> this, E e) {
                     if (lastRet < 0)
                         throw new IllegalStateException();
                     checkForComodification();
@@ -1515,7 +1515,7 @@ public class ArrayList<E> extends AbstractList<E>
                     }
                 }
 
-                public void add(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+                public void add(@GuardSatisfied @Modifiable ListIterator<E> this, E e) {
                     checkForComodification();
 
                     try {
@@ -1842,7 +1842,7 @@ public class ArrayList<E> extends AbstractList<E>
 
     @SuppressWarnings({"unchecked"})
     @Override
-    public void replaceAll(@GuardSatisfied @Modifiable ThisClass<E> this, UnaryOperator<E> operator) {
+    public void replaceAll(@GuardSatisfied @Modifiable ArrayList<E> this, UnaryOperator<E> operator) {
         replaceAllRange(operator, 0, size);
         // TODO(8203662): remove increment of modCount from ...
         modCount++;

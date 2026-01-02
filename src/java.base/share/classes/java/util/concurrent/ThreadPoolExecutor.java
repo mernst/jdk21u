@@ -1774,7 +1774,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      * @param task the task to remove
      * @return {@code true} if the task was removed
      */
-    public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, Runnable task) {
+    public boolean remove(Runnable task) {
         boolean removed = workQueue.remove(task);
         tryTerminate(); // In case SHUTDOWN and now empty
         return removed;

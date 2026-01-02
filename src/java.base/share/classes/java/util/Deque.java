@@ -536,7 +536,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      * @throws IllegalArgumentException if some property of an element of the
      *         specified collection prevents it from being added to this deque
      */
-    boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, Collection<? extends E> c);
+    boolean addAll(@GuardSatisfied @Modifiable Deque<E> this, Collection<? extends E> c);
 
     // *** Stack methods ***
 

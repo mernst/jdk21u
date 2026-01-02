@@ -232,7 +232,7 @@ public interface BlockingDeque<E extends @NonNull Object> extends BlockingQueue<
      * @throws NullPointerException if the specified element is null
      * @throws IllegalArgumentException {@inheritDoc}
      */
-    void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, E e);
+    void addFirst(@GuardSatisfied @Modifiable BlockingQueue<E> this, E e);
 
     /**
      * Inserts the specified element at the end of this deque if it is
@@ -247,7 +247,7 @@ public interface BlockingDeque<E extends @NonNull Object> extends BlockingQueue<
      * @throws NullPointerException if the specified element is null
      * @throws IllegalArgumentException {@inheritDoc}
      */
-    void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, E e);
+    void addLast(@GuardSatisfied @Modifiable BlockingQueue<E> this, E e);
 
     /**
      * Inserts the specified element at the front of this deque if it is

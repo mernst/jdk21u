@@ -350,7 +350,7 @@ public interface NavigableSet<E> extends SortedSet<E> {
      * @throws UnsupportedOperationException {@inheritDoc}
      * @since 21
      */
-    default E removeFirst(@GuardSatisfied @Modifiable ThisClass<E> this) {
+    default E removeFirst(@GuardSatisfied @Modifiable NavigableSet<E> this) {
         if (this.isEmpty()) {
             throw new NoSuchElementException();
         } else {
@@ -369,7 +369,7 @@ public interface NavigableSet<E> extends SortedSet<E> {
      * @throws UnsupportedOperationException {@inheritDoc}
      * @since 21
      */
-    default E removeLast(@GuardSatisfied @Modifiable ThisClass<E> this) {
+    default E removeLast(@GuardSatisfied @Modifiable NavigableSet<E> this) {
         if (this.isEmpty()) {
             throw new NoSuchElementException();
         } else {

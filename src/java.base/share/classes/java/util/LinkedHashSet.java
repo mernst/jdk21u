@@ -244,7 +244,7 @@ public class LinkedHashSet<E>
      *
      * @since 21
      */
-    public void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+    public void addFirst(@GuardSatisfied @Modifiable LinkedHashSet<E> this, E e) {
         map().putFirst(e, PRESENT);
     }
 
@@ -256,7 +256,7 @@ public class LinkedHashSet<E>
      *
      * @since 21
      */
-    public void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+    public void addLast(@GuardSatisfied @Modifiable LinkedHashSet<E> this, E e) {
         map().putLast(e, PRESENT);
     }
 
@@ -286,7 +286,7 @@ public class LinkedHashSet<E>
      * @throws NoSuchElementException {@inheritDoc}
      * @since 21
      */
-    public E removeFirst(@GuardSatisfied @Modifiable ThisClass<E> this) {
+    public E removeFirst(@GuardSatisfied @Modifiable LinkedHashSet<E> this) {
         return map().sequencedKeySet().removeFirst();
     }
 
@@ -296,7 +296,7 @@ public class LinkedHashSet<E>
      * @throws NoSuchElementException {@inheritDoc}
      * @since 21
      */
-    public E removeLast(@GuardSatisfied @Modifiable ThisClass<E> this) {
+    public E removeLast(@GuardSatisfied @Modifiable LinkedHashSet<E> this) {
         return map().sequencedKeySet().removeLast();
     }
 
@@ -314,12 +314,12 @@ public class LinkedHashSet<E>
             public int size()                  { return LinkedHashSet.this.size(); }
             public Iterator<E> iterator()      { return map().sequencedKeySet().reversed().iterator(); }
             public boolean add(@GuardSatisfied @Modifiable SequencedSet<E> this, E e)            { return LinkedHashSet.this.add(e); }
-            public void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, E e)          { LinkedHashSet.this.addLast(e); }
-            public void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, E e)           { LinkedHashSet.this.addFirst(e); }
+            public void addFirst(@GuardSatisfied @Modifiable ReverseLinkedHashSetView this, E e)          { LinkedHashSet.this.addLast(e); }
+            public void addLast(@GuardSatisfied @Modifiable ReverseLinkedHashSetView this, E e)           { LinkedHashSet.this.addFirst(e); }
             public E getFirst()                { return LinkedHashSet.this.getLast(); }
             public E getLast()                 { return LinkedHashSet.this.getFirst(); }
-            public E removeFirst(@GuardSatisfied @Modifiable ThisClass<E> this)             { return LinkedHashSet.this.removeLast(); }
-            public E removeLast(@GuardSatisfied @Modifiable ThisClass<E> this)              { return LinkedHashSet.this.removeFirst(); }
+            public E removeFirst(@GuardSatisfied @Modifiable ReverseLinkedHashSetView this)             { return LinkedHashSet.this.removeLast(); }
+            public E removeLast(@GuardSatisfied @Modifiable ReverseLinkedHashSetView this)              { return LinkedHashSet.this.removeFirst(); }
             public SequencedSet<E> reversed()  { return LinkedHashSet.this; }
             public Object[] toArray() { return map().keysToArray(new Object[map.size()], true); }
             public <T> T[] toArray(T[] a) { return map().keysToArray(map.prepareArray(a), true); }

@@ -342,7 +342,7 @@ public class TreeMap<K,V>
      * @throws UnsupportedOperationException always
      * @since 21
      */
-     public V putFirst(@GuardSatisfied @Modifiable ThisClass<K,V> this, K k, V v) {
+     public V putFirst(@GuardSatisfied @Modifiable TreeMap<K,V> this, K k, V v) {
         throw new UnsupportedOperationException();
     }
 
@@ -354,7 +354,7 @@ public class TreeMap<K,V>
      * @throws UnsupportedOperationException always
      * @since 21
      */
-    public V putLast(@GuardSatisfied @Modifiable ThisClass<K,V> this, K k, V v) {
+    public V putLast(@GuardSatisfied @Modifiable TreeMap<K,V> this, K k, V v) {
         throw new UnsupportedOperationException();
     }
 
@@ -1391,7 +1391,7 @@ public class TreeMap<K,V>
             return TreeMap.this.containsValue(o);
         }
 
-        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object o) {
+        public boolean remove(@GuardSatisfied @Modifiable Values this, @UnknownSignedness Object o) {
             for (Entry<K,V> e = getFirstEntry(); e != null; e = successor(e)) {
                 if (valEquals(e.getValue(), o)) {
                     deleteEntry(e);
@@ -1427,7 +1427,7 @@ public class TreeMap<K,V>
             return p != null && valEquals(p.getValue(), value);
         }
 
-        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object o) {
+        public boolean remove(@GuardSatisfied @Modifiable EntrySet this, @UnknownSignedness Object o) {
             if (!(o instanceof Map.Entry<?, ?> entry))
                 return false;
             Object value = entry.getValue();
@@ -1513,7 +1513,7 @@ public class TreeMap<K,V>
             Map.Entry<E,?> e = m.pollLastEntry();
             return (e == null) ? null : e.getKey();
         }
-        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object o) {
+        public boolean remove(@GuardSatisfied @Modifiable KeySet<E> this, @UnknownSignedness Object o) {
             int oldSize = size();
             m.remove(o);
             return size() != oldSize;
@@ -1592,7 +1592,7 @@ public class TreeMap<K,V>
             return e;
         }
 
-        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+        public void remove(@GuardSatisfied @Modifiable PrivateEntryIterator<T> this) {
             if (lastReturned == null)
                 throw new IllegalStateException();
             if (modCount != expectedModCount)
@@ -1640,7 +1640,7 @@ public class TreeMap<K,V>
         public K next(@NonEmpty DescendingKeyIterator this) {
             return prevEntry().key;
         }
-        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+        public void remove(@GuardSatisfied @Modifiable DescendingKeyIterator this) {
             if (lastReturned == null)
                 throw new IllegalStateException();
             if (modCount != expectedModCount)
@@ -1986,7 +1986,7 @@ public class TreeMap<K,V>
             return exportEntry(subHighest());
         }
 
-        public final Map.Entry<K,V> pollFirstEntry(@GuardSatisfied @Modifiable ThisClass<E> this) {
+        public final Map.Entry<K,V> pollFirstEntry(@GuardSatisfied @Modifiable NavigableSubMap<K,V> this) {
             TreeMap.Entry<K,V> e = subLowest();
             Map.Entry<K,V> result = exportEntry(e);
             if (e != null)
@@ -1994,7 +1994,7 @@ public class TreeMap<K,V>
             return result;
         }
 
-        public final Map.Entry<K,V> pollLastEntry(@GuardSatisfied @Modifiable ThisClass<E> this) {
+        public final Map.Entry<K,V> pollLastEntry(@GuardSatisfied @Modifiable NavigableSubMap<K,V> this) {
             TreeMap.Entry<K,V> e = subHighest();
             Map.Entry<K,V> result = exportEntry(e);
             if (e != null)
@@ -2079,7 +2079,7 @@ public class TreeMap<K,V>
                     valEquals(node.getValue(), entry.getValue());
             }
 
-            public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object o) {
+            public boolean remove(@GuardSatisfied @Modifiable EntrySetView this, @UnknownSignedness Object o) {
                 if (!(o instanceof Entry<?, ?> entry))
                     return false;
                 Object key = entry.getKey();
@@ -2175,7 +2175,7 @@ public class TreeMap<K,V>
             public Map.Entry<K,V> next(@NonEmpty SubMapEntryIterator this) {
                 return nextEntry();
             }
-            public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+            public void remove(@GuardSatisfied @Modifiable SubMapEntryIterator this) {
                 removeAscending();
             }
         }
@@ -2189,7 +2189,7 @@ public class TreeMap<K,V>
             public Map.Entry<K,V> next(@NonEmpty DescendingSubMapEntryIterator this) {
                 return prevEntry();
             }
-            public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+            public void remove(@GuardSatisfied @Modifiable DescendingSubMapEntryIterator this) {
                 removeDescending();
             }
         }
@@ -2204,7 +2204,7 @@ public class TreeMap<K,V>
             public K next(@NonEmpty SubMapKeyIterator this) {
                 return nextEntry().key;
             }
-            public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+            public void remove(@GuardSatisfied @Modifiable SubMapKeyIterator this) {
                 removeAscending();
             }
             public Spliterator<K> trySplit() {
@@ -2242,7 +2242,7 @@ public class TreeMap<K,V>
             public K next(@NonEmpty DescendingSubMapKeyIterator this) {
                 return prevEntry().key;
             }
-            public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+            public void remove(@GuardSatisfied @Modifiable DescendingSubMapKeyIterator this) {
                 removeDescending();
             }
             public Spliterator<K> trySplit() {

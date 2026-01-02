@@ -405,7 +405,7 @@ public class LinkedHashMap<K,V>
      *
      * @since 21
      */
-    public V putFirst(@GuardSatisfied @Modifiable ThisClass<K,V> this, K k, V v) {
+    public V putFirst(@GuardSatisfied @Modifiable LinkedHashMap<K,V> this, K k, V v) {
         try {
             putMode = PUT_FIRST;
             return this.put(k, v);
@@ -422,7 +422,7 @@ public class LinkedHashMap<K,V>
      *
      * @since 21
      */
-    public V putLast(@GuardSatisfied @Modifiable ThisClass<K,V> this, K k, V v) {
+    public V putLast(@GuardSatisfied @Modifiable LinkedHashMap<K,V> this, K k, V v) {
         try {
             putMode = PUT_LAST;
             return this.put(k, v);
@@ -724,7 +724,7 @@ public class LinkedHashMap<K,V>
         @Pure
         @EnsuresNonEmptyIf(result = true, expression = "this")
         public final boolean contains(@Nullable @UnknownSignedness Object o) { return containsKey(o); }
-        public final boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @Nullable @UnknownSignedness Object key) {
+        public final boolean remove(@GuardSatisfied @Modifiable LinkedKeySet this, @Nullable @UnknownSignedness Object key) {
             return removeNode(hash(key), key, null, false, true) != null;
         }
         @SideEffectFree
@@ -756,8 +756,8 @@ public class LinkedHashMap<K,V>
             if (modCount != mc)
                 throw new ConcurrentModificationException();
         }
-        public final void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, K k) { throw new UnsupportedOperationException(); }
-        public final void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, K k) { throw new UnsupportedOperationException(); }
+        public final void addFirst(@GuardSatisfied @Modifiable LinkedKeySet this, K k) { throw new UnsupportedOperationException(); }
+        public final void addLast(@GuardSatisfied @Modifiable LinkedKeySet this, K k) { throw new UnsupportedOperationException(); }
         public final K getFirst() { return nsee(reversed ? tail : head).key; }
         public final K getLast() { return nsee(reversed ? head : tail).key; }
         public final K removeFirst() {
@@ -865,8 +865,8 @@ public class LinkedHashMap<K,V>
             if (modCount != mc)
                 throw new ConcurrentModificationException();
         }
-        public final void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, V v) { throw new UnsupportedOperationException(); }
-        public final void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, V v) { throw new UnsupportedOperationException(); }
+        public final void addFirst(@GuardSatisfied @Modifiable LinkedValues this, V v) { throw new UnsupportedOperationException(); }
+        public final void addLast(@GuardSatisfied @Modifiable LinkedValues this, V v) { throw new UnsupportedOperationException(); }
         public final V getFirst() { return nsee(reversed ? tail : head).value; }
         public final V getLast() { return nsee(reversed ? head : tail).value; }
         public final V removeFirst() {
@@ -955,7 +955,7 @@ public class LinkedHashMap<K,V>
             Node<K,V> candidate = getNode(key);
             return candidate != null && candidate.equals(e);
         }
-        public final boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @Nullable @UnknownSignedness Object o) {
+        public final boolean remove(@GuardSatisfied @Modifiable LinkedEntrySet this, @Nullable @UnknownSignedness Object o) {
             if (o instanceof Map.Entry<?, ?> e) {
                 Object key = e.getKey();
                 Object value = e.getValue();
@@ -989,8 +989,8 @@ public class LinkedHashMap<K,V>
             else
                 return e;
         }
-        public final void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, Map.Entry<K,V> e) { throw new UnsupportedOperationException(); }
-        public final void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, Map.Entry<K,V> e) { throw new UnsupportedOperationException(); }
+        public final void addFirst(@GuardSatisfied @Modifiable LinkedEntrySet this, Map.Entry<K,V> e) { throw new UnsupportedOperationException(); }
+        public final void addLast(@GuardSatisfied @Modifiable LinkedEntrySet this, Map.Entry<K,V> e) { throw new UnsupportedOperationException(); }
         public final Map.Entry<K,V> getFirst() { return nsee(reversed ? tail : head); }
         public final Map.Entry<K,V> getLast() { return nsee(reversed ? head : tail); }
         public final Map.Entry<K,V> removeFirst() {
@@ -1067,7 +1067,7 @@ public class LinkedHashMap<K,V>
             return e;
         }
 
-        public final void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+        public final void remove(@GuardSatisfied @Modifiable LinkedHashIterator this) {
             Node<K,V> p = current;
             if (p == null)
                 throw new IllegalStateException();
@@ -1230,7 +1230,7 @@ public class LinkedHashMap<K,V>
             return base.putIfAbsent(key, value);
         }
 
-        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, Object key, Object value) {
+        public boolean remove(@GuardSatisfied @Modifiable ReversedLinkedHashMapView<K,V> this, Object key, Object value) {
             return base.remove(key, value);
         }
 
@@ -1272,19 +1272,19 @@ public class LinkedHashMap<K,V>
             return base.firstEntry();
         }
 
-        public Entry<K, V> pollFirstEntry(@GuardSatisfied @Modifiable ThisClass<E> this) {
+        public Entry<K, V> pollFirstEntry(@GuardSatisfied @Modifiable ReversedLinkedHashMapView<K,V> this) {
             return base.pollLastEntry();
         }
 
-        public Entry<K, V> pollLastEntry(@GuardSatisfied @Modifiable ThisClass<E> this) {
+        public Entry<K, V> pollLastEntry(@GuardSatisfied @Modifiable ReversedLinkedHashMapView<K,V> this) {
             return base.pollFirstEntry();
         }
 
-        public V putFirst(@GuardSatisfied @Modifiable ThisClass<K,V> this, K k, V v) {
+        public V putFirst(@GuardSatisfied @Modifiable ReversedLinkedHashMapView<K,V> this, K k, V v) {
             return base.putLast(k, v);
         }
 
-        public V putLast(@GuardSatisfied @Modifiable ThisClass<K,V> this, K k, V v) {
+        public V putLast(@GuardSatisfied @Modifiable ReversedLinkedHashMapView<K,V> this, K k, V v) {
             return base.putFirst(k, v);
         }
     }

@@ -966,7 +966,7 @@ public class LinkedList<E>
             return nextIndex - 1;
         }
 
-        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+        public void remove(@GuardSatisfied @Modifiable ListItr this) {
             checkForComodification();
             if (lastReturned == null)
                 throw new IllegalStateException();
@@ -981,14 +981,14 @@ public class LinkedList<E>
             expectedModCount++;
         }
 
-        public void set(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+        public void set(@GuardSatisfied @Modifiable ListItr this, E e) {
             if (lastReturned == null)
                 throw new IllegalStateException();
             checkForComodification();
             lastReturned.item = e;
         }
 
-        public void add(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+        public void add(@GuardSatisfied @Modifiable ListItr this, E e) {
             checkForComodification();
             lastReturned = null;
             if (next == null)
@@ -1049,7 +1049,7 @@ public class LinkedList<E>
         public E next(@NonEmpty DescendingIterator this) {
             return itr.previous();
         }
-        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+        public void remove(@GuardSatisfied @Modifiable DescendingIterator this) {
             itr.remove();
         }
     }
@@ -1349,11 +1349,11 @@ public class LinkedList<E>
             return rlist.toString();
         }
 
-        public boolean retainAll(@GuardSatisfied @Modifiable ThisClass<> this, Collection<?> c) {
+        public boolean retainAll(@GuardSatisfied @Modifiable ReverseOrderLinkedListView<E> this, Collection<?> c) {
             return rlist.retainAll(c);
         }
 
-        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, Collection<?> c) {
+        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ReverseOrderLinkedListView<E> this, Collection<?> c) {
             return rlist.removeAll(c);
         }
 
@@ -1409,7 +1409,7 @@ public class LinkedList<E>
             rlist.sort(c);
         }
 
-        public void replaceAll(@GuardSatisfied @Modifiable ThisClass<E> this, UnaryOperator<E> operator) {
+        public void replaceAll(@GuardSatisfied @Modifiable ReverseOrderLinkedListView<E> this, UnaryOperator<E> operator) {
             rlist.replaceAll(operator);
         }
 
@@ -1481,7 +1481,7 @@ public class LinkedList<E>
             return rdeque.offer(e);
         }
 
-        public E remove(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this) {
+        public E remove(@GuardSatisfied @Modifiable @Shrinkable ReverseOrderLinkedListView<E> this) {
             return rdeque.remove();
         }
 
@@ -1505,11 +1505,11 @@ public class LinkedList<E>
             return rlist.indexOf(o);
         }
 
-        public E remove(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, @IndexFor({"this"}) int index) {
+        public E remove(@GuardSatisfied @Modifiable @Shrinkable ReverseOrderLinkedListView<E> this, @IndexFor({"this"}) int index) {
             return rlist.remove(index);
         }
 
-        public void add(@GuardSatisfied @Modifiable ThisClass<E> this, @IndexOrHigh({"this"}) int index, E element) {
+        public void add(@GuardSatisfied @Modifiable ReverseOrderLinkedListView<E> this, @IndexOrHigh({"this"}) int index, E element) {
             rlist.add(index, element);
         }
 
@@ -1525,15 +1525,15 @@ public class LinkedList<E>
             rlist.clear();
         }
 
-        public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, int index, Collection<? extends E> c) {
+        public boolean addAll(@GuardSatisfied @Modifiable ReverseOrderLinkedListView<E> this, int index, Collection<? extends E> c) {
             return rlist.addAll(index, c);
         }
 
-        public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, Collection<? extends E> c) {
+        public boolean addAll(@GuardSatisfied @Modifiable ReverseOrderLinkedListView<E> this, Collection<? extends E> c) {
             return rlist.addAll(c);
         }
 
-        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, Object o) {
+        public boolean remove(@GuardSatisfied @Modifiable ReverseOrderLinkedListView<E> this, Object o) {
             return rlist.remove(o);
         }
 
@@ -1549,19 +1549,19 @@ public class LinkedList<E>
             return rlist.contains(o);
         }
 
-        public void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+        public void addLast(@GuardSatisfied @Modifiable ReverseOrderLinkedListView<E> this, E e) {
             rdeque.addLast(e);
         }
 
-        public void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+        public void addFirst(@GuardSatisfied @Modifiable ReverseOrderLinkedListView<E> this, E e) {
             rdeque.addFirst(e);
         }
 
-        public E removeLast(@GuardSatisfied @Modifiable ThisClass<E> this) {
+        public E removeLast(@GuardSatisfied @Modifiable ReverseOrderLinkedListView<E> this) {
             return rdeque.removeLast();
         }
 
-        public E removeFirst(@GuardSatisfied @Modifiable ThisClass<E> this) {
+        public E removeFirst(@GuardSatisfied @Modifiable ReverseOrderLinkedListView<E> this) {
             return rdeque.removeFirst();
         }
 

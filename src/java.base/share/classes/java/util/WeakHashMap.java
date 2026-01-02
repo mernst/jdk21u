@@ -854,7 +854,7 @@ public class WeakHashMap<K,V>
             return lastReturned;
         }
 
-        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+        public void remove(@GuardSatisfied @Modifiable HashIterator<T> this) {
             if (lastReturned == null)
                 throw new IllegalStateException();
             if (modCount != expectedModCount)
@@ -930,7 +930,7 @@ public class WeakHashMap<K,V>
             return containsKey(o);
         }
 
-        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @Nullable @UnknownSignedness Object o) {
+        public boolean remove(@GuardSatisfied @Modifiable KeySet this, @Nullable @UnknownSignedness Object o) {
             if (containsKey(o)) {
                 WeakHashMap.this.remove(o);
                 return true;
@@ -1033,7 +1033,7 @@ public class WeakHashMap<K,V>
                     && getEntry(e.getKey()).equals(e);
         }
 
-        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @Nullable @UnknownSignedness Object o) {
+        public boolean remove(@GuardSatisfied @Modifiable EntrySet this, @Nullable @UnknownSignedness Object o) {
             return removeMapping(o);
         }
 

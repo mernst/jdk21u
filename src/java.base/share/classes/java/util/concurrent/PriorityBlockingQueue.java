@@ -889,7 +889,7 @@ public class PriorityBlockingQueue<E extends Object> extends AbstractQueue<E>
             return (E)array[lastRet = cursor++];
         }
 
-        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+        public void remove(@GuardSatisfied @Modifiable Itr this) {
             if (lastRet < 0)
                 throw new IllegalStateException();
             removeEq(array[lastRet]);

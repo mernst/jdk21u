@@ -410,7 +410,7 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
             }
         }
 
-        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+        public void remove(@GuardSatisfied @Modifiable ListIterator<E> this) {
             if (lastRet < 0)
                 throw new IllegalStateException();
             checkForComodification();
@@ -462,7 +462,7 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
             return cursor-1;
         }
 
-        public void set(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+        public void set(@GuardSatisfied @Modifiable ListItr this, E e) {
             if (lastRet < 0)
                 throw new IllegalStateException();
             checkForComodification();
@@ -475,7 +475,7 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
             }
         }
 
-        public void add(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+        public void add(@GuardSatisfied @Modifiable ListItr this, E e) {
             checkForComodification();
 
             try {
@@ -827,14 +827,14 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
             return size;
         }
 
-        public void add(@GuardSatisfied @Modifiable ThisClass<E> this, @IndexOrHigh({"this"}) int index, E element) {
+        public void add(@GuardSatisfied @Modifiable SubList<E> this, @IndexOrHigh({"this"}) int index, E element) {
             rangeCheckForAdd(index);
             checkForComodification();
             root.add(offset + index, element);
             updateSizeAndModCount(1);
         }
 
-        public E remove(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, @IndexFor({"this"} int index) {
+        public E remove(@GuardSatisfied @Modifiable @Shrinkable SubList<E> this, @IndexFor({"this"}) int index) {
             Objects.checkIndex(index, size);
             checkForComodification();
             E result = root.remove(offset + index);
@@ -848,11 +848,11 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
             updateSizeAndModCount(fromIndex - toIndex);
         }
 
-        public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, Collection<? extends E> c) {
+        public boolean addAll(@GuardSatisfied @Modifiable SubList<E> this, Collection<? extends E> c) {
             return addAll(size, c);
         }
 
-        public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, int index, Collection<? extends E> c) {
+        public boolean addAll(@GuardSatisfied @Modifiable SubList<E> this, int index, Collection<? extends E> c) {
             rangeCheckForAdd(index);
             int cSize = c.size();
             if (cSize==0)
@@ -912,16 +912,16 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
                     return i.previousIndex() - offset;
                 }
 
-                public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+                public void remove(@GuardSatisfied @Modifiable ListIterator<E> this) {
                     i.remove();
                     updateSizeAndModCount(-1);
                 }
 
-                public void set(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+                public void set(@GuardSatisfied @Modifiable ListIterator<E> this, E e) {
                     i.set(e);
                 }
 
-                public void add(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+                public void add(@GuardSatisfied @Modifiable ListIterator<E> this, E e) {
                     i.add(e);
                     updateSizeAndModCount(1);
                 }

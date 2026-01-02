@@ -1293,7 +1293,7 @@ public class ArrayBlockingQueue<E extends Object> extends AbstractQueue<E>
             }
         }
 
-        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+        public void remove(@GuardSatisfied @Modifiable Itr this) {
             final ReentrantLock lock = ArrayBlockingQueue.this.lock;
             lock.lock();
             // assert lock.getHoldCount() == 1;

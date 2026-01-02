@@ -346,7 +346,7 @@ public class DelayQueue<E extends @NonNull Delayed> extends AbstractQueue<E>
      * @throws NoSuchElementException if this queue has no elements with an
      *         expired delay
      */
-    public E remove(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this) {
+    public E remove(@GuardSatisfied @Modifiable @Shrinkable DelayQueue<E> this) {
         return super.remove();
     }
 
@@ -591,7 +591,7 @@ public class DelayQueue<E extends @NonNull Delayed> extends AbstractQueue<E>
             return (E)array[lastRet = cursor++];
         }
 
-        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+        public void remove(@GuardSatisfied @Modifiable Itr this) {
             if (lastRet < 0)
                 throw new IllegalStateException();
             removeEQ(array[lastRet]);

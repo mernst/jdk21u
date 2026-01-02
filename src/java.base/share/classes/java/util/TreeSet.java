@@ -507,7 +507,7 @@ public class TreeSet<E> extends AbstractSet<E>
      * @throws UnsupportedOperationException always
      * @since 21
      */
-    public void addFirst(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+    public void addFirst(@GuardSatisfied @Modifiable TreeSet<E> this, E e) {
         throw new UnsupportedOperationException();
     }
 
@@ -519,7 +519,7 @@ public class TreeSet<E> extends AbstractSet<E>
      * @throws UnsupportedOperationException always
      * @since 21
      */
-    public void addLast(@GuardSatisfied @Modifiable ThisClass<E> this, E e) {
+    public void addLast(@GuardSatisfied @Modifiable TreeSet<E> this, E e) {
         throw new UnsupportedOperationException();
     }
 

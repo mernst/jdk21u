@@ -122,7 +122,7 @@ class ReverseOrderSortedSetView<E> implements SortedSet<E> {
         return true;
     }
 
-    public boolean addAll(@GuardSatisfied @Modifiable ThisClass<E> this, Collection<? extends E> c) {
+    public boolean addAll(@GuardSatisfied @Modifiable ReverseOrderSortedSetView<E> this, Collection<? extends E> c) {
         return base.addAll(c);
     }
 
@@ -146,16 +146,16 @@ class ReverseOrderSortedSetView<E> implements SortedSet<E> {
         return StreamSupport.stream(spliterator(), true);
     }
 
-    public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, Object o) {
+    public boolean remove(@GuardSatisfied @Modifiable ReverseOrderSortedSetView<E> this, Object o) {
         return base.remove(o);
     }
 
-    public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ThisClass<E> this, Collection<?> c) {
+    public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ReverseOrderSortedSetView<E> this, Collection<?> c) {
         return base.removeAll(c);
     }
 
     // copied from AbstractCollection
-    public boolean retainAll(@GuardSatisfied @Modifiable ThisClass<> this, Collection<?> c) {
+    public boolean retainAll(@GuardSatisfied @Modifiable ReverseOrderSortedSetView<E> this, Collection<?> c) {
         return base.retainAll(c);
     }
 
@@ -222,7 +222,7 @@ class ReverseOrderSortedSetView<E> implements SortedSet<E> {
                 return t;
             }
 
-            public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+            public void remove(/*@GuardSatisfied @Modifiable Iterator<E> this*/) {
                 if (prev == null) {
                     throw new IllegalStateException();
                 } else {
@@ -312,7 +312,7 @@ class ReverseOrderSortedSetView<E> implements SortedSet<E> {
                 throw new IllegalArgumentException();
         }
 
-        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, Object o) {
+        public boolean remove(@GuardSatisfied @Modifiable Subset this, Object o) {
             @SuppressWarnings("unchecked")
             E e = (E) o;
             if (aboveHead(e) && belowTail(e))

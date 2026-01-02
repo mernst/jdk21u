@@ -711,7 +711,7 @@ public class Hashtable<K extends @NonNull Object,V extends @NonNull Object>
         public boolean contains(@UnknownSignedness Object o) {
             return containsKey(o);
         }
-        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object o) {
+        public boolean remove(@GuardSatisfied @Modifiable KeySet this, @UnknownSignedness Object o) {
             return Hashtable.this.remove(o) != null;
         }
         public void clear() {
@@ -769,7 +769,7 @@ public class Hashtable<K extends @NonNull Object,V extends @NonNull Object>
             return false;
         }
 
-        public boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @UnknownSignedness Object o) {
+        public boolean remove(@GuardSatisfied @Modifiable EntrySet this, @UnknownSignedness Object o) {
             if (!(o instanceof Map.Entry<?, ?> entry))
                 return false;
             Object key = entry.getKey();
@@ -998,7 +998,7 @@ public class Hashtable<K extends @NonNull Object,V extends @NonNull Object>
     }
 
     @Override
-    public synchronized boolean remove(@GuardSatisfied @Modifiable ThisClass<> this, @GuardSatisfied @UnknownSignedness Object key, @GuardSatisfied @UnknownSignedness Object value) {
+    public synchronized boolean remove(@GuardSatisfied @Modifiable Hashtable<K,V> this, @GuardSatisfied @UnknownSignedness Object key, @GuardSatisfied @UnknownSignedness Object value) {
         Objects.requireNonNull(value);
 
         Entry<?,?> tab[] = table;
@@ -1556,7 +1556,7 @@ public class Hashtable<K extends @NonNull Object,V extends @NonNull Object>
             return nextElement();
         }
 
-        public void remove(@GuardSatisfied @Modifiable ThisClass<E> this) {
+        public void remove(@GuardSatisfied @Modifiable Enumerator<T> this) {
             if (!iterator)
                 throw new UnsupportedOperationException();
             if (lastReturned == null)

@@ -189,7 +189,7 @@ public interface ListIterator<E> extends Iterator<E> {
      *         {@code add} have been called after the last call to
      *         {@code next} or {@code previous}
      */
-    void set(@GuardSatisfied @Modifiable ThisClass<E> this, @GuardSatisfied ListIterator<E> this, E e);
+    void set(@GuardSatisfied @Modifiable ListIterator<E> this, E e);
 
     /**
      * Inserts the specified element into the list (optional operation).

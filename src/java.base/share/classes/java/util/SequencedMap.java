@@ -185,7 +185,7 @@ public interface SequencedMap<K, V> extends Map<K, V> {
      * @throws UnsupportedOperationException if this collection implementation does not
      *         support this operation
      */
-    default Map.Entry<K,V> pollFirstEntry(@GuardSatisfied @Modifiable ThisClass<E> this) {
+    default Map.Entry<K,V> pollFirstEntry(@GuardSatisfied @Modifiable SequencedMap<K,V> this) {
         var it = entrySet().iterator();
         if (it.hasNext()) {
             var entry = new NullableKeyValueHolder<>(it.next());
@@ -210,7 +210,7 @@ public interface SequencedMap<K, V> extends Map<K, V> {
      * @throws UnsupportedOperationException if this collection implementation does not
      *         support this operation
      */
-    default Map.Entry<K,V> pollLastEntry(@GuardSatisfied @Modifiable ThisClass<E> this) {
+    default Map.Entry<K,V> pollLastEntry(@GuardSatisfied @Modifiable SequencedMap<K,V> this) {
         var it = reversed().entrySet().iterator();
         if (it.hasNext()) {
             var entry = new NullableKeyValueHolder<>(it.next());
@@ -236,7 +236,7 @@ public interface SequencedMap<K, V> extends Map<K, V> {
      * @throws UnsupportedOperationException if this collection implementation does not
      *         support this operation
      */
-    default V putFirst(@GuardSatisfied @Modifiable ThisClass<K,V> this, K k, V v) {
+    default V putFirst(@GuardSatisfied @Modifiable SequencedMap<K,V> this, K k, V v) {
         throw new UnsupportedOperationException();
     }
 
@@ -255,7 +255,7 @@ public interface SequencedMap<K, V> extends Map<K, V> {
      * @throws UnsupportedOperationException if this collection implementation does not
      *         support this operation
      */
-    default V putLast(@GuardSatisfied @Modifiable ThisClass<K,V> this, K k, V v) {
+    default V putLast(@GuardSatisfied @Modifiable SequencedMap<K,V> this, K k, V v) {
         throw new UnsupportedOperationException();
     }
 
