@@ -462,7 +462,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
      * @throws IllegalArgumentException if the initial capacity is negative
      *         or the load factor is nonpositive
      */
-    public HashMap(@NonNegative int initialCapacity, float loadFactor) {
+    public @Modifiable HashMap(@NonNegative int initialCapacity, float loadFactor) {
         if (initialCapacity < 0)
             throw new IllegalArgumentException("Illegal initial capacity: " +
                                                initialCapacity);
@@ -486,7 +486,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
      * @param  initialCapacity the initial capacity.
      * @throws IllegalArgumentException if the initial capacity is negative.
      */
-    public HashMap(@NonNegative int initialCapacity) {
+    public @Modifiable HashMap(@NonNegative int initialCapacity) {
         this(initialCapacity, DEFAULT_LOAD_FACTOR);
     }
 
@@ -494,7 +494,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
      * Constructs an empty {@code HashMap} with the default initial capacity
      * (16) and the default load factor (0.75).
      */
-    public HashMap() {
+    public @Modifiable HashMap() {
         this.loadFactor = DEFAULT_LOAD_FACTOR; // all other fields defaulted
     }
 
@@ -507,7 +507,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
      * @param   m the map whose mappings are to be placed in this map
      * @throws  NullPointerException if the specified map is null
      */
-    public @PolyNonEmpty HashMap(@PolyNonEmpty Map<? extends K, ? extends V> m) {
+    public @Modifiable @PolyNonEmpty HashMap(@PolyNonEmpty Map<? extends K, ? extends V> m) {
         this.loadFactor = DEFAULT_LOAD_FACTOR;
         putMapEntries(m, false);
     }

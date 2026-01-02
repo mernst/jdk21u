@@ -120,7 +120,7 @@ public class HashSet<E>
      * Constructs a new, empty set; the backing {@code HashMap} instance has
      * default initial capacity (16) and load factor (0.75).
      */
-    public HashSet() {
+    public @Modifiable HashSet() {
         map = new HashMap<>();
     }
 
@@ -133,7 +133,7 @@ public class HashSet<E>
      * @param c the collection whose elements are to be placed into this set
      * @throws NullPointerException if the specified collection is null
      */
-    public @PolyNonEmpty HashSet(@PolyNonEmpty Collection<? extends E> c) {
+    public @Modifiable @PolyNonEmpty HashSet(@PolyNonEmpty Collection<? extends E> c) {
         map = HashMap.newHashMap(Math.max(c.size(), 12));
         addAll(c);
     }
@@ -151,7 +151,7 @@ public class HashSet<E>
      * @throws     IllegalArgumentException if the initial capacity is less
      *             than zero, or if the load factor is nonpositive
      */
-    public HashSet(@NonNegative int initialCapacity, float loadFactor) {
+    public @Modifiable HashSet(@NonNegative int initialCapacity, float loadFactor) {
         map = new HashMap<>(initialCapacity, loadFactor);
     }
 
@@ -167,7 +167,7 @@ public class HashSet<E>
      * @throws     IllegalArgumentException if the initial capacity is less
      *             than zero
      */
-    public HashSet(@NonNegative int initialCapacity) {
+    public @Modifiable HashSet(@NonNegative int initialCapacity) {
         map = new HashMap<>(initialCapacity);
     }
 

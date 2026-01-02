@@ -2660,7 +2660,7 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
      * @see Calendar.Builder#setCalendarType(String)
      * @see Locale#getUnicodeLocaleType(String)
      */
-    public static Set<String> getAvailableCalendarTypes() {
+    public static @Unmodifiable Set<String> getAvailableCalendarTypes() {
         return AvailableCalendarTypes.SET;
     }
 

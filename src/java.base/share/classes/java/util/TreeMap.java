@@ -177,7 +177,7 @@ public class TreeMap<K,V>
      * {@code put(Object key, Object value)} call will throw a
      * {@code ClassCastException}.
      */
-    public TreeMap() {
+    public @Modifiable TreeMap() {
         comparator = null;
     }
 
@@ -195,7 +195,7 @@ public class TreeMap<K,V>
      *        If {@code null}, the {@linkplain Comparable natural
      *        ordering} of the keys will be used.
      */
-    public TreeMap(@Nullable Comparator<? super K> comparator) {
+    public @Modifiable TreeMap(@Nullable Comparator<? super K> comparator) {
         this.comparator = comparator;
     }
 
@@ -213,7 +213,7 @@ public class TreeMap<K,V>
      *         or are not mutually comparable
      * @throws NullPointerException if the specified map is null
      */
-    public @PolyNonEmpty TreeMap(@PolyNonEmpty Map<? extends K, ? extends V> m) {
+    public @Modifiable @PolyNonEmpty TreeMap(@PolyNonEmpty Map<? extends K, ? extends V> m) {
         comparator = null;
         putAll(m);
     }
@@ -227,7 +227,7 @@ public class TreeMap<K,V>
      *         and whose comparator is to be used to sort this map
      * @throws NullPointerException if the specified map is null
      */
-    public @PolyNonEmpty TreeMap(@PolyNonEmpty SortedMap<K, ? extends V> m) {
+    public @Modifiable @PolyNonEmpty TreeMap(@PolyNonEmpty SortedMap<K, ? extends V> m) {
         comparator = m.comparator();
         try {
             buildFromSorted(m.size(), m.entrySet().iterator(), null, null);

@@ -147,7 +147,7 @@ public class CopyOnWriteArrayList<E>
     /**
      * Creates an empty list.
      */
-    public CopyOnWriteArrayList() {
+    public @Modifiable CopyOnWriteArrayList() {
         setArray(new Object[0]);
     }
 
@@ -159,7 +159,7 @@ public class CopyOnWriteArrayList<E>
      * @param c the collection of initially held elements
      * @throws NullPointerException if the specified collection is null
      */
-    public CopyOnWriteArrayList(Collection<? extends E> c) {
+    public @Modifiable CopyOnWriteArrayList(Collection<? extends E> c) {
         Object[] es;
         if (c.getClass() == CopyOnWriteArrayList.class)
             es = ((CopyOnWriteArrayList<?>)c).getArray();
@@ -178,7 +178,7 @@ public class CopyOnWriteArrayList<E>
      *        internal array)
      * @throws NullPointerException if the specified array is null
      */
-    public CopyOnWriteArrayList(E[] toCopyIn) {
+    public @Modifiable CopyOnWriteArrayList(E[] toCopyIn) {
         setArray(Arrays.copyOf(toCopyIn, toCopyIn.length, Object[].class));
     }
 

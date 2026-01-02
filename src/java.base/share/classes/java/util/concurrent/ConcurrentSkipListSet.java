@@ -126,7 +126,7 @@ public class ConcurrentSkipListSet<E extends @NonNull Object>
      * Constructs a new, empty set that orders its elements according to
      * their {@linkplain Comparable natural ordering}.
      */
-    public ConcurrentSkipListSet() {
+    public @Modifiable ConcurrentSkipListSet() {
         m = new ConcurrentSkipListMap<E,Object>();
     }
 
@@ -138,7 +138,7 @@ public class ConcurrentSkipListSet<E extends @NonNull Object>
      *        If {@code null}, the {@linkplain Comparable natural
      *        ordering} of the elements will be used.
      */
-    public ConcurrentSkipListSet(@Nullable Comparator<? super E> comparator) {
+    public @Modifiable ConcurrentSkipListSet(@Nullable Comparator<? super E> comparator) {
         m = new ConcurrentSkipListMap<E,Object>(comparator);
     }
 
@@ -153,7 +153,7 @@ public class ConcurrentSkipListSet<E extends @NonNull Object>
      * @throws NullPointerException if the specified collection or any
      *         of its elements are null
      */
-    public ConcurrentSkipListSet(Collection<? extends E> c) {
+    public @Modifiable ConcurrentSkipListSet(Collection<? extends E> c) {
         m = new ConcurrentSkipListMap<E,Object>();
         addAll(c);
     }
@@ -166,7 +166,7 @@ public class ConcurrentSkipListSet<E extends @NonNull Object>
      * @throws NullPointerException if the specified sorted set or any
      *         of its elements are null
      */
-    public ConcurrentSkipListSet(SortedSet<E> s) {
+    public @Modifiable ConcurrentSkipListSet(SortedSet<E> s) {
         m = new ConcurrentSkipListMap<E,Object>(s.comparator());
         addAll(s);
     }

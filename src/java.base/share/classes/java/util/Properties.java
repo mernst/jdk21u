@@ -1221,7 +1221,7 @@ public class Properties extends Hashtable<Object,Object> {
      * @see     java.util.Properties#defaults
      * @since   1.6
      */
-    public Set<String> stringPropertyNames() {
+    public @Unmodifiable Set<String> stringPropertyNames() {
         Map<String, String> h = new HashMap<>();
         enumerateStringProperties(h);
         return Collections.unmodifiableSet(h.keySet());

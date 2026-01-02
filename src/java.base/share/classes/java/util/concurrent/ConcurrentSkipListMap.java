@@ -1083,7 +1083,7 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
      * Constructs a new, empty map, sorted according to the
      * {@linkplain Comparable natural ordering} of the keys.
      */
-    public ConcurrentSkipListMap() {
+    public @Modifiable ConcurrentSkipListMap() {
         this.comparator = null;
     }
 
@@ -1095,7 +1095,7 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
      *        If {@code null}, the {@linkplain Comparable natural
      *        ordering} of the keys will be used.
      */
-    public ConcurrentSkipListMap(Comparator<? super K> comparator) {
+    public @Modifiable ConcurrentSkipListMap(Comparator<? super K> comparator) {
         this.comparator = comparator;
     }
 
@@ -1110,7 +1110,7 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
      * @throws NullPointerException if the specified map or any of its keys
      *         or values are null
      */
-    public ConcurrentSkipListMap(Map<? extends K, ? extends V> m) {
+    public @Modifiable ConcurrentSkipListMap(Map<? extends K, ? extends V> m) {
         this.comparator = null;
         putAll(m);
     }
@@ -1124,7 +1124,7 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
      * @throws NullPointerException if the specified sorted map or any of
      *         its keys or values are null
      */
-    public ConcurrentSkipListMap(SortedMap<K, ? extends V> m) {
+    public @Modifiable ConcurrentSkipListMap(SortedMap<K, ? extends V> m) {
         this.comparator = m.comparator();
         buildFromSorted(m); // initializes transients
     }

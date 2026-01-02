@@ -153,7 +153,7 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V>
      * @param keyType the class object of the key type for this enum map
      * @throws NullPointerException if {@code keyType} is null
      */
-    public EnumMap(Class<K> keyType) {
+    public @Modifiable EnumMap(Class<K> keyType) {
         this.keyType = keyType;
         keyUniverse = getKeyUniverse(keyType);
         vals = new Object[keyUniverse.length];
@@ -166,7 +166,7 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V>
      * @param m the enum map from which to initialize this enum map
      * @throws NullPointerException if {@code m} is null
      */
-    public EnumMap(EnumMap<K, ? extends V> m) {
+    public @Modifiable EnumMap(EnumMap<K, ? extends V> m) {
         keyType = m.keyType;
         keyUniverse = m.keyUniverse;
         vals = m.vals.clone();
@@ -185,7 +185,7 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V>
      *     {@code EnumMap} instance and contains no mappings
      * @throws NullPointerException if {@code m} is null
      */
-    public EnumMap(Map<K, ? extends V> m) {
+    public @Modifiable EnumMap(Map<K, ? extends V> m) {
         if (m instanceof EnumMap) {
             EnumMap<K, ? extends V> em = (EnumMap<K, ? extends V>) m;
             keyType = em.keyType;

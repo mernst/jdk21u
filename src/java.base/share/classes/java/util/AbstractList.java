@@ -526,7 +526,7 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
      *         {@code (fromIndex > toIndex)}
      */
     @SideEffectFree
-    public @PolyGrowShrink List<E> subList(@GuardSatisfied @PolyGrowShrink AbstractList<E> this, @IndexOrHigh({"this"}) int fromIndex, @IndexOrHigh({"this"}) int toIndex) {
+    public @PolyGrowShrink @PolyModifiable List<E> subList(@GuardSatisfied @PolyGrowShrink @PolyModifiable AbstractList<E> this, @IndexOrHigh({"this"}) int fromIndex, @IndexOrHigh({"this"}) int toIndex) {
         subListRangeCheck(fromIndex, toIndex, size());
         return (this instanceof RandomAccess ?
                 new RandomAccessSubList<>(this, fromIndex, toIndex) :
@@ -790,7 +790,7 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
          * Constructs a sublist of an arbitrary AbstractList, which is
          * not a SubList itself.
          */
-        public SubList(AbstractList<E> root, int fromIndex, int toIndex) {
+        public @PolyModifiable SubList(@PolyModifiable AbstractList<E> root, int fromIndex, int toIndex) {
             this.root = root;
             this.parent = null;
             this.offset = fromIndex;
@@ -801,7 +801,7 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
         /**
          * Constructs a sublist of another SubList.
          */
-        protected SubList(SubList<E> parent, int fromIndex, int toIndex) {
+        protected @PolyModifiable SubList(@PolyModifiable SubList<E> parent, int fromIndex, int toIndex) {
             this.root = parent.root;
             this.parent = parent;
             this.offset = parent.offset + fromIndex;

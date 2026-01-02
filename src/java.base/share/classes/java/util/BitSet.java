@@ -153,7 +153,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
     /**
      * Creates a new bit set. All bits are initially {@code false}.
      */
-    public BitSet() {
+    public @Modifiable BitSet() {
         initWords(BITS_PER_WORD);
         sizeIsSticky = false;
     }
@@ -167,7 +167,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      * @throws NegativeArraySizeException if the specified initial size
      *         is negative
      */
-    public BitSet(@NonNegative int nbits) {
+    public @Modifiable BitSet(@NonNegative int nbits) {
         // nbits can't be negative; size 0 is OK
         if (nbits < 0)
             throw new NegativeArraySizeException("nbits < 0: " + nbits);

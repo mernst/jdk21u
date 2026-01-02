@@ -1094,14 +1094,14 @@ public class Collections {
     /**
      * @serial include
      */
-    static class UnmodifiableCollection<E> implements Collection<E>, Serializable {
+    static @Unmodifiable class UnmodifiableCollection<E> implements Collection<E>, Serializable {
         @java.io.Serial
         private static final long serialVersionUID = 1820017752578914078L;
 
         @SuppressWarnings("serial") // Conditionally serializable
         final Collection<? extends E> c;
 
-        @PolyNonEmpty UnmodifiableCollection(@PolyNonEmpty Collection<? extends E> c) {
+        @Unmodifiable @PolyNonEmpty UnmodifiableCollection(@PolyNonEmpty Collection<? extends E> c) {
             if (c==null)
                 throw new NullPointerException();
             this.c = c;
@@ -1123,7 +1123,7 @@ public class Collections {
         public String toString()                   {return c.toString();}
 
         @SideEffectFree
-        public @PolyGrowShrink @PolyNonEmpty Iterator<E> iterator(@PolyGrowShrink @PolyNonEmpty UnmodifiableCollection<E> this) {
+        public @PolyGrowShrink @Unmodifiable @PolyNonEmpty Iterator<E> iterator(@PolyGrowShrink @PolyNonEmpty UnmodifiableCollection<E> this) {
             return new Iterator<>() {
                 private final Iterator<? extends E> i = c.iterator();
 
@@ -1229,13 +1229,13 @@ public class Collections {
     /**
      * @serial include
      */
-    static class UnmodifiableSequencedCollection<E> extends UnmodifiableCollection<E>
+    static @Unmodifiable class UnmodifiableSequencedCollection<E> extends UnmodifiableCollection<E>
             implements SequencedCollection<E>, Serializable {
 
         @java.io.Serial
         private static final long serialVersionUID = -6060065079711684830L;
 
-        UnmodifiableSequencedCollection(SequencedCollection<? extends E> c) {
+        @Unmodifiable UnmodifiableSequencedCollection(SequencedCollection<? extends E> c) {
             super(c);
         }
 
@@ -1303,12 +1303,12 @@ public class Collections {
     /**
      * @serial include
      */
-    static class UnmodifiableSet<E> extends UnmodifiableCollection<E>
+    static @Unmodifiable class UnmodifiableSet<E> extends UnmodifiableCollection<E>
                                  implements Set<E>, Serializable {
         @java.io.Serial
         private static final long serialVersionUID = -9215047833775013803L;
 
-        UnmodifiableSet(Set<? extends E> s)     {super(s);}
+        @Unmodifiable UnmodifiableSet(Set<? extends E> s)     {super(s);}
         public boolean equals(Object o) {return o == this || c.equals(o);}
         public int hashCode()           {return c.hashCode();}
     }
@@ -1341,12 +1341,12 @@ public class Collections {
     /**
      * @serial include
      */
-    static class UnmodifiableSequencedSet<E> extends UnmodifiableSequencedCollection<E>
+    static @Unmodifiable class UnmodifiableSequencedSet<E> extends UnmodifiableSequencedCollection<E>
                                              implements SequencedSet<E>, Serializable {
         @java.io.Serial
         private static final long serialVersionUID = -2153469532349793522L;
 
-        UnmodifiableSequencedSet(SequencedSet<? extends E> s)    {super(s);}
+        @Unmodifiable UnmodifiableSequencedSet(SequencedSet<? extends E> s)    {super(s);}
         public boolean equals(Object o)                          {return o == this || c.equals(o);}
         public int hashCode()                                    {return c.hashCode();}
 
@@ -1391,7 +1391,7 @@ public class Collections {
     /**
      * @serial include
      */
-    static class UnmodifiableSortedSet<E>
+    static @Unmodifiable class UnmodifiableSortedSet<E>
                              extends UnmodifiableSet<E>
                              implements SortedSet<E>, Serializable {
         @java.io.Serial
@@ -1399,7 +1399,7 @@ public class Collections {
         @SuppressWarnings("serial") // Conditionally serializable
         private final SortedSet<E> ss;
 
-        UnmodifiableSortedSet(SortedSet<E> s) {super(s); ss = s;}
+        @Unmodifiable UnmodifiableSortedSet(SortedSet<E> s) {super(s); ss = s;}
 
         public Comparator<? super E> comparator() {return ss.comparator();}
 
@@ -1448,7 +1448,7 @@ public class Collections {
      * @param <E> type of elements
      * @serial include
      */
-    static class UnmodifiableNavigableSet<E>
+    static @Unmodifiable class UnmodifiableNavigableSet<E>
                              extends UnmodifiableSortedSet<E>
                              implements NavigableSet<E>, Serializable {
 
@@ -1461,13 +1461,13 @@ public class Collections {
          *
          * @param <E> type of elements, if there were any, and bounds
          */
-        private static class EmptyNavigableSet<E> extends UnmodifiableNavigableSet<E>
+        private static @Unmodifiable class EmptyNavigableSet<E> extends UnmodifiableNavigableSet<E>
             implements Serializable {
             @java.io.Serial
             private static final long serialVersionUID = -6291252904449939134L;
 
             @SideEffectFree
-            public EmptyNavigableSet() {
+            public @Unmodifiable EmptyNavigableSet() {
                 super(new TreeSet<>());
             }
 
@@ -1475,7 +1475,7 @@ public class Collections {
             private Object readResolve()        { return EMPTY_NAVIGABLE_SET; }
         }
 
-        private static final NavigableSet<?> EMPTY_NAVIGABLE_SET =
+        private static final @Unmodifiable NavigableSet<?> EMPTY_NAVIGABLE_SET =
                 new EmptyNavigableSet<>();
 
         /**
@@ -1484,7 +1484,7 @@ public class Collections {
         @SuppressWarnings("serial") // Conditionally serializable
         private final NavigableSet<E> ns;
 
-        UnmodifiableNavigableSet(NavigableSet<E> s)         {super(s); ns = s;}
+        @Unmodifiable UnmodifiableNavigableSet(NavigableSet<E> s)         {super(s); ns = s;}
 
         public E lower(E e)                             { return ns.lower(e); }
         public E floor(E e)                             { return ns.floor(e); }
@@ -1543,7 +1543,7 @@ public class Collections {
     /**
      * @serial include
      */
-    static class UnmodifiableList<E> extends UnmodifiableCollection<E>
+    static @Unmodifiable class UnmodifiableList<E> extends UnmodifiableCollection<E>
                                   implements List<E> {
         @java.io.Serial
         private static final long serialVersionUID = -283967356065247728L;
@@ -1647,7 +1647,7 @@ public class Collections {
     /**
      * @serial include
      */
-    static class UnmodifiableRandomAccessList<E> extends UnmodifiableList<E>
+    static @Unmodifiable class UnmodifiableRandomAccessList<E> extends UnmodifiableList<E>
                                               implements RandomAccess
     {
         UnmodifiableRandomAccessList(List<? extends E> list) {
@@ -1702,7 +1702,7 @@ public class Collections {
     /**
      * @serial include
      */
-    private static class UnmodifiableMap<K,V> implements Map<K,V>, Serializable {
+    private static @Unmodifiable class UnmodifiableMap<K,V> implements Map<K,V>, Serializable {
         @java.io.Serial
         private static final long serialVersionUID = -1034234728574286014L;
 
@@ -1839,7 +1839,7 @@ public class Collections {
          *
          * @serial include
          */
-        static class UnmodifiableEntrySet<K,V>
+        static @Unmodifiable class UnmodifiableEntrySet<K,V>
             extends UnmodifiableSet<Map.Entry<K,V>> {
             @java.io.Serial
             private static final long serialVersionUID = 7854390611657943733L;
@@ -1859,11 +1859,11 @@ public class Collections {
                 c.forEach(entryConsumer(action));
             }
 
-            static final class UnmodifiableEntrySetSpliterator<K, V>
+            static final @Unmodifiable class UnmodifiableEntrySetSpliterator<K, V>
                     implements Spliterator<Entry<K,V>> {
                 final Spliterator<Map.Entry<K, V>> s;
 
-                UnmodifiableEntrySetSpliterator(Spliterator<Entry<K, V>> s) {
+                @Unmodifiable UnmodifiableEntrySetSpliterator(Spliterator<Entry<K, V>> s) {
                     this.s = s;
                 }
 
@@ -2022,7 +2022,7 @@ public class Collections {
              * an ill-behaved Map.Entry that attempts to modify another
              * Map Entry when asked to perform an equality check.
              */
-            private static class UnmodifiableEntry<K,V> implements Map.Entry<K,V> {
+            private static @Unmodifiable class UnmodifiableEntry<K,V> implements Map.Entry<K,V> {
                 private Map.Entry<? extends K, ? extends V> e;
 
                 UnmodifiableEntry(Map.Entry<? extends K, ? extends V> e)
@@ -2075,7 +2075,7 @@ public class Collections {
     /**
      * @serial include
      */
-    private static class UnmodifiableSequencedMap<K,V> extends UnmodifiableMap<K,V> implements SequencedMap<K,V>, Serializable {
+    private static @Unmodifiable class UnmodifiableSequencedMap<K,V> extends UnmodifiableMap<K,V> implements SequencedMap<K,V>, Serializable {
         @java.io.Serial
         private static final long serialVersionUID = -8171676257373950636L;
 
@@ -2142,7 +2142,7 @@ public class Collections {
     /**
      * @serial include
      */
-    static class UnmodifiableSortedMap<K,V>
+    static @Unmodifiable class UnmodifiableSortedMap<K,V>
           extends UnmodifiableMap<K,V>
           implements SortedMap<K,V>, Serializable {
         @java.io.Serial
@@ -2196,7 +2196,7 @@ public class Collections {
     /**
      * @serial include
      */
-    static class UnmodifiableNavigableMap<K,V>
+    static @Unmodifiable class UnmodifiableNavigableMap<K,V>
           extends UnmodifiableSortedMap<K,V>
           implements NavigableMap<K,V>, Serializable {
         @java.io.Serial
@@ -2209,13 +2209,13 @@ public class Collections {
          * @param <K> type of keys, if there were any, and of bounds
          * @param <V> type of values, if there were any
          */
-        private static class EmptyNavigableMap<K,V> extends UnmodifiableNavigableMap<K,V>
+        private static @Unmodifiable class EmptyNavigableMap<K,V> extends UnmodifiableNavigableMap<K,V>
             implements Serializable {
 
             @java.io.Serial
             private static final long serialVersionUID = -2239321462712562324L;
 
-            EmptyNavigableMap()                       { super(new TreeMap<>()); }
+            @Unmodifiable EmptyNavigableMap()                       { super(new TreeMap<>()); }
 
             @Override
             @SideEffectFree
@@ -2229,7 +2229,7 @@ public class Collections {
         /**
          * Singleton for {@link #emptyNavigableMap()} which is also immutable.
          */
-        private static final EmptyNavigableMap<?,?> EMPTY_NAVIGABLE_MAP =
+        private static final @Unmodifiable EmptyNavigableMap<?,?> EMPTY_NAVIGABLE_MAP =
             new EmptyNavigableMap<>();
 
         /**
@@ -4699,8 +4699,8 @@ public class Collections {
         return (Iterator<T>) EmptyIterator.EMPTY_ITERATOR;
     }
 
-    private static class EmptyIterator<E> implements Iterator<E> {
-        static final EmptyIterator<Object> EMPTY_ITERATOR
+    private static @Unmodifiable class EmptyIterator<E> implements Iterator<E> {
+        static final @Unmodifiable EmptyIterator<Object> EMPTY_ITERATOR
             = new EmptyIterator<>();
 
         @Pure
@@ -4747,11 +4747,11 @@ public class Collections {
         return (ListIterator<T>) EmptyListIterator.EMPTY_ITERATOR;
     }
 
-    private static class EmptyListIterator<E>
+    private static @Unmodifiable class EmptyListIterator<E>
         extends EmptyIterator<E>
         implements ListIterator<E>
     {
-        static final EmptyListIterator<Object> EMPTY_ITERATOR
+        static final @Unmodifiable EmptyListIterator<Object> EMPTY_ITERATOR
             = new EmptyListIterator<>();
 
         public boolean hasPrevious() { return false; }
@@ -4785,14 +4785,14 @@ public class Collections {
         return (Enumeration<T>) EmptyEnumeration.EMPTY_ENUMERATION;
     }
 
-    private static class EmptyEnumeration<E> implements Enumeration<E> {
-        static final EmptyEnumeration<Object> EMPTY_ENUMERATION
+    private static @Unmodifiable class EmptyEnumeration<E> implements Enumeration<E> {
+        static final @Unmodifiable EmptyEnumeration<Object> EMPTY_ENUMERATION
             = new EmptyEnumeration<>();
 
         @EnsuresNonEmptyIf(result = true, expression = "this")
         public boolean hasMoreElements() { return false; }
         public E nextElement(@NonEmpty EmptyEnumeration<E> this) { throw new NoSuchElementException(); }
-        public Iterator<E> asIterator() { return emptyIterator(); }
+        public @Unmodifiable Iterator<E> asIterator() { return emptyIterator(); }
     }
 
     /**
@@ -4839,7 +4839,7 @@ public class Collections {
         private static final long serialVersionUID = 1582296315990362920L;
 
         @SideEffectFree
-        public Iterator<E> iterator() { return emptyIterator(); }
+        public @Unmodifiable Iterator<E> iterator() { return emptyIterator(); }
 
         @Pure
         public @NonNegative int size() {return 0;}
@@ -5128,7 +5128,7 @@ public class Collections {
     /**
      * @serial include
      */
-    private static class EmptyMap<K,V>
+    private static @Unmodifiable class EmptyMap<K,V>
         extends AbstractMap<K,V>
         implements Serializable
     {
@@ -5147,10 +5147,10 @@ public class Collections {
         @Pure
         public boolean containsValue(@UnknownSignedness Object value) {return false;}
         public V get(Object key)                   {return null;}
-        public Set<K> keySet()                     {return emptySet();}
-        public Collection<V> values()              {return emptySet();}
+        public @Unmodifiable Set<K> keySet()                     {return emptySet();}
+        public @Unmodifiable Collection<V> values()              {return emptySet();}
         @SideEffectFree
-        public Set<Map.Entry<K,V>> entrySet()      {return emptySet();}
+        public @Unmodifiable Set<Map.Entry<K,V>> entrySet()      {return emptySet();}
 
         public boolean equals(Object o) {
             return (o instanceof Map) && ((Map<?,?>)o).isEmpty();

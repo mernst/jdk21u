@@ -846,7 +846,7 @@ public class ConcurrentHashMap<K extends @NonNull Object,V extends @NonNull Obje
     /**
      * Creates a new, empty map with the default initial table size (16).
      */
-    public ConcurrentHashMap() {
+    public @Modifiable ConcurrentHashMap() {
     }
 
     /**
@@ -859,7 +859,7 @@ public class ConcurrentHashMap<K extends @NonNull Object,V extends @NonNull Obje
      * @throws IllegalArgumentException if the initial capacity of
      * elements is negative
      */
-    public ConcurrentHashMap(int initialCapacity) {
+    public @Modifiable ConcurrentHashMap(int initialCapacity) {
         this(initialCapacity, LOAD_FACTOR, 1);
     }
 
@@ -868,7 +868,7 @@ public class ConcurrentHashMap<K extends @NonNull Object,V extends @NonNull Obje
      *
      * @param m the map
      */
-    public ConcurrentHashMap(Map<? extends K, ? extends V> m) {
+    public @Modifiable ConcurrentHashMap(Map<? extends K, ? extends V> m) {
         this.sizeCtl = DEFAULT_CAPACITY;
         putAll(m);
     }
@@ -888,7 +888,7 @@ public class ConcurrentHashMap<K extends @NonNull Object,V extends @NonNull Obje
      *
      * @since 1.6
      */
-    public ConcurrentHashMap(int initialCapacity, float loadFactor) {
+    public @Modifiable ConcurrentHashMap(int initialCapacity, float loadFactor) {
         this(initialCapacity, loadFactor, 1);
     }
 
@@ -910,7 +910,7 @@ public class ConcurrentHashMap<K extends @NonNull Object,V extends @NonNull Obje
      * negative or the load factor or concurrencyLevel are
      * nonpositive
      */
-    public ConcurrentHashMap(int initialCapacity,
+    public @Modifiable ConcurrentHashMap(int initialCapacity,
                              float loadFactor, int concurrencyLevel) {
         if (!(loadFactor > 0.0f) || initialCapacity < 0 || concurrencyLevel <= 0)
             throw new IllegalArgumentException();

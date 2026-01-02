@@ -237,7 +237,7 @@ public class IdentityHashMap<K,V>
      * Constructs a new, empty identity hash map with a default expected
      * maximum size (21).
      */
-    public IdentityHashMap() {
+    public @Modifiable IdentityHashMap() {
         init(DEFAULT_CAPACITY);
     }
 
@@ -250,7 +250,7 @@ public class IdentityHashMap<K,V>
      * @param expectedMaxSize the expected maximum size of the map
      * @throws IllegalArgumentException if {@code expectedMaxSize} is negative
      */
-    public IdentityHashMap(@NonNegative int expectedMaxSize) {
+    public @Modifiable IdentityHashMap(@NonNegative int expectedMaxSize) {
         if (expectedMaxSize < 0)
             throw new IllegalArgumentException("expectedMaxSize is negative: "
                                                + expectedMaxSize);
@@ -292,7 +292,7 @@ public class IdentityHashMap<K,V>
      * @param m the map whose mappings are to be placed into this map
      * @throws NullPointerException if the specified map is null
      */
-    public IdentityHashMap(Map<? extends K, ? extends V> m) {
+    public @Modifiable IdentityHashMap(Map<? extends K, ? extends V> m) {
         // Allow for a bit of growth
         this((int) ((1 + m.size()) * 1.1));
         putAll(m);

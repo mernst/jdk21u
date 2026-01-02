@@ -4274,7 +4274,7 @@ public final class Arrays {
     @SafeVarargs
     @SideEffectFree
     @SuppressWarnings("varargs")
-    public static <T> @PolyNonEmpty List<T> asList(T @PolyNonEmpty... a) {
+    public static <T> @Modifiable @PolyNonEmpty List<T> asList(T @PolyNonEmpty... a) {
         return new ArrayList<>(a);
     }
 

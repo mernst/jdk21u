@@ -227,7 +227,7 @@ public class WeakHashMap<K,V>
      * @throws IllegalArgumentException if the initial capacity is negative,
      *         or if the load factor is nonpositive.
      */
-    public WeakHashMap(@NonNegative int initialCapacity, float loadFactor) {
+    public @Modifiable WeakHashMap(@NonNegative int initialCapacity, float loadFactor) {
         if (initialCapacity < 0)
             throw new IllegalArgumentException("Illegal Initial Capacity: "+
                                                initialCapacity);
@@ -254,7 +254,7 @@ public class WeakHashMap<K,V>
      * @param  initialCapacity The initial capacity of the {@code WeakHashMap}
      * @throws IllegalArgumentException if the initial capacity is negative
      */
-    public WeakHashMap(@NonNegative int initialCapacity) {
+    public @Modifiable WeakHashMap(@NonNegative int initialCapacity) {
         this(initialCapacity, DEFAULT_LOAD_FACTOR);
     }
 
@@ -262,7 +262,7 @@ public class WeakHashMap<K,V>
      * Constructs a new, empty {@code WeakHashMap} with the default initial
      * capacity (16) and load factor (0.75).
      */
-    public WeakHashMap() {
+    public @Modifiable WeakHashMap() {
         this(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR);
     }
 
@@ -276,7 +276,7 @@ public class WeakHashMap<K,V>
      * @throws  NullPointerException if the specified map is null
      * @since   1.3
      */
-    public @PolyNonEmpty WeakHashMap(@PolyNonEmpty Map<? extends K, ? extends V> m) {
+    public @Modifiable @PolyNonEmpty WeakHashMap(@PolyNonEmpty Map<? extends K, ? extends V> m) {
         this(Math.max((int) Math.ceil(m.size() / (double)DEFAULT_LOAD_FACTOR),
                 DEFAULT_INITIAL_CAPACITY),
              DEFAULT_LOAD_FACTOR);

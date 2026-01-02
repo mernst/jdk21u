@@ -139,7 +139,7 @@ public class LinkedList<E>
     /**
      * Constructs an empty list.
      */
-    public LinkedList() {
+    public @Modifiable LinkedList() {
     }
 
     /**
@@ -150,7 +150,7 @@ public class LinkedList<E>
      * @param  c the collection whose elements are to be placed into this list
      * @throws NullPointerException if the specified collection is null
      */
-    public @PolyNonEmpty LinkedList(@PolyNonEmpty Collection<? extends E> c) {
+    public @Modifiable @PolyNonEmpty LinkedList(@PolyNonEmpty Collection<? extends E> c) {
         this();
         addAll(c);
     }
