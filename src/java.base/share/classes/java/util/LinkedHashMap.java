@@ -716,7 +716,7 @@ public class LinkedHashMap<K,V>
         LinkedKeySet(boolean reversed)          { this.reversed = reversed; }
         @Pure
         public final int size()                 { return size; }
-        public final void clear(@Modifiable LinkedKeyMap this)               { LinkedHashMap.this.clear(); }
+        public final void clear(@Modifiable LinkedKeySet this)               { LinkedHashMap.this.clear(); }
         @SideEffectFree
         public final Iterator<K> iterator() {
             return new LinkedKeyIterator(reversed);

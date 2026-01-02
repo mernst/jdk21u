@@ -1112,7 +1112,7 @@ class ImmutableCollections {
 
     // Not a jdk.internal.ValueBased class; disqualified by fields in superclass AbstractMap
     abstract static class AbstractImmutableMap<K,V> extends AbstractMap<K,V> implements Serializable {
-        @Override public void clear(@GuardSatisfied @Modifiable AbstractImmutableMap<E> this) { throw uoe(); }
+        @Override public void clear(@GuardSatisfied @Modifiable AbstractImmutableMap<K,V> this) { throw uoe(); }
         @Override public @PolyNull V compute(K key, BiFunction<? super K,? super V,? extends @PolyNull V> rf) { throw uoe(); }
         @Override public @PolyNull V computeIfAbsent(K key, Function<? super K,? extends @PolyNull V> mf) { throw uoe(); }
         @Override public @PolyNull V computeIfPresent(K key, BiFunction<? super K,? super V,? extends @PolyNull V> rf) { throw uoe(); }

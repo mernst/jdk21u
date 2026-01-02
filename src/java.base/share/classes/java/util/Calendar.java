@@ -2016,7 +2016,7 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
      *
      * @see #clear(int)
      */
-    public final void clear(@GuardSatisfied @Modifiable Calendar this)
+    public final void clear()
     {
         for (int i = 0; i < fields.length; ) {
             stamp[i] = fields[i] = 0; // UNSET == 0
@@ -2047,7 +2047,7 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
      * @param field the calendar field to be cleared.
      * @see #clear()
      */
-    public final void clear(@GuardSatisfied @Modifiable Calendar this, @NonNegative int field)
+    public final void clear(@NonNegative int field)
     {
         fields[field] = 0;
         stamp[field] = UNSET;

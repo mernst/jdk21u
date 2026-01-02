@@ -3010,7 +3010,7 @@ public class Collections {
         public void putAll(Map<? extends K, ? extends V> map) {
             synchronized (mutex) {m.putAll(map);}
         }
-        public void clear(@Modifiable SynchronizedMap<E> this) {
+        public void clear(@Modifiable SynchronizedMap<K,V> this) {
             synchronized (mutex) {m.clear();}
         }
 
@@ -4097,7 +4097,7 @@ public class Collections {
         public boolean containsValue(@UnknownSignedness Object v) { return m.containsValue(v); }
         public V get(Object key)               { return m.get(key); }
         public V remove(Object key)            { return m.remove(key); }
-        public void clear(@Modifiable CheckedMap<E> this)                    { m.clear(); }
+        public void clear(@Modifiable CheckedMap<K,V> this)                    { m.clear(); }
         public Set<K> keySet()                 { return m.keySet(); }
         public Collection<V> values()          { return m.values(); }
         public boolean equals(Object o)        { return o == this || m.equals(o); }

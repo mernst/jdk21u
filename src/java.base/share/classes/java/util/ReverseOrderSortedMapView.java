@@ -62,7 +62,7 @@ class ReverseOrderSortedMapView<K, V> extends AbstractMap<K, V> implements Sorte
 
     // ========== Map ==========
 
-    public void clear(@Modifiable ReverseOrderSortedMapView<E> this) {
+    public void clear(@Modifiable ReverseOrderSortedMapView<K,V> this) {
         base.clear();
     }
 
