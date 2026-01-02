@@ -25,6 +25,8 @@
 
 package java.util;
 
+import org.checkerframework.checker.modifiable.qual.Modifiable;
+
 /**
  * A collection that has a well-defined encounter order, that supports operations at both ends,
  * and that is reversible. The elements of a sequenced collection have an <a id="encounter">

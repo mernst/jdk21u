@@ -25,6 +25,7 @@
 
 package java.util;
 
+import org.checkerframework.checker.modifiable.qual.Modifiable;
 import jdk.internal.util.NullableKeyValueHolder;
 
 /**

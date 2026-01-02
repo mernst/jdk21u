@@ -25,6 +25,8 @@
 
 package java.util;
 
+import org.checkerframework.checker.modifiable.qual.Modifiable;
+
 /**
  * Provides a reversed-ordered view of a SortedMap. Not serializable.
  *
