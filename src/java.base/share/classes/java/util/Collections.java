@@ -26,6 +26,7 @@
 package java.util;
 
 import org.checkerframework.checker.index.qual.GTENegativeOne;
+import org.checkerframework.checker.index.qual.IndexFor;
 import org.checkerframework.checker.index.qual.IndexOrHigh;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.index.qual.PolyGrowShrink;
@@ -3931,13 +3932,13 @@ public class Collections {
                 public E previous()          { return i.previous(); }
                 public int nextIndex()       { return i.nextIndex(); }
                 public int previousIndex()   { return i.previousIndex(); }
-                public void remove(@GuardSatisfied @Modifiable ListIterator<E> this)         {        i.remove(); }
+                public void remove(/*@GuardSatisfied @Modifiable ListIterator<E> this*/)         {        i.remove(); }
 
-                public void set(@GuardSatisfied @Modifiable ListIterator<E> this, E e) {
+                public void set(/*@GuardSatisfied @Modifiable ListIterator<E> this,*/ E e) {
                     i.set(typeCheck(e));
                 }
 
-                public void add(@GuardSatisfied @Modifiable ListIterator<E> this, E e) {
+                public void add(/*@GuardSatisfied @Modifiable ListIterator<E> this,*/ E e) {
                     i.add(typeCheck(e));
                 }
 
@@ -6110,7 +6111,7 @@ public class Collections {
      * @since 1.5
      */
     @SafeVarargs
-    public static <T> boolean addAll(@Modifiable @GuardSatisfied @Modifiable Collection<? super T> c, T... elements) {
+    public static <T> boolean addAll(@GuardSatisfied @Modifiable Collection<? super T> c, T... elements) {
         boolean result = false;
         for (T element : elements)
             result |= c.add(element);

@@ -211,7 +211,7 @@ class ReverseOrderSortedMapView<K, V> extends AbstractMap<K, V> implements Sorte
                 return k;
             }
 
-            public void remove(@GuardSatisfied @Modifiable Iterator<K> this) {
+            public void remove(/*@GuardSatisfied @Modifiable Iterator<K> this*/) {
                 if (prev == null) {
                     throw new IllegalStateException();
                 } else {
@@ -234,7 +234,7 @@ class ReverseOrderSortedMapView<K, V> extends AbstractMap<K, V> implements Sorte
                 return map.get(keyIterator.next());
             }
 
-            public void remove(@GuardSatisfied @Modifiable Iterator<V> this) {
+            public void remove(/*@GuardSatisfied @Modifiable Iterator<V> this*/) {
                 keyIterator.remove();
             }
         };
@@ -253,7 +253,7 @@ class ReverseOrderSortedMapView<K, V> extends AbstractMap<K, V> implements Sorte
                 return new ViewEntry<>(map, key, map.get(key));
             }
 
-            public void remove(@GuardSatisfied @Modifiable Iterator<Map.Entry<K, V>> this) {
+            public void remove(/*@GuardSatisfied @Modifiable Iterator<Map.Entry<K, V>> this*/) {
                 keyIterator.remove();
             }
         };
@@ -376,7 +376,7 @@ class ReverseOrderSortedMapView<K, V> extends AbstractMap<K, V> implements Sorte
                     }
                 }
 
-                public void remove(@GuardSatisfied @Modifiable Iterator<Map.Entry<K, V>> this) {
+                public void remove(/*@GuardSatisfied @Modifiable Iterator<Map.Entry<K, V>> this*/) {
                     if (prevKey == null) {
                         throw new IllegalStateException();
                     } else {

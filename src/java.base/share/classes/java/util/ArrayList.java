@@ -26,6 +26,7 @@
 package java.util;
 
 import org.checkerframework.checker.index.qual.GTENegativeOne;
+import org.checkerframework.checker.index.qual.IndexFor;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.index.qual.PolyGrowShrink;
 import org.checkerframework.checker.index.qual.Shrinkable;
@@ -1488,7 +1489,7 @@ public class ArrayList<E> extends AbstractList<E>
                     return cursor - 1;
                 }
 
-                public void remove(@GuardSatisfied @Modifiable ListIterator<E> this) {
+                public void remove(/*@GuardSatisfied @Modifiable ListIterator<E> this*/) {
                     if (lastRet < 0)
                         throw new IllegalStateException();
                     checkForComodification();
@@ -1503,7 +1504,7 @@ public class ArrayList<E> extends AbstractList<E>
                     }
                 }
 
-                public void set(@GuardSatisfied @Modifiable ListIterator<E> this, E e) {
+                public void set(/*@GuardSatisfied @Modifiable ListIterator<E> this*/, E e) {
                     if (lastRet < 0)
                         throw new IllegalStateException();
                     checkForComodification();
@@ -1515,7 +1516,7 @@ public class ArrayList<E> extends AbstractList<E>
                     }
                 }
 
-                public void add(@GuardSatisfied @Modifiable ListIterator<E> this, E e) {
+                public void add(/*@GuardSatisfied @Modifiable ListIterator<E> this*/, E e) {
                     checkForComodification();
 
                     try {
