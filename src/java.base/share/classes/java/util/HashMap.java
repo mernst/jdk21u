@@ -889,7 +889,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
      * Removes all of the mappings from this map.
      * The map will be empty after this call returns.
      */
-    public void clear(@GuardSatisfied HashMap<K, V> this) {
+    public void clear(@GuardSatisfied @Modifiable HashMap<K, V> this) {
         Node<K,V>[] tab;
         modCount++;
         if ((tab = table) != null && size > 0) {
@@ -1018,7 +1018,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
     final class KeySet extends AbstractSet<K> {
         @Pure
         public final @NonNegative int size()                 { return size; }
-        public final void clear()               { HashMap.this.clear(); }
+        public final void clear(@Modifiable KeySet this)               { HashMap.this.clear(); }
         @SideEffectFree
         public final Iterator<K> iterator()     { return new KeyIterator(); }
         @Pure
@@ -1084,7 +1084,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
     final class Values extends AbstractCollection<V> {
         @Pure
         public final @NonNegative int size()                 { return size; }
-        public final void clear()               { HashMap.this.clear(); }
+        public final void clear(@Modifiable Values this)               { HashMap.this.clear(); }
         @SideEffectFree
         public final Iterator<V> iterator()     { return new ValueIterator(); }
         @Pure
@@ -1144,7 +1144,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
     final class EntrySet extends AbstractSet<Map.Entry<K,V>> {
         @Pure
         public final @NonNegative int size()                 { return size; }
-        public final void clear()               { HashMap.this.clear(); }
+        public final void clear(@Modifiable EntrySet this)               { HashMap.this.clear(); }
         @SideEffectFree
         public final Iterator<Map.Entry<K,V>> iterator() {
             return new EntryIterator();

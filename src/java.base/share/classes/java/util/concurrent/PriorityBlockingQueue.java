@@ -1034,7 +1034,7 @@ public class PriorityBlockingQueue<E extends Object> extends AbstractQueue<E>
     /**
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean removeIf(@Shrinkable PriorityBlockingQueue<E> this, Predicate<? super E> filter) {
+    public boolean removeIf(@Modifiable @Shrinkable PriorityBlockingQueue<E> this, Predicate<? super E> filter) {
         Objects.requireNonNull(filter);
         return bulkRemove(filter);
     }

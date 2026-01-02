@@ -1537,7 +1537,7 @@ public class LinkedTransferQueue<E> extends AbstractQueue<E>
     /**
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean removeIf(@Shrinkable LinkedTransferQueue<E> this, Predicate<? super E> filter) {
+    public boolean removeIf(@Modifiable @Shrinkable LinkedTransferQueue<E> this, Predicate<? super E> filter) {
         Objects.requireNonNull(filter);
         return bulkRemove(filter);
     }

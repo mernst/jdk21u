@@ -327,7 +327,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
      *
      * @throws UnsupportedOperationException {@inheritDoc}
      */
-    public void clear(@GuardSatisfied AbstractMap<K, V> this) {
+    public void clear(@GuardSatisfied @Modifiable AbstractMap<K, V> this) {
         entrySet().clear();
     }
 
@@ -414,7 +414,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
                     return AbstractMap.this.isEmpty();
                 }
 
-                public void clear() {
+                public void clear(/*@Modifiable AbstractSet<E> this*/) {
                     AbstractMap.this.clear();
                 }
 
@@ -481,7 +481,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
                     return AbstractMap.this.isEmpty();
                 }
 
-                public void clear() {
+                public void clear(/*@Modifiable AbstractCollection<E> this*/) {
                     AbstractMap.this.clear();
                 }
 
@@ -965,7 +965,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
 
         public boolean add(E t) { throw uoe(); }
         public boolean addAll(@GuardSatisfied @Modifiable ViewCollection<E> this, Collection<? extends E> c) { throw uoe(); }
-        public void clear() { view().clear(); }
+        public void clear(@GuardSatisfied @Modifiable ViewCollection<E> this) { view().clear(); }
         public boolean contains(Object o) { return view().contains(o); }
         public boolean containsAll(Collection<?> c) { return view().containsAll(c); }
         public void forEach(Consumer<? super E> c) { view().forEach(c); }
@@ -974,7 +974,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
         public Stream<E> parallelStream() { return view().parallelStream(); }
         public boolean remove(@GuardSatisfied @Modifiable ViewCollection<E> this, Object o) { return view().remove(o); }
         public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ViewCollection<E> this, Collection<?> c) { return view().removeAll(c); }
-        public boolean removeIf(Predicate<? super E> filter) { return view().removeIf(filter); }
+        public boolean removeIf(@GuardSatisfied @Modifiable ViewCollection<E> this, Predicate<? super E> filter) { return view().removeIf(filter); }
         public boolean retainAll(@GuardSatisfied @Modifiable ViewCollection<E> this, Collection<?> c) { return view().retainAll(c); }
         public int size() { return view().size(); }
         public Spliterator<E> spliterator() { return view().spliterator(); }

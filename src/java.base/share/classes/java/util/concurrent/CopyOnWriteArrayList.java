@@ -922,7 +922,7 @@ public class CopyOnWriteArrayList<E>
     /**
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean removeIf(@Shrinkable CopyOnWriteArrayList<E> this, Predicate<? super E> filter) {
+    public boolean removeIf(@Modifiable @Shrinkable CopyOnWriteArrayList<E> this, Predicate<? super E> filter) {
         Objects.requireNonNull(filter);
         return bulkRemove(filter);
     }
@@ -1561,7 +1561,7 @@ public class CopyOnWriteArrayList<E>
             }
         }
 
-        public void clear() {
+        public void clear(@GuardSatisfied @Modifiable @Shrinkable COWSubList this) {
             synchronized (lock) {
                 checkForComodification();
                 removeRange(offset, offset + size);
@@ -1674,7 +1674,7 @@ public class CopyOnWriteArrayList<E>
             return bulkRemove(e -> !c.contains(e));
         }
 
-        public boolean removeIf(Predicate<? super E> filter) {
+        public boolean removeIf(@GuardSatisfied @Modifiable COWSubList this, Predicate<? super E> filter) {
             Objects.requireNonNull(filter);
             return bulkRemove(filter);
         }
@@ -1878,7 +1878,7 @@ public class CopyOnWriteArrayList<E>
             return true;
         }
 
-        public boolean addAll(@GuardSatisfied @Modifiable Reversed<E> this, Collection<? extends E> c) {
+        public boolean addAll(@GuardSatisfied @Modifiable @Shrinkable Reversed<E> this, Collection<? extends E> c) {
             @SuppressWarnings("unchecked")
             E[] es = (E[]) c.toArray();
             if (es.length > 0) {
@@ -1890,7 +1890,7 @@ public class CopyOnWriteArrayList<E>
             }
         }
 
-        public void clear() {
+        public void clear(@GuardSatisfied @Modifiable @Shrinkable Reversed<E> this) {
             base.clear();
         }
 
@@ -2095,11 +2095,11 @@ public class CopyOnWriteArrayList<E>
             }
         }
 
-        public boolean removeIf(Predicate<? super E> filter) {
+        public boolean removeIf(@GuardSatisfied @Modifiable @Shrinkable Reversed<E> this, Predicate<? super E> filter) {
             return base.removeIf(filter);
         }
 
-        public void replaceAll(@GuardSatisfied @Modifiable Reversed<E> this, UnaryOperator<E> operator) {
+        public void replaceAll(@GuardSatisfied @Modifiable @Shrinkable Reversed<E> this, UnaryOperator<E> operator) {
             base.replaceAll(operator);
         }
 

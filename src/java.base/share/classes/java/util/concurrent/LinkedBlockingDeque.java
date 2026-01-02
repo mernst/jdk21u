@@ -1358,7 +1358,7 @@ public class LinkedBlockingDeque<E extends Object>
     /**
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean removeIf(@Shrinkable LinkedBlockingDeque<E> this, Predicate<? super E> filter) {
+    public boolean removeIf(@Modifiable @Shrinkable LinkedBlockingDeque<E> this, Predicate<? super E> filter) {
         Objects.requireNonNull(filter);
         return bulkRemove(filter);
     }

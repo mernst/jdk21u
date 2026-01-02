@@ -372,7 +372,7 @@ public interface Map<K, V> {
      * @throws UnsupportedOperationException if the {@code clear} operation
      *         is not supported by this map
      */
-    void clear(@GuardSatisfied Map<K, V> this);
+    void clear(@GuardSatisfied @Modifiable Map<K, V> this);
 
 
     // Views

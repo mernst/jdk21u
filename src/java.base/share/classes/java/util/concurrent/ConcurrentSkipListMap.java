@@ -1428,7 +1428,7 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
     /**
      * Removes all of the mappings from this map.
      */
-    public void clear() {
+    public void clear(@Modifiable ConcurrentSkipListMap<K,V> this) {
         Index<K,V> h, r, d; Node<K,V> b;
         VarHandle.acquireFence();
         while ((h = head) != null) {
@@ -2237,7 +2237,7 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
         @EnsuresNonEmptyIf(result = true, expression = "this")
         public boolean contains(@UnknownSignedness Object o) { return m.containsKey(o); }
         public boolean remove(@GuardSatisfied @Modifiable KeySet<K,V> this, @UnknownSignedness Object o) { return m.remove(o) != null; }
-        public void clear() { m.clear(); }
+        public void clear(@GuardSatisfied @Modifiable KeySet<K,V> this) { m.clear(); }
         public K lower(K e) { return m.lowerKey(e); }
         public K floor(K e) { return m.floorKey(e); }
         public K ceiling(K e) { return m.ceilingKey(e); }
@@ -2326,7 +2326,7 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
         @Pure
         @EnsuresNonEmptyIf(result = true, expression = "this")
         public boolean contains(@UnknownSignedness Object o) { return m.containsValue(o); }
-        public void clear() { m.clear(); }
+        public void clear(@Modifiable Values<K,V> this) { m.clear(); }
         public Object[] toArray()     { return toList(this).toArray();  }
         public <T> @Nullable T[] toArray(@PolyNull T[] a) { return toList(this).toArray(a); }
 
@@ -2336,7 +2336,7 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
                 : ((SubMap<K,V>)m).new SubMapValueIterator();
         }
 
-        public boolean removeIf(Predicate<? super V> filter) {
+        public boolean removeIf(@Modifiable Values<K,V> this, Predicate<? super V> filter) {
             if (filter == null) throw new NullPointerException();
             if (m instanceof ConcurrentSkipListMap)
                 return ((ConcurrentSkipListMap<K,V>)m).removeValueIf(filter);
@@ -2390,7 +2390,7 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
         public int size() {
             return m.size();
         }
-        public void clear() {
+        public void clear(@GuardSatisfied @Modifiable EntrySet<K,V> this) {
             m.clear();
         }
         public boolean equals(Object o) {
@@ -2413,7 +2413,7 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
                 ? ((ConcurrentSkipListMap<K,V>)m).entrySpliterator()
                 : ((SubMap<K,V>)m).new SubMapEntryIterator();
         }
-        public boolean removeIf(Predicate<? super Entry<K,V>> filter) {
+        public boolean removeIf(@GuardSatisfied @Modifiable EntrySet<K,V> this, Predicate<? super Entry<K,V>> filter) {
             if (filter == null) throw new NullPointerException();
             if (m instanceof ConcurrentSkipListMap)
                 return ((ConcurrentSkipListMap<K,V>)m).removeEntryIf(filter);
@@ -2743,7 +2743,7 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
             return false;
         }
 
-        public void clear() {
+        public void clear(@GuardSatisfied @Modifiable SubMap<K,V> this) {
             Comparator<? super K> cmp = m.comparator;
             for (ConcurrentSkipListMap.Node<K,V> n = loNode(cmp);
                  isBeforeEnd(n, cmp);

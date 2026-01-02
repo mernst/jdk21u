@@ -952,7 +952,7 @@ public class TreeMap<K,V>
      * Removes all of the mappings from this map.
      * The map will be empty after this call returns.
      */
-    public void clear(@GuardSatisfied TreeMap<K, V> this) {
+    public void clear(@GuardSatisfied @Modifiable TreeMap<K, V> this) {
         modCount++;
         size = 0;
         root = null;
@@ -1401,7 +1401,7 @@ public class TreeMap<K,V>
             return false;
         }
 
-        public void clear() {
+        public void clear(@Modifiable Values this) {
             TreeMap.this.clear();
         }
 
@@ -1444,7 +1444,7 @@ public class TreeMap<K,V>
             return TreeMap.this.size();
         }
 
-        public void clear() {
+        public void clear(@Modifiable EntrySet this) {
             TreeMap.this.clear();
         }
 
@@ -1497,7 +1497,7 @@ public class TreeMap<K,V>
         @Pure
         @EnsuresNonEmptyIf(result = true, expression = "this")
         public boolean contains(@UnknownSignedness Object o) { return m.containsKey(o); }
-        public void clear() { m.clear(); }
+        public void clear(@Modifiable KeySet<E> this) { m.clear(); }
         public E lower(E e) { return m.lowerKey(e); }
         public E floor(E e) { return m.floorKey(e); }
         public E ceiling(E e) { return m.ceilingKey(e); }

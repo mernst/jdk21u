@@ -615,7 +615,7 @@ public interface Collection<E> extends Iterable<E> {
      *         supported.
      * @since 1.8
      */
-    default boolean removeIf(@Shrinkable Collection<E> this, Predicate<? super E> filter) {
+    default boolean removeIf(@Modifiable @Shrinkable Collection<E> this, Predicate<? super E> filter) {
         Objects.requireNonNull(filter);
         boolean removed = false;
         final Iterator<E> each = iterator();

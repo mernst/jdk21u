@@ -657,7 +657,7 @@ public class IdentityHashMap<K,V>
      * Removes all of the mappings from this map.
      * The map will be empty after this call returns.
      */
-    public void clear(@GuardSatisfied IdentityHashMap<K, V> this) {
+    public void clear(@GuardSatisfied @Modifiable IdentityHashMap<K, V> this) {
         modCount++;
         Object[] tab = table;
         for (int i = 0; i < tab.length; i++)
@@ -1060,7 +1060,7 @@ public class IdentityHashMap<K,V>
             }
             return modified;
         }
-        public void clear() {
+        public void clear(@Modifiable KeySet this) {
             IdentityHashMap.this.clear();
         }
         public int hashCode() {
@@ -1162,7 +1162,7 @@ public class IdentityHashMap<K,V>
             }
             return false;
         }
-        public void clear() {
+        public void clear(@Modifiable Values this) {
             IdentityHashMap.this.clear();
         }
         @SideEffectFree
@@ -1272,7 +1272,7 @@ public class IdentityHashMap<K,V>
         public @NonNegative int size() {
             return size;
         }
-        public void clear() {
+        public void clear(@Modifiable EntrySet this) {
             IdentityHashMap.this.clear();
         }
         /*

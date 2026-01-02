@@ -384,7 +384,7 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V>
     /**
      * Removes all mappings from this map.
      */
-    public void clear() {
+    public void clear(@Modifiable EnumMap<K,V> this) {
         Arrays.fill(vals, null);
         size = 0;
     }
@@ -435,7 +435,7 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V>
             EnumMap.this.remove(o);
             return size != oldSize;
         }
-        public void clear() {
+        public void clear(@Modifiable KeySet this) {
             EnumMap.this.clear();
         }
     }
@@ -485,7 +485,7 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V>
             }
             return false;
         }
-        public void clear() {
+        public void clear(@Modifiable Values this) {
             EnumMap.this.clear();
         }
     }
@@ -528,7 +528,7 @@ public class EnumMap<K extends Enum<K>, V> extends AbstractMap<K, V>
         public @NonNegative int size() {
             return size;
         }
-        public void clear() {
+        public void clear(@Modifiable EntrySet this) {
             EnumMap.this.clear();
         }
         @SideEffectFree

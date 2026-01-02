@@ -165,7 +165,7 @@ class ImmutableCollections {
         @Override public void    clear() { throw uoe(); }
         @Override public boolean remove(@GuardSatisfied @Modifiable AbstractImmutableCollection<E> this, @UnknownSignedness Object o) { throw uoe(); }
         @Override public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable AbstractImmutableCollection<E> this, Collection<? extends @UnknownSignedness Object> c) { throw uoe(); }
-        @Override public boolean removeIf(Predicate<? super E> filter) { throw uoe(); }
+        @Override public boolean removeIf(@GuardSatisfied @Modifiable @Shrinkable AbstractImmutableCollection<E> this, Predicate<? super E> filter) { throw uoe(); }
         @Override public boolean retainAll(@GuardSatisfied @Modifiable AbstractImmutableCollection<E> this, Collection<? extends @UnknownSignedness Object> c) { throw uoe(); }
     }
 
@@ -1112,7 +1112,7 @@ class ImmutableCollections {
 
     // Not a jdk.internal.ValueBased class; disqualified by fields in superclass AbstractMap
     abstract static class AbstractImmutableMap<K,V> extends AbstractMap<K,V> implements Serializable {
-        @Override public void clear() { throw uoe(); }
+        @Override public void clear(@GuardSatisfied @Modifiable AbstractImmutableMap<E> this) { throw uoe(); }
         @Override public @PolyNull V compute(K key, BiFunction<? super K,? super V,? extends @PolyNull V> rf) { throw uoe(); }
         @Override public @PolyNull V computeIfAbsent(K key, Function<? super K,? extends @PolyNull V> mf) { throw uoe(); }
         @Override public @PolyNull V computeIfPresent(K key, BiFunction<? super K,? super V,? extends @PolyNull V> rf) { throw uoe(); }

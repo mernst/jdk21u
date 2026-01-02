@@ -683,7 +683,7 @@ public class WeakHashMap<K,V>
      * Removes all of the mappings from this map.
      * The map will be empty after this call returns.
      */
-    public void clear(@GuardSatisfied WeakHashMap<K, V> this) {
+    public void clear(@GuardSatisfied @Modifiable WeakHashMap<K, V> this) {
         // clear out ref queue. We don't need to expunge entries
         // since table is getting cleared.
         while (queue.poll() != null)
@@ -939,7 +939,7 @@ public class WeakHashMap<K,V>
                 return false;
         }
 
-        public void clear() {
+        public void clear(@Modifiable KeySet this) {
             WeakHashMap.this.clear();
         }
 
@@ -989,7 +989,7 @@ public class WeakHashMap<K,V>
             return containsValue(o);
         }
 
-        public void clear() {
+        public void clear(@Modifiable Values this) {
             WeakHashMap.this.clear();
         }
 
@@ -1042,7 +1042,7 @@ public class WeakHashMap<K,V>
             return WeakHashMap.this.size();
         }
 
-        public void clear() {
+        public void clear(@Modifiable EntrySet this) {
             WeakHashMap.this.clear();
         }
 

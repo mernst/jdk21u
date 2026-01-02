@@ -574,7 +574,7 @@ public class Hashtable<K extends @NonNull Object,V extends @NonNull Object>
     /**
      * Clears this hashtable so that it contains no keys.
      */
-    public synchronized void clear(@GuardSatisfied Hashtable<K, V> this) {
+    public synchronized void clear(@GuardSatisfied @Modifiable Hashtable<K, V> this) {
         Entry<?,?> tab[] = table;
         for (int index = tab.length; --index >= 0; )
             tab[index] = null;
@@ -714,7 +714,7 @@ public class Hashtable<K extends @NonNull Object,V extends @NonNull Object>
         public boolean remove(@GuardSatisfied @Modifiable KeySet this, @UnknownSignedness Object o) {
             return Hashtable.this.remove(o) != null;
         }
-        public void clear() {
+        public void clear(@Modifiable KeySet this) {
             Hashtable.this.clear();
         }
     }
@@ -800,7 +800,7 @@ public class Hashtable<K extends @NonNull Object,V extends @NonNull Object>
             return count;
         }
 
-        public void clear() {
+        public void clear(@Modifiable EntrySet this) {
             Hashtable.this.clear();
         }
     }
@@ -842,7 +842,7 @@ public class Hashtable<K extends @NonNull Object,V extends @NonNull Object>
         public boolean contains(@UnknownSignedness Object o) {
             return containsValue(o);
         }
-        public void clear() {
+        public void clear(@Modifiable ValueCollection this) {
             Hashtable.this.clear();
         }
     }

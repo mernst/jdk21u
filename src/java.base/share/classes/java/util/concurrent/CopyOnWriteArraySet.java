@@ -439,7 +439,7 @@ public class CopyOnWriteArraySet<E> extends AbstractSet<E>
     /**
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean removeIf(Predicate<? super E> filter) {
+    public boolean removeIf(@Modifiable CopyOnWriteArraySet<E> this, Predicate<? super E> filter) {
         return al.removeIf(filter);
     }
 

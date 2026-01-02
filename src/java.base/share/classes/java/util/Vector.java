@@ -999,7 +999,7 @@ public class Vector<E>
      */
     @SuppressWarnings({"unchecked"})
     @Override
-    public boolean removeIf(@Shrinkable Vector<E> this, Predicate<? super E> filter) {
+    public boolean removeIf(@Modifiable @Shrinkable Vector<E> this, Predicate<? super E> filter) {
         Objects.requireNonNull(filter);
         return bulkRemove(filter);
     }

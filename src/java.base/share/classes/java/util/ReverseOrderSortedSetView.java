@@ -127,7 +127,7 @@ class ReverseOrderSortedSetView<E> implements SortedSet<E> {
         return base.addAll(c);
     }
 
-    public void clear() {
+    public void clear(@GuardSatisfied @Modifiable ReverseOrderSortedSetView<E> this) {
         base.clear();
     }
 

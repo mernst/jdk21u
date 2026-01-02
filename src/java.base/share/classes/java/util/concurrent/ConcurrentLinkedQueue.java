@@ -992,7 +992,7 @@ public class ConcurrentLinkedQueue<E extends @NonNull Object> extends AbstractQu
     /**
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean removeIf(@Shrinkable ConcurrentLinkedQueue<E> this, Predicate<? super E> filter) {
+    public boolean removeIf(@Modifiable @Shrinkable ConcurrentLinkedQueue<E> this, Predicate<? super E> filter) {
         Objects.requireNonNull(filter);
         return bulkRemove(filter);
     }

@@ -1212,7 +1212,7 @@ public class ConcurrentHashMap<K extends @NonNull Object,V extends @NonNull Obje
     /**
      * Removes all of the mappings from this map.
      */
-    public void clear() {
+    public void clear(@Modifiable ConcurrentHashMap<K,V> this) {
         long delta = 0L; // negative number of deletions
         int i = 0;
         Node<K,V>[] tab = table;
@@ -4475,7 +4475,7 @@ public class ConcurrentHashMap<K extends @NonNull Object,V extends @NonNull Obje
          * Removes all of the elements from this view, by removing all
          * the mappings from the map backing this view.
          */
-        public final void clear()      { map.clear(); }
+        public final void clear(@Modifiable CollectionView<K,V,E> this)      { map.clear(); }
         @Pure
         public final int size()        { return map.size(); }
         @Pure
@@ -4822,7 +4822,7 @@ public class ConcurrentHashMap<K extends @NonNull Object,V extends @NonNull Obje
             return modified;
         }
 
-        public boolean removeIf(Predicate<? super V> filter) {
+        public boolean removeIf(@Modifiable ValuesView<K,V> this, Predicate<? super V> filter) {
             return map.removeValueIf(filter);
         }
 
@@ -4900,7 +4900,7 @@ public class ConcurrentHashMap<K extends @NonNull Object,V extends @NonNull Obje
             return added;
         }
 
-        public boolean removeIf(Predicate<? super Entry<K,V>> filter) {
+        public boolean removeIf(@Modifiable EntrySetView<K,V> this, Predicate<? super Entry<K,V>> filter) {
             return map.removeEntryIf(filter);
         }
 

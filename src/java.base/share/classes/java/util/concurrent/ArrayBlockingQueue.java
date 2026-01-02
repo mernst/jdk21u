@@ -1494,7 +1494,7 @@ public class ArrayBlockingQueue<E extends Object> extends AbstractQueue<E>
     /**
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean removeIf(@Shrinkable ArrayBlockingQueue<E> this, Predicate<? super E> filter) {
+    public boolean removeIf(@Modifiable @Shrinkable ArrayBlockingQueue<E> this, Predicate<? super E> filter) {
         Objects.requireNonNull(filter);
         return bulkRemove(filter);
     }

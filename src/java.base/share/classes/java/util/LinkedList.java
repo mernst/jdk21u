@@ -1375,7 +1375,7 @@ public class LinkedList<E>
             return rlist.stream();
         }
 
-        public boolean removeIf(Predicate<? super E> filter) {
+        public boolean removeIf(@Modifiable ReverseOrderLinkedListView<E> this, Predicate<? super E> filter) {
             return rlist.removeIf(filter);
         }
 

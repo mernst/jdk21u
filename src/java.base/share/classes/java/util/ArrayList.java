@@ -1350,7 +1350,7 @@ public class ArrayList<E> extends AbstractList<E>
             return modified;
         }
 
-        public boolean removeIf(Predicate<? super E> filter) {
+        public boolean removeIf(@GuardSatisfied @Modifiable SubList<E> this, Predicate<? super E> filter) {
             checkForComodification();
             int oldSize = root.size;
             boolean modified = root.removeIf(filter, offset, offset + size);
@@ -1800,7 +1800,7 @@ public class ArrayList<E> extends AbstractList<E>
      * @throws NullPointerException {@inheritDoc}
      */
     @Override
-    public boolean removeIf(@Shrinkable ArrayList<E> this, Predicate<? super E> filter) {
+    public boolean removeIf(@Modifiable @Shrinkable ArrayList<E> this, Predicate<? super E> filter) {
         return removeIf(filter, 0, size);
     }
 
@@ -1808,7 +1808,7 @@ public class ArrayList<E> extends AbstractList<E>
      * Removes all elements satisfying the given predicate, from index
      * i (inclusive) to index end (exclusive).
      */
-    boolean removeIf(@Shrinkable ArrayList<E> this, Predicate<? super E> filter, int i, final int end) {
+    boolean removeIf(@Modifiable @Shrinkable ArrayList<E> this, Predicate<? super E> filter, int i, final int end) {
         Objects.requireNonNull(filter);
         int expectedModCount = modCount;
         final Object[] es = elementData;

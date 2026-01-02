@@ -1639,7 +1639,7 @@ public class ConcurrentLinkedDeque<E extends @NonNull Object>
     /**
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean removeIf(@Shrinkable ConcurrentLinkedDeque<E> this, Predicate<? super E> filter) {
+    public boolean removeIf(@Modifiable @Shrinkable ConcurrentLinkedDeque<E> this, Predicate<? super E> filter) {
         Objects.requireNonNull(filter);
         return bulkRemove(filter);
     }

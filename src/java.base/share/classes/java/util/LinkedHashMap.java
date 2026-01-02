@@ -574,7 +574,7 @@ public class LinkedHashMap<K,V>
     /**
      * {@inheritDoc}
      */
-    public void clear(@GuardSatisfied LinkedHashMap<K, V> this) {
+    public void clear(@GuardSatisfied @Modifiable LinkedHashMap<K, V> this) {
         super.clear();
         head = tail = null;
     }
@@ -716,7 +716,7 @@ public class LinkedHashMap<K,V>
         LinkedKeySet(boolean reversed)          { this.reversed = reversed; }
         @Pure
         public final int size()                 { return size; }
-        public final void clear()               { LinkedHashMap.this.clear(); }
+        public final void clear(@Modifiable LinkedKeyMap this)               { LinkedHashMap.this.clear(); }
         @SideEffectFree
         public final Iterator<K> iterator() {
             return new LinkedKeyIterator(reversed);
@@ -829,7 +829,7 @@ public class LinkedHashMap<K,V>
         LinkedValues(boolean reversed)          { this.reversed = reversed; }
         @Pure
         public final int size()                 { return size; }
-        public final void clear()               { LinkedHashMap.this.clear(); }
+        public final void clear(@Modifiable LinkedValues this)               { LinkedHashMap.this.clear(); }
         @SideEffectFree
         public final Iterator<V> iterator() {
             return new LinkedValueIterator(reversed);
@@ -941,7 +941,7 @@ public class LinkedHashMap<K,V>
         LinkedEntrySet(boolean reversed)        { this.reversed = reversed; }
         @Pure
         public final int size()                 { return size; }
-        public final void clear()               { LinkedHashMap.this.clear(); }
+        public final void clear(@Modifiable LinkedEntrySet this)               { LinkedHashMap.this.clear(); }
         @SideEffectFree
         public final Iterator<Map.Entry<K,V>> iterator() {
             return new LinkedEntryIterator(reversed);
@@ -1186,7 +1186,7 @@ public class LinkedHashMap<K,V>
             base.putAll(m);
         }
 
-        public void clear() {
+        public void clear(@Modifiable ReversedLinkedHashMapView<K,V> this) {
             base.clear();
         }
 

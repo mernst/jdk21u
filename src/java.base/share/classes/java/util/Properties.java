@@ -1379,7 +1379,7 @@ public class Properties extends Hashtable<Object,Object> {
     }
 
     @Override
-    public synchronized void clear() {
+    public synchronized void clear(@Modifiable Properties this) {
         map.clear();
     }
 
@@ -1425,7 +1425,7 @@ public class Properties extends Hashtable<Object,Object> {
         @Override public boolean contains(@UnknownSignedness Object o) { return entrySet.contains(o); }
         @Override public Object[] toArray() { return entrySet.toArray(); }
         @Override public <T> @Nullable T[] toArray(@PolyNull T[] a) { return entrySet.toArray(a); }
-        @Override public void clear() { entrySet.clear(); }
+        @Override public void clear(@Modifiable EntrySet this) { entrySet.clear(); }
         @Override public boolean remove(@GuardSatisfied @Modifiable EntrySet this, @UnknownSignedness Object o) { return entrySet.remove(o); }
 
         @Override
