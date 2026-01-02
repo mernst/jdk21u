@@ -410,7 +410,7 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
             }
         }
 
-        public void remove(@GuardSatisfied @Modifiable Iterator<E> this) {
+        public void remove(@GuardSatisfied @Modifiable Itr this) {
             if (lastRet < 0)
                 throw new IllegalStateException();
             checkForComodification();
