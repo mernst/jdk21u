@@ -34,10 +34,10 @@
 
 package java.util.concurrent;
 
+import org.checkerframework.checker.index.qual.CanShrink;
 import org.checkerframework.checker.index.qual.IndexFor;
 import org.checkerframework.checker.index.qual.IndexOrHigh;
 import org.checkerframework.checker.index.qual.PolyGrowShrink;
-import org.checkerframework.checker.index.qual.Shrinkable;
 import org.checkerframework.checker.lock.qual.GuardSatisfied;
 import org.checkerframework.checker.modifiable.qual.Modifiable;
 import org.checkerframework.checker.nonempty.qual.EnsuresNonEmpty;
@@ -550,7 +550,7 @@ public class CopyOnWriteArrayList<E>
      *
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */
-    public E remove(@GuardSatisfied @Modifiable @Shrinkable CopyOnWriteArrayList<E> this, int index) {
+    public E remove(@GuardSatisfied @Modifiable @CanShrink CopyOnWriteArrayList<E> this, int index) {
         synchronized (lock) {
             Object[] es = getArray();
             int len = es.length;
@@ -613,7 +613,7 @@ public class CopyOnWriteArrayList<E>
      * @param o element to be removed from this list, if present
      * @return {@code true} if this list contained the specified element
      */
-    public boolean remove(@Modifiable @Shrinkable CopyOnWriteArrayList<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o) {
+    public boolean remove(@Modifiable @CanShrink CopyOnWriteArrayList<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o) {
         Object[] snapshot = getArray();
         int index = indexOfRange(o, snapshot, 0, snapshot.length);
         return index >= 0 && remove(o, snapshot, index);
@@ -623,7 +623,7 @@ public class CopyOnWriteArrayList<E>
      * A version of remove(Object) using the strong hint that given
      * recent snapshot contains o at the given index.
      */
-    private boolean remove(@Modifiable @Shrinkable CopyOnWriteArrayList<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o, Object[] snapshot, int index) {
+    private boolean remove(@Modifiable @CanShrink CopyOnWriteArrayList<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o, Object[] snapshot, int index) {
         synchronized (lock) {
             Object[] current = getArray();
             int len = current.length;
@@ -666,7 +666,7 @@ public class CopyOnWriteArrayList<E>
      * @throws IndexOutOfBoundsException if fromIndex or toIndex out of range
      *         ({@code fromIndex < 0 || toIndex > size() || toIndex < fromIndex})
      */
-    void removeRange(@GuardSatisfied @Modifiable @Shrinkable CopyOnWriteArrayList<E> this, int fromIndex, int toIndex) {
+    void removeRange(@GuardSatisfied @Modifiable @CanShrink CopyOnWriteArrayList<E> this, int fromIndex, int toIndex) {
         synchronized (lock) {
             Object[] es = getArray();
             int len = es.length;
@@ -761,7 +761,7 @@ public class CopyOnWriteArrayList<E>
      *         or if the specified collection is null
      * @see #remove(Object)
      */
-    public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable CopyOnWriteArrayList<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
+    public boolean removeAll(@GuardSatisfied @Modifiable @CanShrink CopyOnWriteArrayList<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
         Objects.requireNonNull(c);
         return bulkRemove(e -> c.contains(e));
     }
@@ -782,7 +782,7 @@ public class CopyOnWriteArrayList<E>
      *         or if the specified collection is null
      * @see #remove(Object)
      */
-    public boolean retainAll(@GuardSatisfied @Modifiable @Shrinkable CopyOnWriteArrayList<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
+    public boolean retainAll(@GuardSatisfied @Modifiable @CanShrink CopyOnWriteArrayList<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
         Objects.requireNonNull(c);
         return bulkRemove(e -> !c.contains(e));
     }
@@ -829,7 +829,7 @@ public class CopyOnWriteArrayList<E>
      * Removes all of the elements from this list.
      * The list will be empty after this call returns.
      */
-    public void clear(@GuardSatisfied @Modifiable @Shrinkable CopyOnWriteArrayList<E> this) {
+    public void clear(@GuardSatisfied @Modifiable @CanShrink CopyOnWriteArrayList<E> this) {
         synchronized (lock) {
             setArray(new Object[0]);
         }
@@ -922,7 +922,7 @@ public class CopyOnWriteArrayList<E>
     /**
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean removeIf(@Modifiable @Shrinkable CopyOnWriteArrayList<E> this, Predicate<? super E> filter) {
+    public boolean removeIf(@Modifiable @CanShrink CopyOnWriteArrayList<E> this, Predicate<? super E> filter) {
         Objects.requireNonNull(filter);
         return bulkRemove(filter);
     }
@@ -1561,7 +1561,7 @@ public class CopyOnWriteArrayList<E>
             }
         }
 
-        public void clear(@GuardSatisfied @Modifiable @Shrinkable COWSubList this) {
+        public void clear(@GuardSatisfied @Modifiable @CanShrink COWSubList this) {
             synchronized (lock) {
                 checkForComodification();
                 removeRange(offset, offset + size);
@@ -1570,7 +1570,7 @@ public class CopyOnWriteArrayList<E>
             }
         }
 
-        public E remove(@GuardSatisfied @Modifiable @Shrinkable COWSubList this, @IndexFor({"this"}) int index) {
+        public E remove(@GuardSatisfied @Modifiable @CanShrink COWSubList this, @IndexFor({"this"}) int index) {
             synchronized (lock) {
                 rangeCheck(index);
                 checkForComodification();
@@ -1664,7 +1664,7 @@ public class CopyOnWriteArrayList<E>
             }
         }
 
-        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable COWSubList this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
+        public boolean removeAll(@GuardSatisfied @Modifiable @CanShrink COWSubList this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
             Objects.requireNonNull(c);
             return bulkRemove(e -> c.contains(e));
         }
@@ -1878,7 +1878,7 @@ public class CopyOnWriteArrayList<E>
             return true;
         }
 
-        public boolean addAll(@GuardSatisfied @Modifiable @Shrinkable Reversed<E> this, Collection<? extends E> c) {
+        public boolean addAll(@GuardSatisfied @Modifiable @CanShrink Reversed<E> this, Collection<? extends E> c) {
             @SuppressWarnings("unchecked")
             E[] es = (E[]) c.toArray();
             if (es.length > 0) {
@@ -1890,7 +1890,7 @@ public class CopyOnWriteArrayList<E>
             }
         }
 
-        public void clear(@GuardSatisfied @Modifiable @Shrinkable Reversed<E> this) {
+        public void clear(@GuardSatisfied @Modifiable @CanShrink Reversed<E> this) {
             base.clear();
         }
 
@@ -1946,7 +1946,7 @@ public class CopyOnWriteArrayList<E>
             }
         }
 
-        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable Reversed<E> this, Collection<?> c) {
+        public boolean removeAll(@GuardSatisfied @Modifiable @CanShrink Reversed<E> this, Collection<?> c) {
             return base.removeAll(c);
         }
 
@@ -2070,7 +2070,7 @@ public class CopyOnWriteArrayList<E>
             return new DescendingListIterator(index);
         }
 
-        public E remove(@GuardSatisfied @Modifiable @Shrinkable Reversed<E> this, @IndexFor({"this"}) int index) {
+        public E remove(@GuardSatisfied @Modifiable @CanShrink Reversed<E> this, @IndexFor({"this"}) int index) {
             synchronized (lock) {
                 return base.remove(base.size() - index - 1);
             }
@@ -2095,11 +2095,11 @@ public class CopyOnWriteArrayList<E>
             }
         }
 
-        public boolean removeIf(@GuardSatisfied @Modifiable @Shrinkable Reversed<E> this, Predicate<? super E> filter) {
+        public boolean removeIf(@GuardSatisfied @Modifiable @CanShrink Reversed<E> this, Predicate<? super E> filter) {
             return base.removeIf(filter);
         }
 
-        public void replaceAll(@GuardSatisfied @Modifiable @Shrinkable Reversed<E> this, UnaryOperator<E> operator) {
+        public void replaceAll(@GuardSatisfied @Modifiable @CanShrink Reversed<E> this, UnaryOperator<E> operator) {
             base.replaceAll(operator);
         }
 

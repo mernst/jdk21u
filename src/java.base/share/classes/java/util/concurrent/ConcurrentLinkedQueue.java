@@ -35,8 +35,8 @@
 
 package java.util.concurrent;
 
+import org.checkerframework.checker.index.qual.CanShrink;
 import org.checkerframework.checker.index.qual.PolyGrowShrink;
-import org.checkerframework.checker.index.qual.Shrinkable;
 import org.checkerframework.checker.lock.qual.GuardSatisfied;
 import org.checkerframework.checker.modifiable.qual.Modifiable;
 import org.checkerframework.checker.nonempty.qual.EnsuresNonEmpty;
@@ -400,7 +400,7 @@ public class ConcurrentLinkedQueue<E extends @NonNull Object> extends AbstractQu
         }
     }
 
-    public @Nullable E poll(@GuardSatisfied @Modifiable @Shrinkable ConcurrentLinkedQueue<E> this) {
+    public @Nullable E poll(@GuardSatisfied @Modifiable @CanShrink ConcurrentLinkedQueue<E> this) {
         restartFromHead: for (;;) {
             for (Node<E> h = head, p = h, q;; p = q) {
                 final E item;
@@ -544,7 +544,7 @@ public class ConcurrentLinkedQueue<E extends @NonNull Object> extends AbstractQu
      * @param o element to be removed from this queue, if present
      * @return {@code true} if this queue changed as a result of the call
      */
-    public boolean remove(@Modifiable @Shrinkable ConcurrentLinkedQueue<E> this, @GuardSatisfied @UnknownSignedness Object o) {
+    public boolean remove(@Modifiable @CanShrink ConcurrentLinkedQueue<E> this, @GuardSatisfied @UnknownSignedness Object o) {
         if (o == null) return false;
         restartFromHead: for (;;) {
             for (Node<E> p = head, pred = null; p != null; ) {
@@ -992,7 +992,7 @@ public class ConcurrentLinkedQueue<E extends @NonNull Object> extends AbstractQu
     /**
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean removeIf(@Modifiable @Shrinkable ConcurrentLinkedQueue<E> this, Predicate<? super E> filter) {
+    public boolean removeIf(@Modifiable @CanShrink ConcurrentLinkedQueue<E> this, Predicate<? super E> filter) {
         Objects.requireNonNull(filter);
         return bulkRemove(filter);
     }
@@ -1000,7 +1000,7 @@ public class ConcurrentLinkedQueue<E extends @NonNull Object> extends AbstractQu
     /**
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ConcurrentLinkedQueue<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
+    public boolean removeAll(@GuardSatisfied @Modifiable @CanShrink ConcurrentLinkedQueue<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
         Objects.requireNonNull(c);
         return bulkRemove(e -> c.contains(e));
     }
@@ -1008,12 +1008,12 @@ public class ConcurrentLinkedQueue<E extends @NonNull Object> extends AbstractQu
     /**
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean retainAll(@GuardSatisfied @Modifiable @Shrinkable ConcurrentLinkedQueue<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
+    public boolean retainAll(@GuardSatisfied @Modifiable @CanShrink ConcurrentLinkedQueue<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
         Objects.requireNonNull(c);
         return bulkRemove(e -> !c.contains(e));
     }
 
-    public void clear(@GuardSatisfied @Modifiable @Shrinkable ConcurrentLinkedQueue<E> this) {
+    public void clear(@GuardSatisfied @Modifiable @CanShrink ConcurrentLinkedQueue<E> this) {
         bulkRemove(e -> true);
     }
 

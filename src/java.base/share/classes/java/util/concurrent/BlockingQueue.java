@@ -35,7 +35,7 @@
 
 package java.util.concurrent;
 
-import org.checkerframework.checker.index.qual.Shrinkable;
+import org.checkerframework.checker.index.qual.CanShrink;
 import org.checkerframework.checker.lock.qual.GuardSatisfied;
 import org.checkerframework.checker.modifiable.qual.Modifiable;
 import org.checkerframework.checker.nonempty.qual.EnsuresNonEmpty;
@@ -320,7 +320,7 @@ public interface BlockingQueue<E extends @NonNull Object> extends Queue<E> {
      * @throws NullPointerException if the specified element is null
      * (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      */
-    boolean remove(@Modifiable @Shrinkable BlockingQueue<E> this, @UnknownSignedness Object o);
+    boolean remove(@Modifiable @CanShrink BlockingQueue<E> this, @UnknownSignedness Object o);
 
     /**
      * Returns {@code true} if this queue contains the specified element.
@@ -362,7 +362,7 @@ public interface BlockingQueue<E extends @NonNull Object> extends Queue<E> {
      *         queue, or some property of an element of this queue prevents
      *         it from being added to the specified collection
      */
-    int drainTo(@GuardSatisfied @Modifiable @Shrinkable BlockingQueue<E> this, Collection<? super E> c);
+    int drainTo(@GuardSatisfied @Modifiable @CanShrink BlockingQueue<E> this, Collection<? super E> c);
 
     /**
      * Removes at most the given number of available elements from
@@ -387,5 +387,5 @@ public interface BlockingQueue<E extends @NonNull Object> extends Queue<E> {
      *         queue, or some property of an element of this queue prevents
      *         it from being added to the specified collection
      */
-    int drainTo(@GuardSatisfied @Modifiable @Shrinkable BlockingQueue<E> this, Collection<? super E> c, int maxElements);
+    int drainTo(@GuardSatisfied @Modifiable @CanShrink BlockingQueue<E> this, Collection<? super E> c, int maxElements);
 }

@@ -1158,13 +1158,13 @@ public class Collections {
         public boolean addAll(@GuardSatisfied @Modifiable UnmodifiableCollection<E> this, Collection<? extends E> coll) {
             throw new UnsupportedOperationException();
         }
-        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable UnmodifiableCollection<E> this, Collection<? extends @UnknownSignedness Object> coll) {
+        public boolean removeAll(@GuardSatisfied @Modifiable @CanShrink UnmodifiableCollection<E> this, Collection<? extends @UnknownSignedness Object> coll) {
             throw new UnsupportedOperationException();
         }
         public boolean retainAll(@GuardSatisfied @Modifiable UnmodifiableCollection<E> this, Collection<? extends @UnknownSignedness Object> coll) {
             throw new UnsupportedOperationException();
         }
-        public void clear(@GuardSatisfied @Modifiable @Shrinkable UnmodifiableCollection<E> this) {
+        public void clear(@GuardSatisfied @Modifiable @CanShrink UnmodifiableCollection<E> this) {
             throw new UnsupportedOperationException();
         }
 
@@ -1566,7 +1566,7 @@ public class Collections {
         public void add(@GuardSatisfied @Modifiable UnmodifiableList<E> this, @IndexOrHigh({"this"}) int index, E element) {
             throw new UnsupportedOperationException();
         }
-        public E remove(@GuardSatisfied @Modifiable @Shrinkable UnmodifiableList<E> this, @IndexFor({"this"}) int index) {
+        public E remove(@GuardSatisfied @Modifiable @CanShrink UnmodifiableList<E> this, @IndexFor({"this"}) int index) {
             throw new UnsupportedOperationException();
         }
         public int indexOf(Object o)            {return list.indexOf(o);}
@@ -2434,13 +2434,13 @@ public class Collections {
         public boolean addAll(@GuardSatisfied @Modifiable SynchronizedCollection<E> this, Collection<? extends E> coll) {
             synchronized (mutex) {return c.addAll(coll);}
         }
-        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable SynchronizedCollection<E> this, Collection<? extends @UnknownSignedness Object> coll) {
+        public boolean removeAll(@GuardSatisfied @Modifiable @CanShrink SynchronizedCollection<E> this, Collection<? extends @UnknownSignedness Object> coll) {
             synchronized (mutex) {return c.removeAll(coll);}
         }
         public boolean retainAll(@GuardSatisfied @Modifiable SynchronizedCollection<E> this, Collection<? extends @UnknownSignedness Object> coll) {
             synchronized (mutex) {return c.retainAll(coll);}
         }
-        public void clear(@GuardSatisfied @Modifiable @Shrinkable SynchronizedCollection<E> this) {
+        public void clear(@GuardSatisfied @Modifiable @CanShrink SynchronizedCollection<E> this) {
             synchronized (mutex) {c.clear();}
         }
         public String toString() {
@@ -2825,7 +2825,7 @@ public class Collections {
         public void add(@GuardSatisfied @Modifiable SynchronizedList<E> this, @IndexOrHigh({"this"}) int index, E element) {
             synchronized (mutex) {list.add(index, element);}
         }
-        public E remove(@GuardSatisfied @Modifiable @Shrinkable SynchronizedList<E> this, @IndexFor({"this"}) int index) {
+        public E remove(@GuardSatisfied @Modifiable @CanShrink SynchronizedList<E> this, @IndexFor({"this"}) int index) {
             synchronized (mutex) {return list.remove(index);}
         }
 
@@ -3504,17 +3504,17 @@ public class Collections {
         public <T> @Nullable T[] toArray(@PolyNull T[] a)              { return c.toArray(a); }
         public <T> T[] toArray(IntFunction<T[]> f) { return c.toArray(f); }
         public String toString()                   { return c.toString(); }
-        public boolean remove(@GuardSatisfied @Modifiable @Shrinkable CheckedCollection<E> this, @UnknownSignedness Object o)            { return c.remove(o); }
-        public void clear(@GuardSatisfied @Modifiable @Shrinkable CheckedCollection<E> this)                        {        c.clear(); }
+        public boolean remove(@GuardSatisfied @Modifiable @CanShrink CheckedCollection<E> this, @UnknownSignedness Object o)            { return c.remove(o); }
+        public void clear(@GuardSatisfied @Modifiable @CanShrink CheckedCollection<E> this)                        {        c.clear(); }
 
         @Pure
         public boolean containsAll(Collection<? extends @UnknownSignedness Object> coll) {
             return c.containsAll(coll);
         }
-        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable CheckedCollection<E> this, Collection<? extends @UnknownSignedness Object> coll) {
+        public boolean removeAll(@GuardSatisfied @Modifiable @CanShrink CheckedCollection<E> this, Collection<? extends @UnknownSignedness Object> coll) {
             return c.removeAll(coll);
         }
-        public boolean retainAll(@GuardSatisfied @Modifiable @Shrinkable CheckedCollection<E> this, Collection<? extends @UnknownSignedness Object> coll) {
+        public boolean retainAll(@GuardSatisfied @Modifiable @CanShrink CheckedCollection<E> this, Collection<? extends @UnknownSignedness Object> coll) {
             return c.retainAll(coll);
         }
 
@@ -3650,7 +3650,7 @@ public class Collections {
         @Pure
         public E peek()                 {return queue.peek();}
         public E poll()                 {return queue.poll();}
-        public E remove(@GuardSatisfied @Modifiable @Shrinkable CheckedQueue<E> this)               {return queue.remove();}
+        public E remove(@GuardSatisfied @Modifiable @CanShrink CheckedQueue<E> this)               {return queue.remove();}
         public boolean offer(E e)       {return queue.offer(typeCheck(e));}
     }
 
@@ -3902,7 +3902,7 @@ public class Collections {
         public boolean equals(Object o)  { return o == this || list.equals(o); }
         public int hashCode()            { return list.hashCode(); }
         public E get(int index)          { return list.get(index); }
-        public E remove(@GuardSatisfied @Modifiable @Shrinkable CheckedList<E> this, @IndexFor({"this"}) int index)       { return list.remove(index); }
+        public E remove(@GuardSatisfied @Modifiable @CanShrink CheckedList<E> this, @IndexFor({"this"}) int index)       { return list.remove(index); }
         public int indexOf(Object o)     { return list.indexOf(o); }
         public int lastIndexOf(Object o) { return list.lastIndexOf(o); }
 
@@ -4990,7 +4990,7 @@ public class Collections {
         @Pure
         @EnsuresNonEmptyIf(result = false, expression = "this")
         public boolean isEmpty() {return true;}
-        public void clear(@GuardSatisfied @Modifiable @Shrinkable EmptyList<E> this) {}
+        public void clear(@GuardSatisfied @Modifiable @CanShrink EmptyList<E> this) {}
 
         @Pure
         @EnsuresNonEmptyIf(result = true, expression = "this")
@@ -6354,11 +6354,11 @@ public class Collections {
         public boolean add(@GuardSatisfied @Modifiable AsLIFOQueue<E> this, E e)                     { q.addFirst(e); return true; }
         public boolean offer(E e)                   { return q.offerFirst(e); }
         public E poll()                             { return q.pollFirst(); }
-        public E remove(@GuardSatisfied @Modifiable @Shrinkable AsLIFOQueue<E> this)                           { return q.removeFirst(); }
+        public E remove(@GuardSatisfied @Modifiable @CanShrink AsLIFOQueue<E> this)                           { return q.removeFirst(); }
         @Pure
         public E peek()                             { return q.peekFirst(); }
         public E element()                          { return q.getFirst(); }
-        public void clear(@GuardSatisfied @Modifiable @Shrinkable AsLIFOQueue<E> this)                         {        q.clear(); }
+        public void clear(@GuardSatisfied @Modifiable @CanShrink AsLIFOQueue<E> this)                         {        q.clear(); }
         @Pure
         public @NonNegative int size()                           { return q.size(); }
         @Pure
@@ -6378,8 +6378,8 @@ public class Collections {
         public String toString()                    { return q.toString(); }
         @Pure
         public boolean containsAll(Collection<? extends @UnknownSignedness Object> c) { return q.containsAll(c); }
-        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable AsLIFOQueue<E> this, Collection<? extends @UnknownSignedness Object> c)   { return q.removeAll(c); }
-        public boolean retainAll(@GuardSatisfied @Modifiable @Shrinkable AsLIFOQueue<E> this, Collection<? extends @UnknownSignedness Object> c)   { return q.retainAll(c); }
+        public boolean removeAll(@GuardSatisfied @Modifiable @CanShrink AsLIFOQueue<E> this, Collection<? extends @UnknownSignedness Object> c)   { return q.removeAll(c); }
+        public boolean retainAll(@GuardSatisfied @Modifiable @CanShrink AsLIFOQueue<E> this, Collection<? extends @UnknownSignedness Object> c)   { return q.retainAll(c); }
         // We use inherited addAll; forwarding addAll would be wrong
 
         // Override default methods in Collection

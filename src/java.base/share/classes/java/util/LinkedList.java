@@ -25,12 +25,12 @@
 
 package java.util;
 
+import org.checkerframework.checker.index.qual.CanShrink;
 import org.checkerframework.checker.index.qual.GTENegativeOne;
 import org.checkerframework.checker.index.qual.IndexFor;
 import org.checkerframework.checker.index.qual.IndexOrHigh;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.index.qual.PolyGrowShrink;
-import org.checkerframework.checker.index.qual.Shrinkable;
 import org.checkerframework.checker.lock.qual.GuardSatisfied;
 import org.checkerframework.checker.lock.qual.ReleasesNoLocks;
 import org.checkerframework.checker.modifiable.qual.Modifiable;
@@ -300,7 +300,7 @@ public class LinkedList<E>
      * @return the first element from this list
      * @throws NoSuchElementException if this list is empty
      */
-    public E removeFirst(@GuardSatisfied @NonEmpty @Modifiable @Shrinkable LinkedList<E> this) {
+    public E removeFirst(@GuardSatisfied @NonEmpty @Modifiable @CanShrink LinkedList<E> this) {
         final Node<E> f = first;
         if (f == null)
             throw new NoSuchElementException();
@@ -313,7 +313,7 @@ public class LinkedList<E>
      * @return the last element from this list
      * @throws NoSuchElementException if this list is empty
      */
-    public E removeLast(@GuardSatisfied @NonEmpty @Modifiable @Shrinkable LinkedList<E> this) {
+    public E removeLast(@GuardSatisfied @NonEmpty @Modifiable @CanShrink LinkedList<E> this) {
         final Node<E> l = last;
         if (l == null)
             throw new NoSuchElementException();
@@ -394,7 +394,7 @@ public class LinkedList<E>
      * @return {@code true} if this list contained the specified element
      */
     @ReleasesNoLocks
-    public boolean remove(@GuardSatisfied @Modifiable @Shrinkable LinkedList<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o) {
+    public boolean remove(@GuardSatisfied @Modifiable @CanShrink LinkedList<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o) {
         if (o == null) {
             for (Node<E> x = first; x != null; x = x.next) {
                 if (x.item == null) {
@@ -487,7 +487,7 @@ public class LinkedList<E>
      * Removes all of the elements from this list.
      * The list will be empty after this call returns.
      */
-    public void clear(@GuardSatisfied @Modifiable @Shrinkable LinkedList<E> this) {
+    public void clear(@GuardSatisfied @Modifiable @CanShrink LinkedList<E> this) {
         // Clearing all of the links between nodes is "unnecessary", but:
         // - helps a generational GC if the discarded nodes inhabit
         //   more than one generation
@@ -564,7 +564,7 @@ public class LinkedList<E>
      * @return the element previously at the specified position
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */
-    public E remove(@GuardSatisfied @Modifiable @Shrinkable LinkedList<E> this, @NonNegative int index) {
+    public E remove(@GuardSatisfied @Modifiable @CanShrink LinkedList<E> this, @NonNegative int index) {
         checkElementIndex(index);
         return unlink(node(index));
     }
@@ -715,7 +715,7 @@ public class LinkedList<E>
      * @return the head of this list, or {@code null} if this list is empty
      * @since 1.5
      */
-    public @Nullable E poll(@GuardSatisfied @Modifiable @Shrinkable LinkedList<E> this) {
+    public @Nullable E poll(@GuardSatisfied @Modifiable @CanShrink LinkedList<E> this) {
         final Node<E> f = first;
         return (f == null) ? null : unlinkFirst(f);
     }
@@ -727,7 +727,7 @@ public class LinkedList<E>
      * @throws NoSuchElementException if this list is empty
      * @since 1.5
      */
-    public E remove(@GuardSatisfied @NonEmpty @Modifiable @Shrinkable LinkedList<E> this) {
+    public E remove(@GuardSatisfied @NonEmpty @Modifiable @CanShrink LinkedList<E> this) {
         return removeFirst();
     }
 
@@ -803,7 +803,7 @@ public class LinkedList<E>
      *     this list is empty
      * @since 1.6
      */
-    public @Nullable E pollFirst(@GuardSatisfied @Modifiable @Shrinkable LinkedList<E> this) {
+    public @Nullable E pollFirst(@GuardSatisfied @Modifiable @CanShrink LinkedList<E> this) {
         final Node<E> f = first;
         return (f == null) ? null : unlinkFirst(f);
     }
@@ -816,7 +816,7 @@ public class LinkedList<E>
      *     this list is empty
      * @since 1.6
      */
-    public @Nullable E pollLast(@GuardSatisfied @Modifiable @Shrinkable LinkedList<E> this) {
+    public @Nullable E pollLast(@GuardSatisfied @Modifiable @CanShrink LinkedList<E> this) {
         final Node<E> l = last;
         return (l == null) ? null : unlinkLast(l);
     }
@@ -845,7 +845,7 @@ public class LinkedList<E>
      * @throws NoSuchElementException if this list is empty
      * @since 1.6
      */
-    public E pop(@GuardSatisfied @NonEmpty @Shrinkable LinkedList<E> this) {
+    public E pop(@GuardSatisfied @NonEmpty @CanShrink LinkedList<E> this) {
         return removeFirst();
     }
 
@@ -858,7 +858,7 @@ public class LinkedList<E>
      * @return {@code true} if the list contained the specified element
      * @since 1.6
      */
-    public boolean removeFirstOccurrence(@GuardSatisfied @Modifiable @Shrinkable LinkedList<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o) {
+    public boolean removeFirstOccurrence(@GuardSatisfied @Modifiable @CanShrink LinkedList<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o) {
         return remove(o);
     }
 
@@ -871,7 +871,7 @@ public class LinkedList<E>
      * @return {@code true} if the list contained the specified element
      * @since 1.6
      */
-    public boolean removeLastOccurrence(@GuardSatisfied @Modifiable @Shrinkable LinkedList<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o) {
+    public boolean removeLastOccurrence(@GuardSatisfied @Modifiable @CanShrink LinkedList<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o) {
         if (o == null) {
             for (Node<E> x = last; x != null; x = x.prev) {
                 if (x.item == null) {
@@ -1355,7 +1355,7 @@ public class LinkedList<E>
             return rlist.retainAll(c);
         }
 
-        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ReverseOrderLinkedListView<E> this, Collection<?> c) {
+        public boolean removeAll(@GuardSatisfied @Modifiable @CanShrink ReverseOrderLinkedListView<E> this, Collection<?> c) {
             return rlist.removeAll(c);
         }
 
@@ -1483,7 +1483,7 @@ public class LinkedList<E>
             return rdeque.offer(e);
         }
 
-        public E remove(@GuardSatisfied @Modifiable @Shrinkable ReverseOrderLinkedListView<E> this) {
+        public E remove(@GuardSatisfied @Modifiable @CanShrink ReverseOrderLinkedListView<E> this) {
             return rdeque.remove();
         }
 
@@ -1507,7 +1507,7 @@ public class LinkedList<E>
             return rlist.indexOf(o);
         }
 
-        public E remove(@GuardSatisfied @Modifiable @Shrinkable ReverseOrderLinkedListView<E> this, @IndexFor({"this"}) int index) {
+        public E remove(@GuardSatisfied @Modifiable @CanShrink ReverseOrderLinkedListView<E> this, @IndexFor({"this"}) int index) {
             return rlist.remove(index);
         }
 
@@ -1523,7 +1523,7 @@ public class LinkedList<E>
             return rlist.get(index);
         }
 
-        public void clear(@GuardSatisfied @Modifiable @Shrinkable ReverseOrderLinkedListView<E> this) {
+        public void clear(@GuardSatisfied @Modifiable @CanShrink ReverseOrderLinkedListView<E> this) {
             rlist.clear();
         }
 

@@ -164,8 +164,8 @@ class ImmutableCollections {
         @Override public boolean addAll(@GuardSatisfied @Modifiable AbstractImmutableCollection<E> this, Collection<? extends E> c) { throw uoe(); }
         @Override public void    clear() { throw uoe(); }
         @Override public boolean remove(@GuardSatisfied @Modifiable AbstractImmutableCollection<E> this, @UnknownSignedness Object o) { throw uoe(); }
-        @Override public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable AbstractImmutableCollection<E> this, Collection<? extends @UnknownSignedness Object> c) { throw uoe(); }
-        @Override public boolean removeIf(@GuardSatisfied @Modifiable @Shrinkable AbstractImmutableCollection<E> this, Predicate<? super E> filter) { throw uoe(); }
+        @Override public boolean removeAll(@GuardSatisfied @Modifiable @CanShrink AbstractImmutableCollection<E> this, Collection<? extends @UnknownSignedness Object> c) { throw uoe(); }
+        @Override public boolean removeIf(@GuardSatisfied @Modifiable @CanShrink AbstractImmutableCollection<E> this, Predicate<? super E> filter) { throw uoe(); }
         @Override public boolean retainAll(@GuardSatisfied @Modifiable AbstractImmutableCollection<E> this, Collection<? extends @UnknownSignedness Object> c) { throw uoe(); }
     }
 

@@ -35,9 +35,9 @@
 
 package java.util;
 
+import org.checkerframework.checker.index.qual.CanShrink;
 import org.checkerframework.checker.index.qual.NonNegative;
 import org.checkerframework.checker.index.qual.PolyGrowShrink;
-import org.checkerframework.checker.index.qual.Shrinkable;
 import org.checkerframework.checker.lock.qual.GuardSatisfied;
 import org.checkerframework.checker.modifiable.qual.AnyModifiable;
 import org.checkerframework.checker.modifiable.qual.Modifiable;
@@ -307,7 +307,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      * @return the head of this deque
      * @throws NoSuchElementException if this deque is empty
      */
-    E removeFirst(@GuardSatisfied @NonEmpty @Modifiable @Shrinkable Deque<E> this);
+    E removeFirst(@GuardSatisfied @NonEmpty @Modifiable @CanShrink Deque<E> this);
 
     /**
      * Retrieves and removes the last element of this deque.  This method
@@ -317,7 +317,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      * @return the tail of this deque
      * @throws NoSuchElementException if this deque is empty
      */
-    E removeLast(@GuardSatisfied @NonEmpty @Modifiable @Shrinkable Deque<E> this);
+    E removeLast(@GuardSatisfied @NonEmpty @Modifiable @CanShrink Deque<E> this);
 
     /**
      * Retrieves and removes the first element of this deque,
@@ -325,7 +325,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      *
      * @return the head of this deque, or {@code null} if this deque is empty
      */
-    @Nullable E pollFirst(@GuardSatisfied @Modifiable @Shrinkable Deque<E> this);
+    @Nullable E pollFirst(@GuardSatisfied @Modifiable @CanShrink Deque<E> this);
 
     /**
      * Retrieves and removes the last element of this deque,
@@ -333,7 +333,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      *
      * @return the tail of this deque, or {@code null} if this deque is empty
      */
-    @Nullable E pollLast(@GuardSatisfied @Modifiable @Shrinkable Deque<E> this);
+    @Nullable E pollLast(@GuardSatisfied @Modifiable @CanShrink Deque<E> this);
 
     /**
      * Retrieves, but does not remove, the first element of this deque.
@@ -345,7 +345,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      * @throws NoSuchElementException if this deque is empty
      */
     @EnsuresNonEmpty("this")
-    E getFirst(@GuardSatisfied @NonEmpty @Shrinkable Deque<E> this);
+    E getFirst(@GuardSatisfied @NonEmpty @CanShrink Deque<E> this);
 
     /**
      * Retrieves, but does not remove, the last element of this deque.
@@ -356,7 +356,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      * @throws NoSuchElementException if this deque is empty
      */
     @EnsuresNonEmpty("this")
-    E getLast(@GuardSatisfied @NonEmpty @Shrinkable Deque<E> this);
+    E getLast(@GuardSatisfied @NonEmpty @CanShrink Deque<E> this);
 
     /**
      * Retrieves, but does not remove, the first element of this deque,
@@ -473,7 +473,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      * @return the head of the queue represented by this deque
      * @throws NoSuchElementException if this deque is empty
      */
-    E remove(@GuardSatisfied @NonEmpty @Modifiable @Shrinkable Deque<E> this);
+    E remove(@GuardSatisfied @NonEmpty @Modifiable @CanShrink Deque<E> this);
 
     /**
      * Retrieves and removes the head of the queue represented by this deque
@@ -485,7 +485,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      * @return the first element of this deque, or {@code null} if
      *         this deque is empty
      */
-    @Nullable E poll(@GuardSatisfied @Modifiable @Shrinkable Deque<E> this);
+    @Nullable E poll(@GuardSatisfied @Modifiable @CanShrink Deque<E> this);
 
     /**
      * Retrieves, but does not remove, the head of the queue represented by
@@ -570,7 +570,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      *         of the stack represented by this deque)
      * @throws NoSuchElementException if this deque is empty
      */
-    E pop(@GuardSatisfied @NonEmpty @Shrinkable Deque<E> this);
+    E pop(@GuardSatisfied @NonEmpty @CanShrink Deque<E> this);
 
 
     // *** Collection methods ***

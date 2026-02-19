@@ -180,7 +180,7 @@ class ReverseOrderListView<E> implements List<E> {
         }
     }
 
-    public void clear(@GuardSatisfied @Modifiable @Shrinkable ReverseOrderListView<E> this) {
+    public void clear(@GuardSatisfied @Modifiable @CanShrink ReverseOrderListView<E> this) {
         checkModifiable();
         base.clear();
     }
@@ -250,7 +250,7 @@ class ReverseOrderListView<E> implements List<E> {
     }
 
     // copied from AbstractCollection
-    public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ReverseOrderListView<E> this, Collection<?> c) {
+    public boolean removeAll(@GuardSatisfied @Modifiable @CanShrink ReverseOrderListView<E> this, Collection<?> c) {
         checkModifiable();
         Objects.requireNonNull(c);
         boolean modified = false;
@@ -366,14 +366,14 @@ class ReverseOrderListView<E> implements List<E> {
         return new DescendingListIterator(size, index);
     }
 
-    public E remove(@GuardSatisfied @Modifiable @Shrinkable ReverseOrderListView<E> this, @IndexFor({"this"}) int index) {
+    public E remove(@GuardSatisfied @Modifiable @CanShrink ReverseOrderListView<E> this, @IndexFor({"this"}) int index) {
         checkModifiable();
         int size = base.size();
         Objects.checkIndex(index, size);
         return base.remove(size - index - 1);
     }
 
-    public boolean removeIf(@GuardSatisfied @Modifiable @Shrinkable ReverseOrderListView<E> this, Predicate<? super E> filter) {
+    public boolean removeIf(@GuardSatisfied @Modifiable @CanShrink ReverseOrderListView<E> this, Predicate<? super E> filter) {
         checkModifiable();
         return base.removeIf(filter);
     }

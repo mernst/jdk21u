@@ -973,7 +973,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {
         public Iterator<E> iterator() { return view().iterator(); }
         public Stream<E> parallelStream() { return view().parallelStream(); }
         public boolean remove(@GuardSatisfied @Modifiable ViewCollection<E> this, Object o) { return view().remove(o); }
-        public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ViewCollection<E> this, Collection<?> c) { return view().removeAll(c); }
+        public boolean removeAll(@GuardSatisfied @Modifiable @CanShrink ViewCollection<E> this, Collection<?> c) { return view().removeAll(c); }
         public boolean removeIf(@GuardSatisfied @Modifiable ViewCollection<E> this, Predicate<? super E> filter) { return view().removeIf(filter); }
         public boolean retainAll(@GuardSatisfied @Modifiable ViewCollection<E> this, Collection<?> c) { return view().retainAll(c); }
         public int size() { return view().size(); }

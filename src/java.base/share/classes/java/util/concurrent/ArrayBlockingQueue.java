@@ -35,8 +35,8 @@
 
 package java.util.concurrent;
 
+import org.checkerframework.checker.index.qual.CanShrink;
 import org.checkerframework.checker.index.qual.PolyGrowShrink;
-import org.checkerframework.checker.index.qual.Shrinkable;
 import org.checkerframework.checker.lock.qual.GuardSatisfied;
 import org.checkerframework.checker.modifiable.qual.Modifiable;
 import org.checkerframework.checker.nonempty.qual.EnsuresNonEmpty;
@@ -421,7 +421,7 @@ public class ArrayBlockingQueue<E extends Object> extends AbstractQueue<E>
         }
     }
 
-    public E poll(@GuardSatisfied @Modifiable @Shrinkable ArrayBlockingQueue<E> this) {
+    public E poll(@GuardSatisfied @Modifiable @CanShrink ArrayBlockingQueue<E> this) {
         final ReentrantLock lock = this.lock;
         lock.lock();
         try {
@@ -431,7 +431,7 @@ public class ArrayBlockingQueue<E extends Object> extends AbstractQueue<E>
         }
     }
 
-    public E take(@GuardSatisfied @Modifiable @Shrinkable ArrayBlockingQueue<E> this) throws InterruptedException {
+    public E take(@GuardSatisfied @Modifiable @CanShrink ArrayBlockingQueue<E> this) throws InterruptedException {
         final ReentrantLock lock = this.lock;
         lock.lockInterruptibly();
         try {
@@ -443,7 +443,7 @@ public class ArrayBlockingQueue<E extends Object> extends AbstractQueue<E>
         }
     }
 
-    public E poll(@GuardSatisfied @Modifiable @Shrinkable ArrayBlockingQueue<E> this, long timeout, TimeUnit unit) throws InterruptedException {
+    public E poll(@GuardSatisfied @Modifiable @CanShrink ArrayBlockingQueue<E> this, long timeout, TimeUnit unit) throws InterruptedException {
         long nanos = unit.toNanos(timeout);
         final ReentrantLock lock = this.lock;
         lock.lockInterruptibly();
@@ -528,7 +528,7 @@ public class ArrayBlockingQueue<E extends Object> extends AbstractQueue<E>
      * @param o element to be removed from this queue, if present
      * @return {@code true} if this queue changed as a result of the call
      */
-    public boolean remove(@Modifiable @Shrinkable ArrayBlockingQueue<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o) {
+    public boolean remove(@Modifiable @CanShrink ArrayBlockingQueue<E> this, @GuardSatisfied @Nullable @UnknownSignedness Object o) {
         if (o == null) return false;
         final ReentrantLock lock = this.lock;
         lock.lock();
@@ -679,7 +679,7 @@ public class ArrayBlockingQueue<E extends Object> extends AbstractQueue<E>
      * Atomically removes all of the elements from this queue.
      * The queue will be empty after this call returns.
      */
-    public void clear(@GuardSatisfied @Modifiable @Shrinkable ArrayBlockingQueue<E> this) {
+    public void clear(@GuardSatisfied @Modifiable @CanShrink ArrayBlockingQueue<E> this) {
         final ReentrantLock lock = this.lock;
         lock.lock();
         try {
@@ -718,7 +718,7 @@ public class ArrayBlockingQueue<E extends Object> extends AbstractQueue<E>
      * @throws NullPointerException          {@inheritDoc}
      * @throws IllegalArgumentException      {@inheritDoc}
      */
-    public int drainTo(@GuardSatisfied @Modifiable @Shrinkable ArrayBlockingQueue<E> this, Collection<? super E> c) {
+    public int drainTo(@GuardSatisfied @Modifiable @CanShrink ArrayBlockingQueue<E> this, Collection<? super E> c) {
         return drainTo(c, Integer.MAX_VALUE);
     }
 
@@ -728,7 +728,7 @@ public class ArrayBlockingQueue<E extends Object> extends AbstractQueue<E>
      * @throws NullPointerException          {@inheritDoc}
      * @throws IllegalArgumentException      {@inheritDoc}
      */
-    public int drainTo(@GuardSatisfied @Modifiable @Shrinkable ArrayBlockingQueue<E> this, Collection<? super E> c, int maxElements) {
+    public int drainTo(@GuardSatisfied @Modifiable @CanShrink ArrayBlockingQueue<E> this, Collection<? super E> c, int maxElements) {
         Objects.requireNonNull(c);
         if (c == this)
             throw new IllegalArgumentException();
@@ -1494,7 +1494,7 @@ public class ArrayBlockingQueue<E extends Object> extends AbstractQueue<E>
     /**
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean removeIf(@Modifiable @Shrinkable ArrayBlockingQueue<E> this, Predicate<? super E> filter) {
+    public boolean removeIf(@Modifiable @CanShrink ArrayBlockingQueue<E> this, Predicate<? super E> filter) {
         Objects.requireNonNull(filter);
         return bulkRemove(filter);
     }
@@ -1502,7 +1502,7 @@ public class ArrayBlockingQueue<E extends Object> extends AbstractQueue<E>
     /**
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean removeAll(@GuardSatisfied @Modifiable @Shrinkable ArrayBlockingQueue<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
+    public boolean removeAll(@GuardSatisfied @Modifiable @CanShrink ArrayBlockingQueue<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
         Objects.requireNonNull(c);
         return bulkRemove(e -> c.contains(e));
     }
@@ -1510,7 +1510,7 @@ public class ArrayBlockingQueue<E extends Object> extends AbstractQueue<E>
     /**
      * @throws NullPointerException {@inheritDoc}
      */
-    public boolean retainAll(@GuardSatisfied @Modifiable @Shrinkable ArrayBlockingQueue<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
+    public boolean retainAll(@GuardSatisfied @Modifiable @CanShrink ArrayBlockingQueue<E> this, Collection<? extends @NonNull @UnknownSignedness Object> c) {
         Objects.requireNonNull(c);
         return bulkRemove(e -> !c.contains(e));
     }
