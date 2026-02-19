@@ -326,7 +326,6 @@ public class SynchronousQueue<E extends @NonNull Object> extends AbstractQueue<E
      * @return the head of this queue
      * @throws InterruptedException {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     public E take(@GuardSatisfied @CanShrink SynchronousQueue<E> this) throws InterruptedException {
         Object e;
         if (!Thread.interrupted()) {
@@ -346,7 +345,6 @@ public class SynchronousQueue<E extends @NonNull Object> extends AbstractQueue<E
      *         specified waiting time elapses before an element is present
      * @throws InterruptedException {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     public E poll(@GuardSatisfied @CanShrink SynchronousQueue<E> this, long timeout, TimeUnit unit) throws InterruptedException {
         Object e;
         long nanos = Math.max(unit.toNanos(timeout), 0L);
@@ -362,7 +360,6 @@ public class SynchronousQueue<E extends @NonNull Object> extends AbstractQueue<E
      * @return the head of this queue, or {@code null} if no
      *         element is available
      */
-    @SuppressWarnings("unchecked")
     public E poll(@GuardSatisfied @CanShrink SynchronousQueue<E> this) {
         return (E) xfer(null, 0L);
     }
