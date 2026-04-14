@@ -94,7 +94,6 @@ public class DOMSubTreeData implements NodeSetData<Node> {
             return li.hasNext();
         }
 
-        @SideEffectsOnly("this")
         @Override
         public Node next() {
             if (nodeSet == null) {

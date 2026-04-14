@@ -92,7 +92,6 @@ public class ReferenceSubTreeData implements ReferenceNodeSetData {
             return li.hasNext();
         }
 
-        @SideEffectsOnly("this")
         @Override
         public Node next() {
             if (nodeSet == null) {
