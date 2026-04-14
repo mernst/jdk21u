@@ -23,7 +23,6 @@
 package com.sun.org.apache.xml.internal.security.keys.keyresolver;
 
 import org.checkerframework.dataflow.qual.Pure;
-import org.checkerframework.dataflow.qual.SideEffectsOnly;
 
 import java.lang.reflect.InvocationTargetException;
 import java.security.PublicKey;

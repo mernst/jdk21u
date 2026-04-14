@@ -26,7 +26,6 @@
 package com.sun.org.apache.xml.internal.security.signature.reference;
 
 import org.checkerframework.dataflow.qual.Pure;
-import org.checkerframework.dataflow.qual.SideEffectsOnly;
 
 import java.util.ArrayList;
 import java.util.Iterator;
