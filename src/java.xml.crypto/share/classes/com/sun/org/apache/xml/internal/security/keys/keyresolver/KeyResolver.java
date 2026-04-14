@@ -33,7 +33,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 import com.sun.org.apache.xml.internal.security.keys.keyresolver.implementations.DEREncodedKeyValueResolver;
 import com.sun.org.apache.xml.internal.security.keys.keyresolver.implementations.DSAKeyValueResolver;
 import com.sun.org.apache.xml.internal.security.keys.keyresolver.implementations.ECKeyValueResolver;
@@ -303,7 +302,6 @@ public class KeyResolver {
             return it.hasNext();
         }
 
-        @SideEffectsOnly("this")
         @Override
         public KeyResolverSpi next() {
             KeyResolverSpi resolver = it.next();
