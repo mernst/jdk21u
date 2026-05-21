@@ -51,6 +51,7 @@ jobs:
         run: make jdk
 
   build_jdk21u:
+    if: endsWith(github.repository, '/jdk')
     needs:
       - check_generated_ci
     runs-on: ubuntu-latest
@@ -90,10 +91,13 @@ jobs:
           git config --global pull.rebase false
           git config --global core.longpaths true
           git config --global core.protectNTFS false
+          git config --global --add safe.directory /__w/jdk/jdk
         # This creates ../jdk21u .
         # Run `git-clone-related` without a limit on depth, because if the depth is
         # too small, the merge will fail.  Don't use "--filter=blob:none" because that
         # leads to "fatal: remote error:  filter 'combine' not supported".
+      - name: ci-info
+        run: /tmp/$USER/plume-scripts/ci-info --debug
       - name: clone-related-jdk21u
         run: |
           set -ex
@@ -107,7 +111,6 @@ jobs:
           /tmp/$USER/git-scripts/git-clone-related typetools jdk21u ../jdk21u --single-branch
           cd ../jdk21u
           git diff --exit-code
-          echo $?
       - name: git merge
         run: |
           set -ex
@@ -115,7 +118,14 @@ jobs:
           git status
           eval $(/tmp/$USER/plume-scripts/ci-info typetools)
           echo "About to run: git pull --no-edit https://github.com/${CI_ORGANIZATION}/jdk ${CI_BRANCH_NAME}"
-          cd ../jdk21u && git pull --no-edit "https://github.com/${CI_ORGANIZATION}/jdk" "${CI_BRANCH_NAME}" || (git --version && git show | head -100 && git status && git diff | head -1000 && echo "Merge failed; see 'Pull request merge conflicts' at https://github.com/typetools/jdk/blob/master/README.md " && false)
+          if ! git pull --no-edit "https://github.com/${CI_ORGANIZATION}/jdk" "${CI_BRANCH_NAME}"; then
+            git --version
+            git show | head -100
+            git status && git diff | head -1000
+            echo "Merge failed; see 'Pull request merge conflicts' at https://github.com/typetools/jdk/blob/master/README.md"
+            false
+          fi
+        shell: bash --noprofile --norc -e {0}
       - name: configure
         run: |
           cd ../jdk21u
