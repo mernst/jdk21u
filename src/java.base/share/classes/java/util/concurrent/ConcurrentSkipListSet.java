@@ -313,6 +313,7 @@ public class ConcurrentSkipListSet<E extends @NonNull Object>
      *
      * @return an iterator over the elements in this set in descending order
      */
+    @SideEffectFree
     public @PolyGrowShrink @PolyNonEmpty Iterator<E> descendingIterator(@PolyGrowShrink @PolyNonEmpty ConcurrentSkipListSet<E> this) {
         return m.descendingKeySet().iterator();
     }

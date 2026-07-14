@@ -53,6 +53,7 @@ class Comparators {
         }
 
         @Override
+        @SideEffectFree
         public Comparator<Comparable<Object>> reversed() {
             return Comparator.reverseOrder();
         }
@@ -93,6 +94,7 @@ class Comparators {
         }
 
         @Override
+        @SideEffectFree
         public Comparator<T> reversed() {
             return new NullComparator<>(!nullFirst, real == null ? null : real.reversed());
         }

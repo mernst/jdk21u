@@ -50,9 +50,9 @@ import org.checkerframework.checker.signedness.qual.PolySigned;
 import org.checkerframework.checker.signedness.qual.UnknownSignedness;
 import org.checkerframework.dataflow.qual.Pure;
 import org.checkerframework.dataflow.qual.SideEffectFree;
+import org.checkerframework.dataflow.qual.SideEffectsOnly;
 import org.checkerframework.framework.qual.AnnotatedFor;
 import org.checkerframework.framework.qual.DoesNotUnrefineReceiver;
-import org.checkerframework.dataflow.qual.SideEffectsOnly;
 
 import java.io.Serializable;
 import java.util.function.Consumer;
@@ -721,8 +721,8 @@ public class ArrayDeque<E extends @NonNull Object> extends AbstractCollection<E>
      *
      * @return {@code true} if this deque contains no elements
      */
-    @EnsuresNonNullIf(expression={"peek()", "peekFirst()", "peekLast()", "poll()", "pollFirst()", "pollLast()"}, result=false)
     @Pure
+    @EnsuresNonNullIf(expression={"peek()", "peekFirst()", "peekLast()", "poll()", "pollFirst()", "pollLast()"}, result=false)
     @EnsuresNonEmptyIf(result = false, expression = "this")
     public boolean isEmpty(@GuardSatisfied ArrayDeque<E> this) {
         return head == tail;
@@ -741,6 +741,7 @@ public class ArrayDeque<E extends @NonNull Object> extends AbstractCollection<E>
         return new DeqIterator();
     }
 
+    @SideEffectFree
     public @PolyGrowShrink @PolyNonEmpty Iterator<E> descendingIterator(@PolyGrowShrink @PolyNonEmpty ArrayDeque<E> this) {
         return new DescendingIterator();
     }

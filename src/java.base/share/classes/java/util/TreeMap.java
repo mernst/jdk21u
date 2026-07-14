@@ -38,10 +38,10 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.checker.signedness.qual.UnknownSignedness;
 import org.checkerframework.dataflow.qual.Pure;
 import org.checkerframework.dataflow.qual.SideEffectFree;
+import org.checkerframework.dataflow.qual.SideEffectsOnly;
 import org.checkerframework.framework.qual.AnnotatedFor;
 import org.checkerframework.framework.qual.CFComment;
 import org.checkerframework.framework.qual.DoesNotUnrefineReceiver;
-import org.checkerframework.dataflow.qual.SideEffectsOnly;
 
 import java.io.Serializable;
 import java.util.function.BiConsumer;
@@ -310,7 +310,6 @@ public class TreeMap<K,V>
      *         and this map uses natural ordering, or its comparator
      *         does not permit null keys
      */
-    @SideEffectsOnly("this")
     @DoesNotUnrefineReceiver("modifiability")
     @Pure
     public @Nullable V get(@GuardSatisfied TreeMap<K, V> this, @UnknownSignedness @GuardSatisfied Object key) {
@@ -985,7 +984,6 @@ public class TreeMap<K,V>
      *
      * @return a shallow copy of this map
      */
-    @SideEffectsOnly("this")
     @DoesNotUnrefineReceiver("modifiability")
     @SideEffectFree
     public Object clone(@GuardSatisfied TreeMap<K, V> this) {
@@ -1179,7 +1177,6 @@ public class TreeMap<K,V>
      * operations.  It does not support the {@code add} or {@code addAll}
      * operations.
      */
-    @SideEffectsOnly("this")
     @DoesNotUnrefineReceiver("modifiability")
     @SideEffectFree
     public Set<@KeyFor({"this"}) K> keySet(@GuardSatisfied TreeMap<K, V> this) {
@@ -1527,6 +1524,7 @@ public class TreeMap<K,V>
                 return ((TreeMap.NavigableSubMap<E,?>)m).keyIterator();
         }
 
+        @SideEffectFree
         public Iterator<E> descendingIterator() {
             if (m instanceof TreeMap)
                 return ((TreeMap<E,?>)m).descendingKeyIterator();

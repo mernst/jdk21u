@@ -92,7 +92,7 @@ public interface SequencedCollection<E> extends Collection<E> {
      *
      * @return a reverse-ordered view of this collection
      */
-    @SideEffectsOnly("this")
+    @SideEffectFree
     @DoesNotUnrefineReceiver("modifiability")
     SequencedCollection<E> reversed();
 

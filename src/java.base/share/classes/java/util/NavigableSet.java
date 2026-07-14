@@ -214,7 +214,7 @@ public interface NavigableSet<E> extends SortedSet<E> {
      *
      * @return an iterator over the elements in this set, in descending order
      */
-    @SideEffectsOnly("this")
+    @SideEffectFree
     @DoesNotUnrefineReceiver("modifiability")
     Iterator<E> descendingIterator();
 
@@ -407,7 +407,7 @@ public interface NavigableSet<E> extends SortedSet<E> {
      * @return a reverse-ordered view of this collection, as a {@code NavigableSet}
      * @since 21
      */
-    @SideEffectsOnly("this")
+    @SideEffectFree
     @DoesNotUnrefineReceiver("modifiability")
     default NavigableSet<E> reversed() {
         return this.descendingSet();

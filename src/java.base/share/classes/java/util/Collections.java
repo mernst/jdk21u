@@ -901,7 +901,7 @@ public class Collections {
      *         its list-iterator does not support the {@code set} operation.
      * @since  1.4
      */
-    @SideEffectsOnly("this")
+    @SideEffectsOnly("#1")
     @DoesNotUnrefineReceiver("modifiability")
     public static <T> boolean replaceAll(List<T> list, @Nullable T oldVal, T newVal) {
         boolean result = false;
@@ -2219,6 +2219,7 @@ public class Collections {
         // Even though this wrapper class is serializable, the reversed view is effectively
         // not serializable because it points to the reversed map view, which usually isn't
         // serializable.
+        @SideEffectFree
         public SequencedMap<K, V> reversed() {
             return new UnmodifiableSequencedMap<>(sm().reversed());
         }
@@ -2866,12 +2867,14 @@ public class Collections {
         @DoesNotUnrefineReceiver("modifiability")
         public E pollLast()    { synchronized (mutex) {return ns.pollLast();} }
 
+        @SideEffectFree
         public NavigableSet<E> descendingSet() {
             synchronized (mutex) {
                 return new SynchronizedNavigableSet<>(ns.descendingSet(), mutex);
             }
         }
 
+        @SideEffectFree
         public Iterator<E> descendingIterator()
                  { synchronized (mutex) { return descendingSet().iterator(); } }
 
@@ -4056,8 +4059,10 @@ public class Collections {
         public E higher(E e)                           { return ns.higher(e); }
         public E pollFirst()                         { return ns.pollFirst(); }
         public E pollLast()                            {return ns.pollLast(); }
+        @SideEffectFree
         public NavigableSet<E> descendingSet()
                       { return checkedNavigableSet(ns.descendingSet(), type); }
+        @SideEffectFree
         public Iterator<E> descendingIterator()
             {return checkedNavigableSet(ns.descendingSet(), type).iterator(); }
 
@@ -6188,6 +6193,7 @@ public class Collections {
         private Object readResolve() { return Collections.reverseOrder(); }
 
         @Override
+        @SideEffectFree
         public Comparator<Comparable<Object>> reversed() {
             return Comparator.naturalOrder();
         }
@@ -6274,6 +6280,7 @@ public class Collections {
         }
 
         @Override
+        @SideEffectFree
         public Comparator<T> reversed() {
             return cmp;
         }
@@ -6683,6 +6690,7 @@ public class Collections {
         // Even though this wrapper class is serializable, the reversed view is effectively
         // not serializable because it points to the reversed map view, which usually isn't
         // serializable.
+        @SideEffectFree
         public SequencedSet<E> reversed() { return new SequencedSetFromMap<>(map().reversed()); }
 
         public void addFirst(E e) { map().putFirst(e, Boolean.TRUE); }

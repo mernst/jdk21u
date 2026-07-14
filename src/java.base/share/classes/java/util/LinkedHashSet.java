@@ -330,7 +330,7 @@ public class LinkedHashSet<E>
      * @return {@inheritDoc}
      * @since 21
      */
-    @SideEffectsOnly("this")
+    @SideEffectFree
     @DoesNotUnrefineReceiver("modifiability")
     public SequencedSet<E> reversed() {
         class ReverseLinkedHashSetView extends AbstractSet<E> implements SequencedSet<E> {
@@ -347,6 +347,7 @@ public class LinkedHashSet<E>
             public E getLast()                 { return LinkedHashSet.this.getFirst(); }
             public E removeFirst()             { return LinkedHashSet.this.removeLast(); }
             public E removeLast()              { return LinkedHashSet.this.removeFirst(); }
+            @SideEffectFree
             public SequencedSet<E> reversed()  { return LinkedHashSet.this; }
             @Pure
             @SideEffectFree

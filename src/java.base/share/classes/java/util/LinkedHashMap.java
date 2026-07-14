@@ -36,10 +36,10 @@ import org.checkerframework.checker.nullness.qual.PolyNull;
 import org.checkerframework.checker.signedness.qual.UnknownSignedness;
 import org.checkerframework.dataflow.qual.Pure;
 import org.checkerframework.dataflow.qual.SideEffectFree;
+import org.checkerframework.dataflow.qual.SideEffectsOnly;
 import org.checkerframework.framework.qual.AnnotatedFor;
 import org.checkerframework.framework.qual.CFComment;
 import org.checkerframework.framework.qual.DoesNotUnrefineReceiver;
-import org.checkerframework.dataflow.qual.SideEffectsOnly;
 
 import java.util.function.Consumer;
 import java.util.function.BiConsumer;
@@ -791,6 +791,7 @@ public class LinkedHashMap<K,V>
             removeNode(node.hash, node.key, null, false, false);
             return node.key;
         }
+        @SideEffectFree
         public SequencedSet<K> reversed() {
             if (reversed) {
                 return LinkedHashMap.this.sequencedKeySet();
@@ -911,6 +912,7 @@ public class LinkedHashMap<K,V>
             removeNode(node.hash, node.key, null, false, false);
             return node.value;
         }
+        @SideEffectFree
         public SequencedCollection<V> reversed() {
             if (reversed) {
                 return LinkedHashMap.this.sequencedValues();
@@ -1046,6 +1048,7 @@ public class LinkedHashMap<K,V>
             removeNode(node.hash, node.key, null, false, false);
             return node;
         }
+        @SideEffectFree
         public SequencedSet<Map.Entry<K,V>> reversed() {
             if (reversed) {
                 return LinkedHashMap.this.sequencedEntrySet();
@@ -1182,6 +1185,7 @@ public class LinkedHashMap<K,V>
      * @return {@inheritDoc}
      * @since 21
      */
+    @SideEffectFree
     public SequencedMap<K, V> reversed() {
         return new ReversedLinkedHashMapView<>(this);
     }
@@ -1348,6 +1352,7 @@ public class LinkedHashMap<K,V>
 
         // SequencedMap
 
+        @SideEffectFree
         public SequencedMap<K, V> reversed() {
             return base;
         }

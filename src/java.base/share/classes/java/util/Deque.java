@@ -382,8 +382,6 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      *
      * @return the head of this deque, or {@code null} if this deque is empty
      */
-    @SideEffectsOnly("this")
-    @DoesNotUnrefineReceiver("modifiability")
     @Pure
     @Nullable E peekFirst();
 
@@ -393,8 +391,6 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      *
      * @return the tail of this deque, or {@code null} if this deque is empty
      */
-    @SideEffectsOnly("this")
-    @DoesNotUnrefineReceiver("modifiability")
     @Pure
     @Nullable E peekLast();
 
@@ -534,8 +530,6 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      * @return the head of the queue represented by this deque
      * @throws NoSuchElementException if this deque is empty
      */
-    @SideEffectsOnly("this")
-    @DoesNotUnrefineReceiver("modifiability")
     @Pure
     E element(@GuardSatisfied @NonEmpty Deque<E> this);
 
@@ -549,8 +543,6 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      * @return the head of the queue represented by this deque, or
      *         {@code null} if this deque is empty
      */
-    @SideEffectsOnly("this")
-    @DoesNotUnrefineReceiver("modifiability")
     @Pure
     @Nullable E peek();
 
@@ -689,7 +681,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      * @return an iterator over the elements in this deque in reverse
      * sequence
      */
-    @SideEffectsOnly("this")
+    @SideEffectFree
     @DoesNotUnrefineReceiver("modifiability")
     Iterator<E> descendingIterator();
 
@@ -703,7 +695,7 @@ public interface Deque<E> extends Queue<E>, SequencedCollection<E> {
      * @return a reverse-ordered view of this collection, as a {@code Deque}
      * @since 21
      */
-    @SideEffectsOnly("this")
+    @SideEffectFree
     @DoesNotUnrefineReceiver("modifiability")
     default Deque<E> reversed() {
         return ReverseOrderDequeView.of(this);

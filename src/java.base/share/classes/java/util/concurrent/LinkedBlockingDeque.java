@@ -1133,6 +1133,7 @@ public class LinkedBlockingDeque<E extends Object>
      *
      * @return an iterator over the elements in this deque in reverse order
      */
+    @SideEffectFree
     public @PolyGrowShrink @PolyNonEmpty Iterator<E> descendingIterator(@PolyGrowShrink @PolyNonEmpty LinkedBlockingDeque<E> this) {
         return new DescendingItr();
     }

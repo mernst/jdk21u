@@ -400,7 +400,7 @@ public interface SortedSet<E> extends Set<E>, SequencedSet<E> {
      * @return a reverse-ordered view of this collection, as a {@code SortedSet}
      * @since 21
      */
-    @SideEffectsOnly("this")
+    @SideEffectFree
     @DoesNotUnrefineReceiver("modifiability")
     default SortedSet<E> reversed() {
         return ReverseOrderSortedSetView.of(this);

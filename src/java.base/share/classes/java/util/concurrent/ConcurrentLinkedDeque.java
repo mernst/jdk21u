@@ -50,9 +50,9 @@ import org.checkerframework.checker.signedness.qual.PolySigned;
 import org.checkerframework.checker.signedness.qual.UnknownSignedness;
 import org.checkerframework.dataflow.qual.Pure;
 import org.checkerframework.dataflow.qual.SideEffectFree;
+import org.checkerframework.dataflow.qual.SideEffectsOnly;
 import org.checkerframework.framework.qual.AnnotatedFor;
 import org.checkerframework.framework.qual.DoesNotUnrefineReceiver;
-import org.checkerframework.dataflow.qual.SideEffectsOnly;
 
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.VarHandle;
@@ -1155,8 +1155,8 @@ public class ConcurrentLinkedDeque<E extends @NonNull Object>
      *
      * @return {@code true} if this collection contains no elements
      */
-    @EnsuresNonNullIf(expression={"peek()", "peekFirst()", "peekLast()", "poll()", "pollFirst()", "pollLast()"}, result=false)
     @Pure
+    @EnsuresNonNullIf(expression={"peek()", "peekFirst()", "peekLast()", "poll()", "pollFirst()", "pollLast()"}, result=false)
     @EnsuresNonEmptyIf(result = false, expression = "this")
     public boolean isEmpty() {
         return peekFirst() == null;
@@ -1430,6 +1430,7 @@ public class ConcurrentLinkedDeque<E extends @NonNull Object>
      *
      * @return an iterator over the elements in this deque in reverse order
      */
+    @SideEffectFree
     public @PolyGrowShrink @PolyNonEmpty Iterator<E> descendingIterator(@PolyGrowShrink @PolyNonEmpty ConcurrentLinkedDeque<E> this) {
         return new DescendingItr();
     }

@@ -232,7 +232,6 @@ public interface Queue<E> extends Collection<E> {
      *
      * @return the head of this queue, or {@code null} if this queue is empty
      */
-    @SideEffectsOnly("this")
     @DoesNotUnrefineReceiver("modifiability")
     @Pure
     @Nullable E peek();

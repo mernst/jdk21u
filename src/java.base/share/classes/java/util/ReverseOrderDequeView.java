@@ -209,14 +209,17 @@ class ReverseOrderDequeView<E> implements Deque<E> {
 
     // ========== Deque and Queue ==========
 
+    @SideEffectsOnly("this")
     public void addFirst(E e) {
         base.addLast(e);
     }
 
+    @SideEffectsOnly("this")
     public void addLast(E e) {
         base.addFirst(e);
     }
 
+    @SideEffectFree
     public Iterator<E> descendingIterator() {
         return base.iterator();
     }

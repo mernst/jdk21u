@@ -41,10 +41,10 @@ import org.checkerframework.checker.signedness.qual.PolySigned;
 import org.checkerframework.checker.signedness.qual.UnknownSignedness;
 import org.checkerframework.dataflow.qual.Pure;
 import org.checkerframework.dataflow.qual.SideEffectFree;
+import org.checkerframework.dataflow.qual.SideEffectsOnly;
 import org.checkerframework.framework.qual.AnnotatedFor;
 import org.checkerframework.framework.qual.CFComment;
 import org.checkerframework.framework.qual.DoesNotUnrefineReceiver;
-import org.checkerframework.dataflow.qual.SideEffectsOnly;
 
 import java.io.IOException;
 import java.io.ObjectInput;
@@ -1098,6 +1098,7 @@ public class LinkedList<E>
     /**
      * @since 1.6
      */
+    @SideEffectFree
     public @PolyGrowShrink @PolyNonEmpty Iterator<E> descendingIterator(@PolyGrowShrink @PolyNonEmpty LinkedList<E> this) {
         return new DescendingIterator();
     }
@@ -1397,6 +1398,7 @@ public class LinkedList<E>
      * @return {@inheritDoc}
      * @since 21
      */
+    @SideEffectFree
     public LinkedList<E> reversed() {
         return new ReverseOrderLinkedListView<>(this, super.reversed(), Deque.super.reversed());
     }
@@ -1499,6 +1501,7 @@ public class LinkedList<E>
             rlist.replaceAll(operator);
         }
 
+        @SideEffectFree
         public LinkedList<E> reversed() {
             return list;
         }
@@ -1517,10 +1520,12 @@ public class LinkedList<E>
             return rlist.toArray();
         }
 
+        @SideEffectFree
         public Iterator<E> descendingIterator() {
             return rdeque.descendingIterator();
         }
 
+        @SideEffectFree
         public ListIterator<E> listIterator(int index) {
             return rlist.listIterator(index);
         }

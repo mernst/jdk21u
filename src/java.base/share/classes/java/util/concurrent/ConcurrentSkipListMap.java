@@ -46,8 +46,8 @@ import org.checkerframework.checker.signedness.qual.PolySigned;
 import org.checkerframework.checker.signedness.qual.UnknownSignedness;
 import org.checkerframework.dataflow.qual.Pure;
 import org.checkerframework.dataflow.qual.SideEffectFree;
-import org.checkerframework.framework.qual.DoesNotUnrefineReceiver;
 import org.checkerframework.dataflow.qual.SideEffectsOnly;
+import org.checkerframework.framework.qual.DoesNotUnrefineReceiver;
 
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.VarHandle;
@@ -2325,6 +2325,7 @@ public class ConcurrentSkipListMap<K,V> extends AbstractMap<K,V>
         @SideEffectFree
         public @PolyNull @PolySigned Object[] toArray(KeySet<@PolyNull @PolySigned K,V> this)     { return toList(this).toArray();  }
         public <T> @Nullable T[] toArray(@PolyNull T[] a) { return toList(this).toArray(a); }
+        @SideEffectFree
         public Iterator<K> descendingIterator() {
             return descendingSet().iterator();
         }

@@ -227,6 +227,7 @@ class ReverseOrderSortedSetView<E> implements SortedSet<E> {
 
     // ========== Infrastructure ==========
 
+    @SideEffectFree
     static <T> Iterator<T> descendingIterator(SortedSet<T> set) {
         return new Iterator<>() {
             SortedSet<T> root = set;
