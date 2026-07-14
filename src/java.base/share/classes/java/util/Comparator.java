@@ -196,6 +196,7 @@ public interface Comparator<T> {
      *         comparator.
      * @since 1.8
      */
+    @SideEffectFree
     default Comparator<T> reversed() {
         return Collections.reverseOrder(this);
     }
