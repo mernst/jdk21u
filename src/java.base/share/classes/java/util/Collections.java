@@ -5179,7 +5179,6 @@ public class Collections {
         @Pure
         public boolean containsAll(Collection<? extends @UnknownSignedness Object> c) { return c.isEmpty(); }
 
-        @SideEffectFree
         public @PolyNull @PolySigned Object[] toArray(Collections.EmptySet<@PolyNull @PolySigned E> this) { return new Object[0]; }
 
         public <T> @Nullable T[] toArray(@PolyNull T[] a) {
@@ -5323,7 +5322,6 @@ public class Collections {
         @Pure
         public boolean containsAll(Collection<? extends @UnknownSignedness Object> c) { return c.isEmpty(); }
 
-        @SideEffectFree
         public @PolyNull @PolySigned Object[] toArray(Collections.EmptyList<@PolyNull @PolySigned E> this) { return new Object[0]; }
 
         public <T> @Nullable T[] toArray(@PolyNull T[] a) {
@@ -6036,7 +6034,6 @@ public class Collections {
             return a;
         }
 
-        @SideEffectFree
         @SuppressWarnings("unchecked")
         public <T> @Nullable T[] toArray(@PolyNull T[] a) {
             final int n = this.n;
