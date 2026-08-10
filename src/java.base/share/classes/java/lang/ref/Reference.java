@@ -368,10 +368,17 @@ public abstract sealed class Reference<T>
      * @see #refersTo
      */
     @SideEffectFree
-    @IntrinsicCandidate
     public @Nullable T get(@GuardSatisfied Reference<T> this) {
-        return this.referent;
+        return get0();
     }
+
+    /* Implementation of get().  This method exists to avoid making get() all
+     * of virtual, native, and intrinsic candidate. That could have the
+     * undesirable effect of having the native method used instead of the
+     * intrinsic when devirtualization fails.
+     */
+    @IntrinsicCandidate
+    private native T get0();
 
     /**
      * Tests if the referent of this reference object is {@code obj}.
