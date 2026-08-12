@@ -127,10 +127,10 @@ To update that copy, run the command below from this directory:
 rm -f checker-qual.jar && \
 cp -p $CHECKERFRAMEWORK/checker-qual/build/libs/checker-qual-*-sources.jar checker-qual.jar && \
 (cd src/java.base/share/classes && rm -rf org/checkerframework && \
-  unzip ../../../../checker-qual.jar -x 'META-INF*' -x module-info.java && \
+  unzip ../../../../checker-qual.jar -x module-info.java -x 'META-INF*' && \
   rm -f org/checkerframework/checker/signedness/SignednessUtilExtra.java && \
   chmod -R u+w org/checkerframework) && \
-jar tf checker-qual.jar | grep '\.java$' | sed 's/\/[^/]*\.java/;/' | sed 's/\//./g' | sed 's/^/    exports /' | sort -u
+jar tf checker-qual.jar | grep '\.java$' | grep -v 'module-info.java' | sed 's/\/[^/]*\.java/;/' | sed 's/\//./g' | sed 's/^/    exports /' | sort -u
 ```
 
 The result of the command will be a list of export lines.
@@ -218,7 +218,7 @@ git pull ../jdk-fork-${USER}-branch-jdk21
 Push and wait for CI to pass.
 
 Find all `.java` files that contain both `@AnnotatedFor` and a relevant `@since`
-in Javadoc.  For example, the regex "@since[ \t](18|19|20|21)".  For each
+in Javadoc.  For example, the regex `@since[ \t](18|19|20|21)`.  For each
 relevant `@since`, add annotations for all the type systems in `@AnnotatedFor`.
 Note: I have not yet done this for JDK 18-21.
 
@@ -240,9 +240,9 @@ but I wasn't able to make that work for JDK 17.
 
 The remainder of this file is the `README.md` from `openjdk/jdk`.
 
-<!-- markdownlint-disable single-h1 -->
-
+<!-- markdownlint-disable single-title -->
 # Welcome to OpenJDK 21 Updates!
+<!-- markdownlint-enable single-title -->
 
 The JDK 21 Updates project uses two GitHub repositories.
 Updates are continuously developed in the repository [jdk21u-dev](https://github.com/openjdk/jdk21u-dev). This is the repository usually targeted by contributors.
@@ -250,7 +250,9 @@ The [jdk21u](https://github.com/openjdk/jdk21u) repository is used for rampdown 
 
 For more OpenJDK 21 updates specific information such as timelines and contribution guidelines see the [project wiki page](https://wiki.openjdk.org/display/JDKUpdates/JDK+21u/).
 
+<!-- markdownlint-disable single-title -->
 # Welcome to the JDK!
+<!-- markdownlint-enable single-title -->
 
 For build instructions please see the
 [online documentation](https://openjdk.org/groups/build/doc/building.html),
