@@ -42,8 +42,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.checker.nullness.qual.PolyNull;
 import org.checkerframework.checker.signedness.qual.UnknownSignedness;
 import org.checkerframework.dataflow.qual.Pure;
-import org.checkerframework.framework.qual.DoesNotUnrefineReceiver;
 import org.checkerframework.dataflow.qual.SideEffectsOnly;
+import org.checkerframework.framework.qual.DoesNotUnrefineReceiver;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
@@ -1099,7 +1099,7 @@ public class ScheduledThreadPoolExecutor
         }
 
         @Pure
-        public RunnableScheduledFuture<?> peek() {
+        public @Nullable RunnableScheduledFuture<?> peek() {
             final ReentrantLock lock = this.lock;
             lock.lock();
             try {
@@ -1165,7 +1165,7 @@ public class ScheduledThreadPoolExecutor
             return f;
         }
 
-        public RunnableScheduledFuture<?> poll() {
+        public @Nullable RunnableScheduledFuture<?> poll() {
             final ReentrantLock lock = this.lock;
             lock.lock();
             try {
@@ -1212,7 +1212,7 @@ public class ScheduledThreadPoolExecutor
             }
         }
 
-        public RunnableScheduledFuture<?> poll(long timeout, TimeUnit unit)
+        public @Nullable RunnableScheduledFuture<?> poll(long timeout, TimeUnit unit)
             throws InterruptedException {
             long nanos = unit.toNanos(timeout);
             final ReentrantLock lock = this.lock;

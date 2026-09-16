@@ -1378,7 +1378,7 @@ public final class Locale implements Cloneable, Serializable {
      * @see #UNICODE_LOCALE_EXTENSION
      * @since 1.7
      */
-    public String getExtension(char key) {
+    public @Nullable String getExtension(char key) {
         if (!LocaleExtensions.isValidKey(key)) {
             throw new IllegalArgumentException("Ill-formed extension key: " + key);
         }
@@ -1430,7 +1430,7 @@ public final class Locale implements Cloneable, Serializable {
      * @throws NullPointerException if {@code key} is null
      * @since 1.7
      */
-    public String getUnicodeLocaleType(String key) {
+    public @Nullable String getUnicodeLocaleType(String key) {
         if (!isUnicodeExtensionKey(key)) {
             throw new IllegalArgumentException("Ill-formed Unicode locale key: " + key);
         }
@@ -2563,7 +2563,7 @@ public final class Locale implements Cloneable, Serializable {
         private static final LocaleNameGetter INSTANCE = new LocaleNameGetter();
 
         @Override
-        public String getObject(LocaleNameProvider localeNameProvider,
+        public @Nullable String getObject(LocaleNameProvider localeNameProvider,
                                 Locale locale,
                                 String key,
                                 Object... params) {

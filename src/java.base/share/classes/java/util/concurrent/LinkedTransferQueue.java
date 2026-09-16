@@ -702,8 +702,8 @@ public class LinkedTransferQueue<E> extends AbstractQueue<E>
      * @param q p.next: the next live node, or null if at end
      * @return pred if pred still alive and CAS succeeded; else p
      */
-    final DualNode skipDeadNodes(DualNode pred, DualNode c,
-                                 DualNode p, DualNode q) {
+    final DualNode skipDeadNodes(@Nullable DualNode pred, DualNode c,
+                                 DualNode p, @Nullable DualNode q) {
         // assert pred != c && p != q; && c.matched() && p.matched();
         if (q == null) { // Never unlink trailing node.
             if (c == p)
@@ -1024,7 +1024,7 @@ public class LinkedTransferQueue<E> extends AbstractQueue<E>
         boolean exhausted;  // true when no more nodes
         LTQSpliterator() {}
 
-        public Spliterator<E> trySplit() {
+        public @Nullable Spliterator<E> trySplit() {
             DualNode p, q;
             if ((p = current()) == null || (q = p.next) == null)
                 return null;
@@ -1307,7 +1307,7 @@ public class LinkedTransferQueue<E> extends AbstractQueue<E>
     @SuppressWarnings("unchecked")
     @SideEffectsOnly("this")
     @DoesNotUnrefineReceiver("modifiability")
-    public E poll(@GuardSatisfied @CanShrink LinkedTransferQueue<E> this, long timeout, TimeUnit unit) throws InterruptedException {
+    public @Nullable E poll(@GuardSatisfied @CanShrink LinkedTransferQueue<E> this, long timeout, TimeUnit unit) throws InterruptedException {
         Object e;
         long nanos = Math.max(unit.toNanos(timeout), 0L);
         if ((e = xfer(null, nanos)) != null || !Thread.interrupted())
@@ -1318,7 +1318,7 @@ public class LinkedTransferQueue<E> extends AbstractQueue<E>
     @SuppressWarnings("unchecked")
     @SideEffectsOnly("this")
     @DoesNotUnrefineReceiver("modifiability")
-    public E poll(@GuardSatisfied @CanShrink LinkedTransferQueue<E> this) {
+    public @Nullable E poll(@GuardSatisfied @CanShrink LinkedTransferQueue<E> this) {
         return (E) xfer(null, 0L);
     }
 
@@ -1369,7 +1369,7 @@ public class LinkedTransferQueue<E> extends AbstractQueue<E>
     }
 
     @Pure
-    public E peek() {
+    public @Nullable E peek() {
         restartFromHead: for (;;) {
             for (DualNode p = head; p != null;) {
                 Object item = p.item;

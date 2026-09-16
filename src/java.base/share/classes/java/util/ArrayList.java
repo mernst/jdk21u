@@ -42,10 +42,10 @@ import org.checkerframework.checker.signedness.qual.PolySigned;
 import org.checkerframework.checker.signedness.qual.UnknownSignedness;
 import org.checkerframework.dataflow.qual.Pure;
 import org.checkerframework.dataflow.qual.SideEffectFree;
+import org.checkerframework.dataflow.qual.SideEffectsOnly;
 import org.checkerframework.framework.qual.AnnotatedFor;
 import org.checkerframework.framework.qual.CFComment;
 import org.checkerframework.framework.qual.DoesNotUnrefineReceiver;
-import org.checkerframework.dataflow.qual.SideEffectsOnly;
 
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -1671,7 +1671,7 @@ public class ArrayList<E> extends AbstractList<E>
                     return hi;
                 }
 
-                public ArrayList<E>.ArrayListSpliterator trySplit() {
+                public ArrayList<E>.@Nullable ArrayListSpliterator trySplit() {
                     int hi = getFence(), lo = index, mid = (lo + hi) >>> 1;
                     // ArrayListSpliterator can be used here as the source is already bound
                     return (lo >= mid) ? null : // divide range in half unless too small
@@ -1815,7 +1815,7 @@ public class ArrayList<E> extends AbstractList<E>
             return hi;
         }
 
-        public ArrayListSpliterator trySplit() {
+        public @Nullable ArrayListSpliterator trySplit() {
             int hi = getFence(), lo = index, mid = (lo + hi) >>> 1;
             return (lo >= mid) ? null : // divide range in half unless too small
                 new ArrayListSpliterator(lo, index = mid, expectedModCount);
