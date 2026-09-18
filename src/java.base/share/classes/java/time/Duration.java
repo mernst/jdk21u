@@ -1429,6 +1429,7 @@ public final class Duration
      *          zero if they are equal, greater than zero if this duration is greater than {@code otherDuration}
      */
     @Override
+    @Pure
     public int compareTo(Duration otherDuration) {
         int cmp = Long.compare(seconds, otherDuration.seconds);
         if (cmp != 0) {

@@ -911,6 +911,7 @@ class MethodType
         return false;
     }
 
+    @Pure
     private boolean equals(MethodType that) {
         return this.rtype == that.rtype
             && Arrays.equals(this.ptypes, that.ptypes);

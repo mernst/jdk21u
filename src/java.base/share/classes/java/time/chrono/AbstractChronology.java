@@ -665,6 +665,7 @@ public abstract class AbstractChronology implements Chronology {
      * @return the comparator value, that is this ID string compared with the {@code other}'s ID string
      */
     @Override
+    @Pure
     public int compareTo(Chronology other) {
         return getId().compareTo(other.getId());
     }

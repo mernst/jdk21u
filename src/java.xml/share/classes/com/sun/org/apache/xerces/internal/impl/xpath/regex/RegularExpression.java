@@ -1762,7 +1762,9 @@ public class RegularExpression implements java.io.Serializable {
 
     static abstract class ExpressionTarget {
         abstract char charAt(int index);
+        @Pure
         abstract boolean regionMatches(boolean ignoreCase, int offset, int limit, String part, int partlen);
+        @Pure
         abstract boolean regionMatches(boolean ignoreCase, int offset, int limit, int offset2, int partlen);
     }
 
@@ -1782,6 +1784,7 @@ public class RegularExpression implements java.io.Serializable {
             return target.charAt(index);
         }
 
+        @Pure
         final boolean regionMatches(boolean ignoreCase, int offset, int limit,
                               String part, int partlen) {
             if (limit-offset < partlen) {
@@ -1790,6 +1793,7 @@ public class RegularExpression implements java.io.Serializable {
             return (ignoreCase) ? target.regionMatches(true, offset, part, 0, partlen) : target.regionMatches(offset, part, 0, partlen);
         }
 
+        @Pure
         final boolean regionMatches(boolean ignoreCase, int offset, int limit,
                                     int offset2, int partlen) {
             if (limit-offset < partlen) {
@@ -1816,6 +1820,7 @@ public class RegularExpression implements java.io.Serializable {
             return target[index];
         }
 
+        @Pure
         final boolean regionMatches(boolean ignoreCase, int offset, int limit,
                 String part, int partlen) {
             if (offset < 0 || limit-offset < partlen)  {
@@ -1825,6 +1830,7 @@ public class RegularExpression implements java.io.Serializable {
                                 : regionMatches(offset, limit, part, partlen);
         }
 
+        @Pure
         private final boolean regionMatches(int offset, int limit, String part, int partlen) {
             int i = 0;
             while (partlen-- > 0) {
@@ -1855,6 +1861,7 @@ public class RegularExpression implements java.io.Serializable {
             return true;
         }
 
+        @Pure
         final boolean regionMatches(boolean ignoreCase, int offset, int limit, int offset2, int partlen) {
             if (offset < 0 || limit-offset < partlen) {
                 return false;
@@ -1863,6 +1870,7 @@ public class RegularExpression implements java.io.Serializable {
                                 : regionMatches(offset, limit, offset2, partlen);
         }
 
+        @Pure
         private final boolean regionMatches(int offset, int limit, int offset2, int partlen) {
             int i = offset2;
             while (partlen-- > 0) {
@@ -1908,6 +1916,7 @@ public class RegularExpression implements java.io.Serializable {
             return target.setIndex(index);
         }
 
+        @Pure
         final boolean regionMatches(boolean ignoreCase, int offset, int limit,
                 String part, int partlen) {
             if (offset < 0 || limit-offset < partlen)  {
@@ -1917,6 +1926,7 @@ public class RegularExpression implements java.io.Serializable {
                                 : regionMatches(offset, limit, part, partlen);
         }
 
+        @Pure
         private final boolean regionMatches(int offset, int limit, String part, int partlen) {
             int i = 0;
             while (partlen-- > 0) {
@@ -1947,6 +1957,7 @@ public class RegularExpression implements java.io.Serializable {
             return true;
         }
 
+        @Pure
         final boolean regionMatches(boolean ignoreCase, int offset, int limit, int offset2, int partlen) {
             if (offset < 0 || limit-offset < partlen) {
                 return false;
@@ -1955,6 +1966,7 @@ public class RegularExpression implements java.io.Serializable {
                                 : regionMatches(offset, limit, offset2, partlen);
         }
 
+        @Pure
         private final boolean regionMatches(int offset, int limit, int offset2, int partlen) {
             int i = offset2;
             while (partlen-- > 0) {

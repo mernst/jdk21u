@@ -953,6 +953,7 @@ public abstract class Charset
      * @return A negative integer, zero, or a positive integer as this charset
      *         is less than, equal to, or greater than the specified charset
      */
+    @Pure
     public final int compareTo(Charset that) {
         return (name().compareToIgnoreCase(that.name()));
     }
@@ -975,6 +976,7 @@ public abstract class Charset
      * @return  {@code true} if, and only if, this charset is equal to the
      *          given object
      */
+    @Pure
     public final boolean equals(@Nullable Object ob) {
         if (!(ob instanceof Charset))
             return false;

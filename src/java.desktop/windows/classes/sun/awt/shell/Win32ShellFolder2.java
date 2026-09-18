@@ -1267,6 +1267,7 @@ final class Win32ShellFolder2 extends ShellFolder {
      *
      * @see sun.awt.shell.ShellFolder#compareTo(File)
      */
+    @Pure
     public int compareTo(File file2) {
         if (!(file2 instanceof Win32ShellFolder2)) {
             if (isFileSystem() && !isSpecial()) {
@@ -1380,6 +1381,7 @@ final class Win32ShellFolder2 extends ShellFolder {
         }
 
         // compares 2 objects within this folder by the specified column
+        @Pure
         public int compare(final File o, final File o1) {
             Integer result = invoke(new Callable<Integer>() {
                 public Integer call() {

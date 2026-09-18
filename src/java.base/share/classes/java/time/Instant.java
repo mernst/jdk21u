@@ -1285,6 +1285,7 @@ public final class Instant
      * @see #isAfter
      */
     @Override
+    @Pure
     public int compareTo(Instant otherInstant) {
         int cmp = Long.compare(seconds, otherInstant.seconds);
         if (cmp != 0) {
@@ -1302,6 +1303,7 @@ public final class Instant
      * @return true if this instant is after the specified instant
      * @throws NullPointerException if otherInstant is null
      */
+    @Pure
     public boolean isAfter(Instant otherInstant) {
         return compareTo(otherInstant) > 0;
     }
@@ -1315,6 +1317,7 @@ public final class Instant
      * @return true if this instant is before the specified instant
      * @throws NullPointerException if otherInstant is null
      */
+    @Pure
     public boolean isBefore(Instant otherInstant) {
         return compareTo(otherInstant) < 0;
     }

@@ -1294,6 +1294,7 @@ public final class OffsetTime
      * @see #isAfter
      */
     @Override
+    @Pure
     public int compareTo(OffsetTime other) {
         if (offset.equals(other.offset)) {
             return time.compareTo(other.time);
@@ -1317,6 +1318,7 @@ public final class OffsetTime
      * @param other  the other time to compare to, not null
      * @return true if this is after the instant of the specified time
      */
+    @Pure
     public boolean isAfter(OffsetTime other) {
         return toEpochNano() > other.toEpochNano();
     }
@@ -1332,6 +1334,7 @@ public final class OffsetTime
      * @param other  the other time to compare to, not null
      * @return true if this is before the instant of the specified time
      */
+    @Pure
     public boolean isBefore(OffsetTime other) {
         return toEpochNano() < other.toEpochNano();
     }
@@ -1347,6 +1350,7 @@ public final class OffsetTime
      * @param other  the other time to compare to, not null
      * @return true if this is equal to the instant of the specified time
      */
+    @Pure
     public boolean isEqual(OffsetTime other) {
         return toEpochNano() == other.toEpochNano();
     }

@@ -3166,6 +3166,7 @@ public class Types {
             }
 
             @Override
+            @Pure
             public boolean equals(@Nullable Object obj) {
                 return (obj instanceof Entry entry)
                         && entry.msym == msym
@@ -3852,6 +3853,7 @@ public class Types {
                 return 127 * Types.this.hashCode(t1) + Types.this.hashCode(t2);
             }
             @Override
+            @Pure
             public boolean equals(@Nullable Object obj) {
                 return (obj instanceof TypePair typePair)
                         && isSameType(t1, typePair.t1)
@@ -4877,6 +4879,7 @@ public class Types {
             return types.hashCode(type);
         }
 
+        @Pure
         public boolean equals(@Nullable Object obj) {
             return (obj instanceof UniqueType uniqueType) &&
                     types.isSameType(type, uniqueType.type);

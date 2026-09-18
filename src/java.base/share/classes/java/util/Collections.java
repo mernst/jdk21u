@@ -6183,6 +6183,7 @@ public class Collections {
         static final ReverseComparator REVERSE_ORDER
             = new ReverseComparator();
 
+        @Pure
         public int compare(Comparable<Object> c1, Comparable<Object> c2) {
             return c2.compareTo(c1);
         }
@@ -6261,6 +6262,7 @@ public class Collections {
             this.cmp = cmp;
         }
 
+        @Pure
         public int compare(T t1, T t2) {
             return cmp.compare(t2, t1);
         }
